@@ -1,2 +1,2 @@
 # Road-to-Web-Development
-A web developer notepad
+This is a web developer's notepad. Filled with guides, lessons, notes and all the necessary to understand the web as a programmer.
