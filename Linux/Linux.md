@@ -8,4 +8,4 @@
 
 <br>
 ### Spreadsheet
-<img src="linuxSpreadsheet.jpg">
+<img src="../Images/linuxSpreadsheet.jpg">
