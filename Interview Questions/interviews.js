@@ -3,7 +3,7 @@
 
 //Solution 1
 function isPowerOfTwo(x) {
-	if(x == 0) {
+	if(x === 0) {
 		return false;
 	} if(x%2 === 0) {
 		return true;
@@ -46,5 +46,41 @@ mySequence();
 
 
 /*3.	Given a string, write a function to print all possible permutations.
- * Example: ABC=> ABC ACB BAC BCA CAB CBA*/
+ * Example: ABC => ABC ACB BAC BCA CAB CBA*/
+function permut(string) {
+	var results = [];
+
+	if(string.length < 2) {
+		return string;
+	}
+
+	for(var i = 0; i < string.length; i++) {
+		var firstChar = string[i];
+		var charsLeft = string.substring(0,i) + string.substring(i+1);
+		var innerPermutations = permut(charsLeft);
+
+		for(var j = 0; j < innerPermutations.length; j++) {
+			results.push(firstChar + innerPermutations[j]);
+		}
+	}
+	return results;
+}
+
+permut("ABC"); // "ABC", "ACB", "BAC", "BCA", "CAB", "CBA" ]
+
+
+
+
+/*4.	Given a String, reverse the whole string without reversing the individual words in it.
+ * Example: "my favourite film is the lord of the rings" => "rings the of lord the is film favourite my"*/
+var string = "my favourite film is the lord of the rings";
+
+var separate = string.split(" ");
+
+var reverse = separate.reverse();
+
+console.log(reverse); //"rings", "the", "of", "lord", "the", "is", "film", "favourite", "my"
+
+
+
 
