@@ -1,12 +1,17 @@
 #!/bin/bash
 
+# This is a comment and below prints Hello World
+echo "Hello World";
+
+
 # Variable declaration
 myName="Xabier";
 
+
 # Constant declaration
 declare -r NUM1=5
-
 num2=4
+
 
 # Basic arithmetics and print info, using python
 num3=$((NUM1+num2))
@@ -35,6 +40,7 @@ num7=1.2
 num8=3.4
 num9=$(python -c "print $num7+$num8")
 echo $num9
+
 
 # Print out info over multiple lines
 cat<< END
