@@ -1,5 +1,7 @@
 # Road-to-Web-Development
-This is a web developer's notepad. <br>
-Filled with guides, lessons, notes and all the necessary to understand the web as a programmer.
+A web developer's notepad :books:
 
-<img src="Images/matrix.jpg">
+Filled with guides, lessons and notes to understand the web as a programmer
+<p align="center"
+	<img src="Images/matrix.jpg">
+</p>
