@@ -10,6 +10,8 @@ Web scraping software many access the World Wide Web directly using the HTTP (Hy
 
 
 
+
+
 ## Fetching and Extracting
 
 Web scraping a web page involves fetching it and extracting from it. **Fetching** is the downloading of a page (which a browser does when an user views a page). Therefore, web crawling is a main component of web scraping, to fetch pages for later processing. Once fetched, the **extraction** can take place. The content of a page my be parsed, searched, reformatted, its data copied into a spreadsheet, and so on. Web scrapers typically take something out of a page to make use of it for another purpose somewhere else.
@@ -19,6 +21,8 @@ Web scraping is used for contact scraping, and as a component of applications us
 **JSON** is commonly used as a transport storage mechanism between the client and the web server.
 
 There are methods that some websites use to prevent scraping, such as detecting and disallowing bots from crawling their pages. In response, there are web scraping systems that rely on using techniques in DOM parsing, computer vision and natural language processing to simulate human browsing to enable gathering web page content for offline parsing.
+
+
 
 
 
@@ -37,6 +41,8 @@ By embedding a full-fledged web browser, programs can retrieve the dynamic conte
 
 
 
+
+
 ## Methods to prevent web scraping
 
 - Blocking an IP address manually or based on geolocation. This will block all browsing from that address.
@@ -46,6 +52,8 @@ By embedding a full-fledged web browser, programs can retrieve the dynamic conte
 - Bots can sometimes be blocked with tools to verify that its a real person accessing the site, like a CAPTCHA.
 - Locating bots with a honeypot or other method to identify the IP addresses of automated crawlers.
 - Websites can declare if crawling is allowed or not in the robots.txt file and allow partial access, limit the crawl rate, specify the optimal time to crawl, etc.
+
+
 
 
 
@@ -81,6 +89,92 @@ wget google.com
 
 
 
+
+
+## Best tools for Web Scraping, Cheerio & Puppeteer
+Comparing to APIs, Scraping is an unsatable and unreliable solution for pulling data. Also, it doesn't help with code reusability.
+
+But from a technical marketer perspective, scraping and automation libraries are extremely important to learn. Cheerio & Puppeteer are two of the most widely used web scraping libraries in Node JS.
+
+#### Cheerio
+Cheerio is another NPM library, also called "JQuery for Node". It allows to scrape data with a lightweight, simple and quick framework.
+Cheerio works with Ray HTML data that input to it, that means that if the data you need to parse can be extracted from a URL, it is very simple to work with Cheerio.
+
+```sh
+//Cheerio example to extract information from twitter about a list of users
+
+const axios = require("axios");
+const cheerio = require("cheerio");
+
+//This function uses axios to get the html data on a given url it's also possible to do the same using the fetch method
+
+const getHtml = async url => {
+  link = await axios.get(url);
+  return link.data;
+};
+
+//this is a node module that uses the above function and Cheerio to extract twitter data from a list of user tag (used in the backend of Hunt)
+
+
+module.exports = async function run(userList) {
+  const enrichedUsers = [];
+
+  for (user of productHuntUserList) {
+    try {
+      const $ = cheerio.load(await getHtml(`https://twitter.com/${user.tag}`));
+
+// here we extract the relevant information from each twitter page - followers number, description, and Twitter URL
+
+
+      let followers = $(
+        ".ProfileNav-item.ProfileNav-item--followers > a > span.ProfileNav-value"
+      ).text();
+      const description = $(".ProfileHeaderCard-bio").text();
+      const url = `https://twitter.com/${user.tag}`;
+
+      // create a user object with existing info and the new info we've extracted from twitter
+
+      const enrichedUser = {
+        tag: user.tag,
+        name: user.name,
+        profile: user.profile,
+        twitterDescription: description,
+        twitterFollowers: followers,
+        pageUrl: url,
+        messagedAndFollowed: false
+      };
+
+//Push the new user object into the enrichedUsers array
+
+      enrichedUsers.push(enrichedUser);
+
+    } catch (e) {
+
+//This is not a good way to handle errors, but I didn't want to get into error handling and it works for the sake of this tutorial
+
+      continue;
+    }
+  }
+
+  return enrichedUsers;
+
+};
+```
+
+#### Puppeteer
+Puppeteer is a Node open source library developed by Google. It's basically a way to launch a browservia Node and automate actions on Chrome.
+The main use for Puppeteer is **Automation** and when you need to **log in** to get data.
+
+#### Conclusion
+Considering the simplicity and lightweight of Cheerio, if there's no need for Puppeteer's automation, it would be more efficient and better practice to use Cheerio.
+
+
+
+
+
 ##### [Web scraping - Wikipedia](https://en.wikipedia.org/wiki/Web_scraping) / Wikipedia
 ##### [What is Web Scraping and How to Use it](https://www.geeksforgeeks.org/what-is-web-scraping-and-how-to-use-it/) / Brief explanation on web scraping
 ##### [Wget vs Curl](https://www.linuxfordevices.com/tutorials/linux/wget-vs-curl#Conclusion) / Different commands to download internet data
+##### [Cheerio vs Puppeteer](https://tshaped.io/javascript-scraping-for-marketers-cheerio-and-puppeteer/) / Web scraping tools comparison
+
+##### [Web Scraping tutorial with Cheerio](https://www.youtube.com/watch?v=LoziivfAAjE) / Traversy Media's Intro To Web Scraping With Node.js & Cheerio
