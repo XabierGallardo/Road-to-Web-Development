@@ -9,7 +9,7 @@ DOM represents the document as nodes and objects which can be modified with a sc
 The Document Object is the core of DOM. To perform any manipulation, you must access the document object first
 
 <p align="center">
-	<img src="../Images/DOM_1.png" alt="DOM structure" />
+	<img src="../Images/DOM_1.PNG" alt="DOM structure" />
 </p>
 
 
