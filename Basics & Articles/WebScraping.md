@@ -97,6 +97,8 @@ Comparing to APIs, Scraping is an unsatable and unreliable solution for pulling 
 But from a technical marketer perspective, scraping and automation libraries are extremely important to learn. Cheerio & Puppeteer are two of the most widely used web scraping libraries in Node JS.
 
 #### Cheerio
+**Cheerio tutorial on Programming Languages/JavaScript/cheerio folder**
+
 Cheerio is another NPM library, also called "JQuery for Node". It allows to scrape data with a lightweight, simple and quick framework.
 Cheerio works with Ray HTML data that input to it, that means that if the data you need to parse can be extracted from a URL, it is very simple to work with Cheerio.
 
