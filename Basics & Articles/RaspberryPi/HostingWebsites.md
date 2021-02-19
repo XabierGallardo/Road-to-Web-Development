@@ -131,7 +131,7 @@ sudo service vsftpd restart
 This allows us to connect our Raspberry Pi and upload the files to **/var/www/html** directory
 
 
-## Getting a domain name
+## Step 7 / Getting a domain name
 
 While we can visit our website, it's not visible to everyone
 To make it accesible for everyone, we need to get it online
@@ -175,4 +175,48 @@ sudo reboot
 ```
 
 
+## Step 8 / Visiting the Website
 
+If we used DNSdynamic, we should nee the exact domain name to access our website
+It'll be possible to visit our website by entering the domain name on the browser
+Same functionality with a no-ip server
+
+With a no-ip, if possible to test if the service is running properly by writing
+```sh
+sudo noip2 -S
+```
+
+**Some appointments on no-ip**
+
+
+## Step 9 / Improving performance and security
+
+While hosting a website on the Raspberry is not a complicated process, it's not the best web server for a production-level speed
+
+If possible, setting the server on a USB drive rather than an SD card is a better option
+The time to read and write will be significant faster, also, using RAM for write and read file storage will also help with the possible speed problems
+
+When it comes to security, it's a good idea to change the default password of our Pi to another much more stronger and hard to guess
+```sh
+Passwd
+```
+
+This way, our website will be safer at least from somebody familiar with the Raspberry Pi OS
+
+
+## Extra Step / Hosting with LAMP
+
+A LAMP server configuration is the recommended one with the Raspberry
+A LAMP server support both PHP and MySQL
+```sh
+sudo apt install mysql-server php-mysql -y
+
+//Restart the apache after the installation
+sudo service apache2 restart
+
+//Install PHP
+sudo apt install php -y
+```
+
+After the installation is done, we'll restart Apache Again
+This way our LAMP server is ready
