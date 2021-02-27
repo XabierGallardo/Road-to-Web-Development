@@ -245,9 +245,7 @@ This allows us to connect our Raspberry Pi and upload the files to **/var/www/ht
 
 
 
-# Step 5 / Configuring SSL encryption
-
-
+# Step 5 / Configuring SSL encryption using cloudflare
 
 
 ## Step 6 / Hosting with LAMP (Quick guide)
@@ -274,3 +272,7 @@ This way our LAMP server is ready!
 - Setup wireguard VPN on the Raspberry for remote working. Don't expose port 22 to internet (an option when using a key based auth, but this option is better and gives easier access to internal ports)
 - Taking regular RPI backups due to the problems of flash drives on a long-term basis
 - Before the RPI backups, check that the ISP isn't behind a CGNAT or block incoming traffic on certain ports (port 80, 443, 25 are commonly blocked)
+
+# Step 5 / Configuring SSL encryption using cloudflare
+We'll learn how to configure SSL Encryption using cloudflare
+Cloudflare provides free https certificate
