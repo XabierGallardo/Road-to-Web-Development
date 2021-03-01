@@ -1,7 +1,7 @@
 # Linux Filesystem
 
 <p align="center">
-	<img src="../Images/linuxfilesystem.png">
+	<img src="../../Images/linuxfilesystem.PNG">
 </p>
 
 The Linux Filesystem is a cryptic labyrinth of directories defined by the file system hierarchy standard
@@ -19,7 +19,7 @@ ls
 Everything, all the files an directories are located under **root** represented by **/**
 
 <p align="center">
-        <img src="../Images/linuxfilesystem3.png">
+        <img src="../../Images/linuxfilesystem3.PNG">
 </p>
 
 
@@ -147,5 +147,5 @@ If we want to check memory usage of our Linux system, we can check the content o
 
 
 <p align="center">
-        <img src="../Images/linuxfilesystem2.png">
+        <img src="../../Images/linuxfilesystem2.PNG">
 </p>
