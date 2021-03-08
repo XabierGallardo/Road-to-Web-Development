@@ -266,6 +266,7 @@ After the installation is done, we'll restart Apache Again
 This way our LAMP server is ready!
 
 
+
 ## Advanced Tips on hosting on a Raspberry
 - It's recommended to not use No-IP, a better option could be a cheap domain and adding it to a cloudflare and using cloudflare-ddns
 - Using docker + portainer to host your production builds, only keep port 80 exposed (and forwarded) to web, keep the rest inside docker virtual network

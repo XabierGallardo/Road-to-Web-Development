@@ -15,6 +15,21 @@ Another option for languages that don't have a native support from visual studio
 
 
 
+## SSH Connection
+We can use Visual Studio Code on our server using the **Remote -SSH** Extension
+File -> Preferences -> Extensions
+Write *Remote - SSH* from Microsoft and Install it
+
+##### Getting started
+1. Press F1 and run the **Remote-SSH: Open SSH Host**
+2. Write the ssh command *ssh example@192.168.1.10*
+3. After we add it, we'll connect to that direction and a new window pop up asking for the password
+4. Once we're connected we'll have our terminal on the bottom of the screen and we can access any folder on File -> Open Folder
+
+That's it! Now simply using **F1** we'll have a shortcut to access our server!
+
+
+
 ## Themes
 My favourite one is Dracula theme
 https://draculatheme.com/visual-studio-code/

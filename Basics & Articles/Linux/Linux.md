@@ -6,6 +6,7 @@
 
 ##### [Beginners tutorial of Linux and GNU](https://www.youtube.com/watch?v=h1gSb9qn0Bo&list=PLpOqH6AE0tNjiU5erEwrvoTEqY36ArbCu) - Linux tutorial in Spanish
 
-<br>
-### Spreadsheet
-<img src="../Images/linuxSpreadsheet.jpg">
+##### Spreadsheet
+<p align="center">
+        <img src="img/linuxSpreadsheet.jpg" alt="Linux Spreadsheet">
+</p>

@@ -1,10 +1,8 @@
 # How the web works?
 
-## Intro
+# Intro
 The web is made of two main parts, Front End and Back End
-
 What we see and interact with is the Front End 
-
 The Back End are all of the parts of the web the users don't interact with
 
 
@@ -54,11 +52,7 @@ Which means that it's possible store any secure information and it'll be safe as
 It's safe to have a website and a database running on the same server, since the server only chooses to expose the website and not the database
 Esentially the server acts as a barrier between the outside world and all the parts of the website
 
-
-
-## Back End Development
-
-## Basic Skills
+# Comparison between Front, Back and Full Stack
 ##### Frontend Development
 - UX or User Experience
 - HTML, CSS & JavaScript
@@ -83,3 +77,17 @@ Esentially the server acts as a barrier between the outside world and all the pa
 - Frontend tech
 - Backend tech
 - Total independence to build any project combining front and back skills
+
+
+
+# Back End Development
+
+## Basics & Fundamentals
+Ok, my server-side app runs on the server. So, in order to access my server-side apps, I need to access the server and open that resource!
+We have then, two options
+- *Find a web host*
+- *Install a web server on the PC*
+
+We prefer to use servers running on virtual machines, or make our own servers
+The ideal choice is running an Ubuntu server on a virtual or physical server
+https://ubuntu.com/tutorials/install-and-configure-apache#2-installing-apache

@@ -1,15 +1,8 @@
 # Node.js Basics
-
-
 ## What it is?
-
 Node.js is an open-source web development framework written in JavaScript
-
-Node.js is esentially JavaScript running on the server
-
+Node.js is a runtime that allows JavaScript running on the server
 Used to build powerful, fast & scalable web apps
-
-Runs single-threaded, non-blocking, asynchronous programming, which is memory efficient
 
 ## What can we build with Node.js?
 - REST APIs & Backend apps

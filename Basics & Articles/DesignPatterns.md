@@ -35,7 +35,7 @@ The customer controller will handle all the interactions and inputs from the cus
 The same controller will be used to view the customer data
 
 <p align="center">
-        <img src="../Images/mvc_3.png">
+        <img src="../Images/mvc_3.png" alt="Model View Controller img 3">
 </p>
 
 
@@ -123,14 +123,14 @@ router.get('/',ensureAuth, async (req,res)=>{
 
 #### MVC How it works
 <p align="center">
-        <img src="../Images/mvc_1.png">
+        <img src="../Images/mvc_1.png" alt="Model View Controller img 1">
 </p>
 
 
 
 #### MVC example
 <p align="center">
-        <img src="../Images/mvc_2.png">
+        <img src="../Images/mvc_2.png" alt="Model View Controller img 2">
 </p>
 
 ##### [Wikipedia - Software design patterns](https://en.wikipedia.org/wiki/Software_design_pattern) / Wikipedia
