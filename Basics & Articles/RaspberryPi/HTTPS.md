@@ -57,3 +57,33 @@ Nada aquí.
 </body>
 </html> 
 ```
+
+## SSL, TLS & HTTPS
+*Secure Sockets Layer or SSL* is the standard technology that grants a secure internet connection, it also protects any confidential data sent between two systems
+Both systems can be a client (browser) and a server (online shopping app), or even two servers
+
+This is done encrypting the data transfered between users and websites, this way even if the data is sniffed (stolen), it cannot be read
+This data could be from credit card numbers to bank data, names and directions
+
+*Transport Layer Security or TLS* is a modern version of SSL, being SSL the standard denomination, when we're buying SSL certificates, we're actually buying the latests TLS certifications with encryption options such as ECC, RSA or DSA
+
+*Hyper Text Transfer Protocol Secure or HTTPS* can be seen in the URL direction bar when a website is protected by an SSL certificate
+We can check the certificate details clicking on the lock symbol next to the URL bar
+
+The SSL certificate is installed on the server, but it shows visual indications on the browser
+Starting from the *https://* instead of just *http://*
+
+When we install an SSL certificate and there is a connection between a browser and our server, the existence of the SSL certificate activates the SSL (TLS actually) protocol that will encrypt the info between both client and servers (or between servers)
+SSL protocol works on top of another protocol as *Transmission Control Protocol or TCP* and acts as a security layer
+This allows a secure connection and won't make changes on superior layers and layers below SSL can work normally
+
+If our SSL certificate is used properly, the only info that can be seen by a hacker are both port and IP address and the aproximately amount of data sent
+Hackers may be able to stop the connection, but both server and user will be able to know that this is because of a third party action, besides that, the hacker will not be able to obtain any data
+It may be able to get the hostname, but it won't be able to recognize the entire URL, as the connection is encrypted
+
+1. SSL Protocol starts after a TCP connection is set up
+2. The server sends its certificate among some specs, as the SSL/TLS version and the correspondent encrypting methods
+3. The user checks the certificate and selects the highest level of encryption admited on both sides and starts a secure session with those methods
+4. In order to grant security and authenticity of sent data, both SSL and TLS protocols include an authentication process
+
+This may be seen as a long and slow process but it's done almost instantly!

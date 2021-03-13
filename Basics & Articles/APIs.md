@@ -1,13 +1,35 @@
 # API / Application Programming Interfaces
 
-An API is a way for 2 computers to talk to each other
+An API or *Application Programming Interface* is a way for 2 computers to talk to each other
 Using an API would be like using a website on our browser
 But instead of clicking buttons and filling out forms, we write code to explicity request data from a server
 
 For example, we could visit the NASA website to look at asteroids or we could use their Rest API to request the raw JSON data that is shown on the screen
+There are 3 main types, Private, Public and External
 
-**RESTful** means they follow a set of rules or constraints known as **Representational State Transfer**
-Which has been the standard for API development since early 2000s
+- Private APIs are classified as an in-house application for employees to automate business processes and delivery
+- Public/Partner APIs are openly promoted but available for known developers or business partners
+- External APIs are available to any third-party developer and are mostly designed or built for end-users/customers
+
+APIs make it easier to access to a variety of resources
+**APIs are efficient**, they can significantly reduce the amount of work and will speed up the development process of an application
+**APIs make things simpler**
+
+## API Specifications
+##### Service Object Access Protocol / SOAP
+SOAP is a lightweight protocol for exchanging structured information in a decentralized, distributed environment
+This contains rules guiding requests and responses sent from web applications using XML between systems through HTTP
+
+##### GraphQL
+GraphQL is a query language for APIs, it provides an absolute and simplified description of the data in APIs, which gives us the power to get the exact data we need
+This makes easier to evolve APIs over time and also enables powerful developer tools
+
+##### Representational State Transfer (REST)
+*Representational State Transfer* or *REST* is a style of architecture that provides standars on the web between computer systems which makes communication flow easier within applications
+REST APIs are stateless and can be used for seperation of concecrns between the client and the server
+
+**RESTful** means they follow a set of rules or constraints known as **Representational State Transfer**, which has been the standard for API development since early 2000s
+
 
 ## How an API organizes the data?
 A restful API organizes data entities or resources into a bunch of unique URLs or specifically URIs *Uniform Resource Identifiers*
