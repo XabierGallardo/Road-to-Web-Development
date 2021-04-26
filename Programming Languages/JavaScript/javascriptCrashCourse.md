@@ -30,7 +30,7 @@ Used in desktop application development (Electron JS)
 - Arrays
 - Object Literals
 - Methods for strings, arrays, objects, etc
-- Loops -for, while, for...of, forEach, map
+- Loops (for, while, for...of, forEach, map)
 - Conditionals (if, ternary & switch)
 - Functions (normal & arrow)
 - OOP (prototypes & classes)
@@ -80,12 +80,16 @@ Examples of primitive data types are *String, Numbers, Boolean, null, undefined*
 ```sh
 # String
 const name = "John";
+
 # Number
 const age = 30;
+
 # Numbers also include decimals
 const rating = 4.5;
+
 # Boolean (either true or false only)
 const isCool = true;
+
 # Null is basically empty, it's a variable with nothing on it
 const x = null;
 
@@ -102,7 +106,7 @@ console.log("My name is " + name + " and I am " + age); # My name is John and I 
 
 # Template String or Template literals (ES6 concatenation)
 const hello = `My name is ${name} and I am ${age}`;
-console.log(hello); # # My name is John and I am 30
+console.log(hello); # My name is John and I am 30
 ```
 
 ### String properties & methods
@@ -110,15 +114,20 @@ A **property** doesn't have parenthesis, if not, it's a method
 A **method** is basically a function that is associated with an object
 ```sh
 const s = "Hello World";
+
 console.log(s.length); # 11
+
 console.log(s.toUpperCase()); # HELLO WORLD
+
 console.log(s.toLowerCase); # hello world
+
 console.log(s.substring(0, 6).toUpperCase()); # HELLO W
 
 # to split a string onto an array
 console.log(s.split('')); # ["H", "e", "l", "l", "o", " ", "W", "o", "r", "l", "d"]
 
 const x = 'technology, computers, it, code';
+
 console.log(s.split(', ')); # ["technology", "computers", "it", "code"]
 ```
 With those split() examples, now we could insert each specific word onto a database and search to it and stuff like that
@@ -155,3 +164,187 @@ console.log(fruits.indexOf('oranges')); # 2
 
 
 # Object Literals
+Object literals are basically just key-value pairs
+```sh
+const person = {
+	firstName: 'John',
+	lastName: 'Doe',
+	age: 30,
+	hobbies: ['music', 'movies', 'sports'],
+
+	# We can also do embedded objects (an object within an object)
+	address: {
+		street: '50 main st',
+		city: 'Boston',
+		state: 'MA'
+	}
+}
+
+# To access a single value we can use the dot syntax
+console.log(person.firstName, person.lastName); # John Doe
+
+console.log(person.hobbies[1]); # movies
+
+console.log(person.address.city); # Boston
+
+# We can also use destructuring, it's part of ES6
+const { firstName, lastName, address: { city} } = person;
+
+# We can add properties
+person.email = 'john@gmail.com';
+```
+
+### Arrays of objects
+In JavaScript we'll be dealing with tons of arrays of objects
+```sh
+const todos = [
+	{
+		id: 1,
+		text: 'Take out trash',
+		isCompleted: true
+	},
+	{
+		id: 2,
+		text: 'Meeting',
+		isCompleted: true
+	},
+	{
+		id: 3,
+		text: 'Dentist',
+		isCompleted: true
+	}
+];
+
+console.log(todos[1].text); # Meeting
+
+# To convert this array of objects into JSON within our script to send it to a server
+const todoJSON = JSON.stringify(todos);
+console.log(todoJSON); # Returns a JSON string
+```
+
+### JSON or JavaScript Object Notation
+JSON is a lightweight data interchange formata data
+It's commonly used to send and receive data in web apps
+
+**JSON Syntax Rules**
+- Data is in name/value pairs
+- Data is separated by commas
+- Curly braces hold objects
+- Square brackets hold arrays
+
+The JSON format is syntactically identical to the code for creating JavaScript objects
+Because of this similarity, a JavaScript program can easily convert JSON data into native JavaScript objects
+*JSON names require double quotes. JavaScript names do not*
+```sh
+{
+"employees":[
+  {"firstName":"John", "lastName":"Doe"},
+  {"firstName":"Anna", "lastName":"Smith"},
+  {"firstName":"Peter", "lastName":"Jones"}
+]
+}
+```
+**Converting a JSON text to a JavaScript Object**
+A common use of JSON is to read data from a web server, and display the data in a web page
+For simplicity, this can be demonstrated using a string as input
+First, let's create a JavaScript string containing JSON syntax
+Then, we'll use the JavaScript built-in function JSON.parse() to convert the string into a JavaScript object
+```sh
+let text = '{ "employees" : [' +
+'{ "firstName":"John" , "lastName":"Doe" },' +
+'{ "firstName":"Anna" , "lastName":"Smith" },' +
+'{ "firstName":"Peter" , "lastName":"Jones" } ]}'; 
+
+let object = JSON.parse(text);
+
+console.log(obj.employees[1].firstName + " " + obj.employees[1].lastName'); # Anna Smith
+```
+
+
+# Loops (for, while, for...of, forEach, map)
+### for
+```sh
+# This function will be executed until the condition i < 10 is true
+for(let i = 0; i < 10; i++) {
+	console.log(`For Loop Number: ${i}`); # For Loop Number: 0 For Loop Number: 1 ...
+}
+```
+
+### while
+```sh
+let i = 0;
+while (i < 10) {
+	console.log(`While Loop Number: ${i}`);
+	i++;
+}
+```
+
+An example looping through arrays
+```sh
+const todos = [
+	{
+		id: 1,
+		text: 'Take out trash',
+		isCompleted: true
+	},
+	{
+		id: 2,
+		text: 'Meeting',
+		isCompleted: true
+	},
+	{
+		id: 3,
+		text: 'Dentist',
+		isCompleted: false
+	}
+];
+
+# length will give us the number of items in the array
+for(let i = 0; i < todos.length; i++) {
+	console.log(todo[i].text); # Take out trash		Meeting		Dentist
+}
+```
+
+### for of
+```sh
+for(let todo of todos) {
+	console.log(todo.text); # Take out trash		Meeting		Dentist
+}
+```
+
+### High order array methods: forEach, map, filter
+Best way to do any kind of iteration with arrays
+**forEach** loops through the array
+**map** will allow us to create a new array from an array
+**filter** will allow us to create a new array based on a condition
+```sh
+# forEach
+todos.forEach(function(todo) {
+	console.log(todo.text); # Take out trash		Meeting		Dentist
+});
+
+# map
+const todoText = todos.map(function(todo) {
+	 # Loop through and return an array of just the text values
+	return todo.text;
+});
+console.log(todoText);  # ["Take out trash", "Meeting", "Dentist"]
+
+# filter
+const todoCompleted = todos.filter(function(todo) {
+	 # Similar to map, but filtering only those which are completed
+	return todo.isCompleted === true;
+});
+# Returns an array of 2 values and both of them are completed (true)
+console.log(todoCompleted); 
+
+# We can even combine both filter and map loops
+# filter
+const todoCompleted = todos.filter(function(todo) {
+	return todo.isCompleted === true;
+}).map(function(todo) {
+	return todo.text;
+});
+
+console.log(todoCompleted);  # ["Take out trash", "Meeting"]
+```
