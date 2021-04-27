@@ -1,9 +1,9 @@
 # What is Javascript?
 
 ### High level, interpreted programming language
-**High level** means that there are a lot of abstractions, so we don't have to deal with things like memory management like we would do with a low leve language like C or C++
+*High level* means that there are a lot of abstractions, so we don't have to deal with things like memory management like we would do with a low leve language like C or C++
 
-**Interpreted** means that the program is executed directly without having to run through a compiler
+*Interpreted* means that the program is executed directly without having to run through a compiler
 Languages like Java need to run the code through a compiler (that transforms our human readable code into machine language)
 
 ### Conforms to the ECMAScript specification
@@ -13,7 +13,7 @@ This means that you can write your code in many different ways, like object-orie
 
 ### Runs on the client/browser as well as on the server (Node.js)
 JavaScript is the language of the browser or the client, this means it's the language of the front end
-But JavaScript also runs on the server for more powerful options like interacting with a database, this is done using a JavaScript runtime known as **Node.js**
+But JavaScript also runs on the server for more powerful options like interacting with a database, this is done using a JavaScript runtime known as *Node.js*
 
 
 # Why learn JavaScript?
@@ -48,7 +48,7 @@ alert("Hello World");
 console.log("Hello World");
 ```
 
-### var, let & const variables & Data Types
+### var, let & const variables
 **var** has been used since the beginning of javascript, but isn't used anymore because and its global scoped
 This means that if we use the same variable name outside of its block, it can cause a conflict and cause problems
 
@@ -72,11 +72,9 @@ Some other people prefers to use only const, except when you know you're going t
 
 
 # Data Types
-
 ### Primitive data types
 We have **primitive data types**, which means that the data is directly assigned to memory
 Examples of primitive data types are *String, Numbers, Boolean, null, undefined*
-
 ```sh
 # String
 const name = "John";
@@ -314,8 +312,11 @@ for(let todo of todos) {
 
 ### High order array methods: forEach, map, filter
 Best way to do any kind of iteration with arrays
+
 **forEach** loops through the array
+
 **map** will allow us to create a new array from an array
+
 **filter** will allow us to create a new array based on a condition
 ```sh
 # forEach
@@ -348,3 +349,202 @@ const todoCompleted = todos.filter(function(todo) {
 
 console.log(todoCompleted);  # ["Take out trash", "Meeting"]
 ```
+
+
+# Conditionals (if, ternary & switch)
+### if else, else if, &&, ||
+```sh
+const x = 10;
+const y = 10;
+
+if(x === 10) {
+	console.log("x is 10");
+}
+else if (x > 10) {
+	console.log("x is greater than 10")
+} 
+else {
+	console.log("x is less than 10");
+}
+
+# Multiple conditions, && and, || or
+# if x > 5 and y > 10
+if(x > 5 && y > 10) {} 
+
+# if x > 5 or y > 10
+if(x > 5 || y > 10) {} 
+```
+
+### Ternary Operator
+Is basically a shorthand if statement
+It's used a lot to assign variables based on a condition
+```sh
+const x = 10;
+# if x > 10 is true, then (?), color value is red, else (:) color value is blue
+const color = x > 10 ? 'red' : 'blue';
+```
+
+### Switch
+Switch conditionals allow us to uses cases
+```sh
+switch(color) {
+	case 'red':
+		console.log('color is red');
+		break;
+	
+	case 'blue':
+		console.log('color is blue');
+		break;
+
+		default:
+		console.log('color is not red or blue');
+		break;
+}
+```
+
+
+# Functions
+A function is a block of code designed to perform a particular task
+It is executed when "something" invokes it (calls it)
+We can create a function with the **function** keyword
+```sh
+# Adding default values for num1 and num2 parameters
+function addNums(num1 = 1, num2 = 2) {
+	# for the most part we won't console log a function
+	# console.log(num1 + num2);
+
+	# We'll want to return something from instead
+	return num1 + num2;
+}
+
+console.log(addNums(5,4)); # 9
+console.log(addNums()); # 2
+```
+
+### Arrow functions
+Introduced in ES6, arrow functions are very handy and help a lot to clean things up
+instead of using the keyword **function** we would name it as a variable
+```sh
+const addNums = (num1 = 1, num2 = 2) => {
+	return num1 + num2;
+}
+
+# We don't even need to use the return keyword when the function only has one statement and it returns a value
+const addNums = (num1 = 1. num2 = 1) => num1 + num2;
+
+# Even when we only have a parameter, no () are needed
+const addNums = num1 => num1 + 5;
+
+# A great option with forEach
+todos.forEach((todo) => console.log(todo));
+```
+
+
+# OOP or Object Oriented Programming
+We've already looked at object literals, however we can construct objects using a *constructor function*
+
+### Constructor Function
+We can use constructor functions with prototypes
+and we can also sue ES6 classes
+```sh
+# A constructor function should start with a capital
+function Person(firstName, lastName, dob) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+
+	# We can create a Date object
+	this.dob = new Date(dob);
+
+	# We can also create methods (functions to this person object)
+	this.getBirthYear = function() {
+		return this.dob.getFullYear();
+	}
+
+	this.getFullName = function() {
+		return `${this.firstName} ${this.lastName}`;
+	}
+}
+
+# Instantiate object
+const person1 = new Person('John', 'Doe', '4-3-1980');
+const person2 = new Person('Mary', 'Smith', '3-6-1970');
+
+console.log(person1); # Returns object Person John Doe 4-3-1980
+console.log(person2.firstName); # Mary
+console.log(person2.dob.getFullYear()); # 1970
+console.log(person1.getBirthYear()); # 1980
+console.log(person1.getFullName()); # John Doe
+```
+
+### Prototypes
+All JavaScript objects inherit properties and methods from a prototype
+- Date objects inherit from Date.prototype
+- Array objects inherit from Array.prototype
+- Person objects inherit from Person.prototype
+
+The Object.prototype is on the top of the prototype inheritance chain:
+*Date objects, Array objects, and Person objects inherit from Object.prototype*
+
+Sometimes you want to add new properties (or methods) to all existing objects of a given type
+Sometimes you want to add new properties (or methods) to an object constructor
+The JavaScript prototype property allows you to add new properties to object constructors:
+
+**We can attach objects and methods to the prototype**
+Because we don't want to have the functions with every object instance, we may not need to use this
+that's why we want to put these in the prototype
+```sh
+function Person(firstName, lastName, dob) {
+	this.firstName = firstName;
+	this.lastName = lastName;
+	this.dob = new Date(dob);
+}
+
+Person.prototype.getBirthYear = function() {
+	return this.dob.getFullYear();
+}
+
+Person.prototype.getFullName = function() {
+	return `${this.firstName} ${this.lastName}`;
+}
+
+console.log(person2.getFullName()); # Mary Smith
+```
+Now we can also console.log the object person and don't see its methods attached
+
+### ES6 Classes
+ES6 classes do the exact same thing under the hood, it adds the methods to the prototype
+Everything will look the same, however it's syntatic sugar (just a prettier way to write it)
+```sh
+class Person {
+
+	# Constructor
+	constructor(firstName, lastName, dob) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.dob = new Date(dob);
+	}
+
+	# Methods
+	getBirthYear() {
+		return this.dob.getFullYear();
+	}
+
+	getFullName() {
+		return `${this.firstName} ${this.lastName}`;
+	}
+}
+
+# Same results!
+const person1 = new Person('John', 'Doe', '4-3-1980');
+const person2 = new Person('Mary', 'Smith', '3-6-1970');
+
+console.log(person1); # Returns object Person John Doe 4-3-1980
+console.log(person2.firstName); # Mary
+console.log(person2.dob.getFullYear()); # 1970
+console.log(person1.getBirthYear()); # 1980
+console.log(person1.getFullName()); # John Doe
+```
+It does the same thing than the previous example, but in a prettier and easier way!
+
+
+# DOM or Document Object Model
