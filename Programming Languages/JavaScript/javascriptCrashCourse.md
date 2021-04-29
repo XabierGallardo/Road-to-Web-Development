@@ -548,3 +548,46 @@ It does the same thing than the previous example, but in a prettier and easier w
 
 
 # DOM or Document Object Model
+DOM is the tree structure of our HTML website
+
+### Window object
+The Window object is the parent object of the browser
+It does includes functions like alert() or localStorage()
+The window object is supported by all browsers. It represents the browser's window.
+```sh
+console.log(window); # It includes functions like alert() or localStorage()
+window.alert("hello"); # Same result as alert("hello")
+```
+
+### document
+We also find the **document**
+The document is what we want to use to select things from the document
+```sh
+# Single element
+const form = document.getElementById("my-form"); 
+console.log(form); # prints the element with that id
+
+# Query selector method
+console.log(document.querySelector("h1")); # Gives us the first h1 element
+
+console.log(document.querySelectorAll(".item")); # Gives the node list of the elements with that class
+
+console.log(document.getElementsByClassName("h1")); # Gives the html selection
+
+console.log(document.getElementsByTagName("li")); # Gives the html selection
+```
+
+### DOM Manipulation
+```sh
+const ul = document.querySelector('.items');
+
+ul.remove(); # Remove all elements with class items
+
+ul.lastElementChild.remove(); # Remove last element of the list
+
+ul.firstElementChild.textContent = 'Hello'; # Changing the text content to Hello
+
+ul.children[1].innerText = 'Ted';
+
+ul.lastElementChild.innerHTML = '<h1>Hello</h1>'
+```
