@@ -589,5 +589,69 @@ ul.firstElementChild.textContent = 'Hello'; # Changing the text content to Hello
 
 ul.children[1].innerText = 'Ted';
 
-ul.lastElementChild.innerHTML = '<h1>Hello</h1>'
+ul.lastElementChild.innerHTML = '<h1>Hello</h1>';
+
+const btn = document.querySelector('.btn');
+btn.style.background = 'red'; # Changing the background of the element with that class
+```
+
+### Event Listener
+HTML events are actions that happen to HTML elements
+When JavaScript is used in HTML pages, JavaScript can *react* on these events, for example
+	- An HTML web page has finished loading
+	- An HTML input field has changed
+	- An HTML button was clicked
+
+```sh
+const btn = document.querySelector('.btn');
+
+btn.addEventListener('click', (e) => {
+	e.preventDefault(); # Prevent default behavior clicking the submit button
+	
+	console.log('click');
+	
+	document.querySelector('#my-form').style.background = "#ccc"; # Adding a dark background
+
+	document.querySelector('body').classList.add)'bg-dark';
+
+	document.querySelector('.items').lastElementChild.innerHTML = '<h1>Hello</h1>';
+});
+```
+```sh
+const myForm = document.querySelector('#my-form');
+const nameInput = document.querySelector('#name');
+const emailInput = document.querySelector('#email');
+const msg = document.querySelector('.msg');
+const userList = document.querySelector('#users');
+
+# When submiting, do the function onSubmit()
+myForm.addEventListener('submit', onSubmit);
+
+function onSubmit(e) {
+
+	e.preventDefault();
+
+	console.log(nameInput.value); # Getting the value from the field
+
+	if(nameInput.value === '' || emailInput.value === '') {
+
+		msg.classList.add('error');
+		msg.innerHTML = 'Please enter all fields';
+
+		setTimeout(() => msg.remove(), 3000); # After 3 seconds the error message goes away
+	} else {
+		console.log('success');
+
+		# Creating a text node with the input values
+		const li = document.createElement('li');
+
+		li.appendChild(document.createTextNode(`${nameInput.value} : ${emailInput.value}`));
+
+		userList.appendChild(li);
+
+		# Clear fields
+		nameInput.value = '';
+		emailInput.value = '';
+	}
+}
 ```
