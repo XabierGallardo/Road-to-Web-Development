@@ -56,7 +56,7 @@ The request message has a very specific format
 ## REQUEST
 *The start line contains the URI we want to access* preceded by an HTTP verb or request which signal our intent with the resource
 ```sh
-POST /dinosaur HTTP/1.1
+POST /dinosaur HTTP/1.1 
 ```
 - **GET** / READ data
 - **POST** / CREATE data
