@@ -1,4 +1,6 @@
 # JSON Crash Course
+**JSON is a syntax for storing and exchanging data**
+**JSON is text, written in JavaScript object notation**
 JSON is extremely important in web development, specially when working with APIs
 
 - JSON stands for **JavaScript Object Notation**
@@ -6,6 +8,26 @@ JSON is extremely important in web development, specially when working with APIs
 - Based on a subset of JavaScript, it's easy to read and write
 - Often used with AJAX
 - Can be used with most modern languages
+
+### Quick Intro
+When exchanging data between a browser and a server, the data can only be text
+*JSON is text, and we can convert any JavaScript object into JSON and send JSON to the server*
+*We can also convert any JSON received from the server into JavaScript Objects*
+This way we can work with the data as JavaScript objects, with no complicated parsing and translations
+
+**Sending data**
+```sh
+var myObj = {name: "John", age: 31, city: "New York"};
+
+var myJSON = JSON.stringify(myObj);
+```
+
+**Receiving data**
+```sh
+var myJSON = '{"name":"John", "age":31, "city":"New York"}';
+
+var myObj = JSON.parse(myJSON);
+```
 
 
 ### What is AJAX?
@@ -215,4 +237,40 @@ xhttp.onreadystatechange = function() {
 
 xhttp.open("GET", "people.json", true);
 xhttp.send();
+```
+
+
+### Another example sending JSON Data to a Server
+```sh
+const url = 'https://example.example.com/todos/1';
+
+# Sending a GET request without any data to the server
+fetch(URL, {method: "GET"})
+
+# Getting JSON data from the raw response
+.then(rest => res.json())
+
+# Print the result
+.then(console.log);
+```
+
+
+### Another example receiving JSON Data to a Server
+```sh
+const url = 'https://example.example.com/todos/1';
+
+const data = {
+	"id": 1,
+	"title": "My title",
+	"completed": false
+};
+
+# Sending a post request
+fetch(URL, {
+	method: "POST",
+	body: JSON.stringify(data),
+	headers: {
+		"Content-type": "application/json; charset=UTF-8"
+	}
+});
 ```
