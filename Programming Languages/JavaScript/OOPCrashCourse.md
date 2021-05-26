@@ -1,6 +1,7 @@
 # Object Oriented Programming in JavaScript Crash Course
 Basis and core concepts of writing code in Object Oriented Programming
 
+
 ## Introduction
 When it comes to objects in JavaScript
 ```sh
@@ -56,6 +57,7 @@ We can also access object *navigator*
 console.log(navigator.appVersion);
 ```
 
+
 ## Creating objects 
 We can create a new JavaScript object with four properties using different ways
 
@@ -83,13 +85,16 @@ person.eyeColor = "brown";
 ## Working with our objects
 ```sh
 let book1 = {
+
 	title: 'Book One',
 	author: 'Tomaso Menos',
 	year: 2013,
 
 	# Adding a function as a property
 	getSummary: function() {
+
 		return `${this.title} was written by ${this.author} in ${this.year}`;
+
 	}
 };
 
@@ -109,7 +114,9 @@ let book2 = {
 
 	# Adding a function as a property
 	getSummary: function() {
+
 		return `${this.title} was written by ${this.author} in ${this.year}`;
+
 	}
 };
 
@@ -131,5 +138,307 @@ This is where constructors come in
 
 A constructor it's basically a function
 ```sh
+# Constructor (with Uppercase)
+function Book() {
 
+	console.log('Book Instantiated');
+
+}
+
+# Instantiate an Object
+const book1 = new Book(); # Book Instantiated
+```
+When a new object is instantiated, it will run the code is defined on the constructor
+```sh
+function Book(title, author, year) {
+
+	this.title = title;
+	this.author = author;
+	this.year = year;
+
+	this.getSummary = function() {
+
+		return `${this.title} was written by ${this.author} in ${this.year}`;
+
+	}
+}
+
+const book1 = new Book('Book One', 'Johnny Melavo', '2014');
+const book2 = new Book('Book Two', 'Johnny Escuccio', '2015');
+
+console.log(book2.getSummary()); # Book Two was written by Johnny Escuccio in 2015
+```
+
+
+## Prototype
+All JavaScript objects inherit properties and methods from a prototype
+- **Date** objects inherit from **Date.prototype**
+- **Array** objects inherit from **Array.prototype**
+- **Person** objects inherit from **Person.prototype**
+
+The **Object.prototype** is on the top of the prototype inheritance chain:
+
+**Date** objects, **Array** objects and **Person** objects inherit from **Object.prototype**
+
+The JavaScript prototype property allows us to add new properties to object constructors
+It also allows us to add new methods to object constructors
+
+Now we're getting rid of the getSummary function from the constructor
+The idea is to store the function into the prototype, we don't want that function for every book object
+```sh
+function Book(title, author, year) {
+
+	this.title = title;
+	this.author = author;
+	this.year = year;
+
+}
+
+# getSummary
+Book.prototype.getSummary = function() {
+
+	return `${this.title} was written by ${this.author} in ${this.year}`;
+
+}
+
+# getAge
+Book.prototype.getAge = function() {
+
+	const years = new Date().getFullYear() - this.year;
+
+	return `${this.title} is ${years} years old`;
+}
+
+# Same result
+console.log(book2.getSummary()); # Book Two was written by Johnny Escuccio in 2015
+
+# Now the object doesn't have the method, now it's stored in the prototype
+console.log(book2);
+
+console.log(book2.getAge()); # Book Two is 2 years old
+```
+Now we'll manipulate the data
+```sh
+# Revise / change the year
+Book.prototype.revise = function(newYear) {
+
+	this.year = newYear;
+
+	this.revised = true;
+
+}
+
+console.log(book2); # Book { ... year: "2016" }
+
+book2.revise('2018');
+
+console.log(book2); # Book { ... year: "2018", revised: true }
+```
+
+
+## Inheritance
+We'll create a magazine object, but this magazine will inherit the properties of the book
+```sh
+# Book constructor
+function Book(title, author, year) {
+
+	this.title = title;
+	this.author = author;
+	this.year = year;
+
+}
+
+# getSummary
+Book.prototype.getSummary = function() {
+
+	return `${this.title} was written by ${this.author} in ${this.year}`;
+
+}
+
+function Magazine(title, author, year, month) {
+
+	# We'll call the Book object and get its properties
+	Book.call(this, title, author, year);
+	
+	this.month = month;
+
+}
+
+# Instantiate Magazine object
+const mag1 = new Magazine('Mag One', 'John Jackson', '2018', 'January');
+
+# In order to inherit the prototype methods of Book
+Magazine.prototype = Object.create(Book.prototype);
+
+console.log(mag1); # Prints the Magazine object
+
+console.log(mag1.getSummary()); # Mag One was written by John jackson in 2018
+
+# Now if we look at the proto object, we'll see that it uses the Book constructor
+console.log(mag1);
+
+# To change the constructor to the magazine
+Magazine.prototype.constructor = Magazine;
+
+# Now it will show that the constructor is Magazine
+console.log(mag1); # constructor: Magazine(title, author, year, month)
+```
+
+
+## Different ways to create objects
+Object of Protos
+```sh
+const bookProtos = {
+
+	getSummary: function() {
+		return `${this.title} was written by ${this.author} in ${this.year}`;
+	},
+
+	getAge: function() {
+		const years = new Date().getFullYear() - this.year;
+		return `${this.title} is ${years} years old`;
+	}
+};
+
+# Object creation 1
+const book1 = Object.create(bookProtos);
+book1.title = 'Book One';
+book1.author = 'Johnny Melavo';
+book1.year = '2013';
+
+# Object creation 2
+const book1 = Object.create(bookProtos, {
+	title: {value: 'Book One'},
+	author: {value: 'Johnny Melavo'},
+	year: {value: '2013'},
+});
+```
+Creating objects using classes, much easier for those familiar with object-oriented programming languages
+```sh
+class Book {
+	constructor(title, author, year) {
+		this.title = title;
+		this.year = author;
+		this.year = year;
+	}
+
+	getSummary() {
+		return `${this.title} was written by ${this.author} in ${this.year}`;
+	}
+
+	getAge() {
+		const years = new Date().getFullYear() - this.year;
+		return `${this.title} is ${years} years old`;
+	}
+
+	revise(newYear) {
+		this.year = newYear;
+		this.revised = true;
+	}
+
+	# Static methods allows us to have a method in our class that we can use without instatiate an object
+
+	# Defining an static method
+	static topBookStore() {
+		return 'Barnes & noble';
+	}
+}
+
+# Instantiating an object
+const book1 = new Book('Book One', 'Johnny Melavo', '2013');
+
+console.log(book1); # Now we can see printed our objects with the methods below the prototype arrow
+
+# To use our static method, we must call it on the actual class
+
+book1.topBookStore(); # Uncaugh TypeError: is not a function
+
+console.log(Book.topBookStore());
+```
+Working with subclasses
+Our subclass magazine will have everything a book has but also have a month
+```sh
+# Magazine subclass
+class Magazine extends Book() {
+
+	constructor(title, author, year, month) {
+
+		# In order to call the parent constructor we will use super
+		super(title, author, year);
+		this.month = month;
+
+	}
+}
+
+# Instantiate Magazine
+const mag1 = new Magazine('Mag One', 'John Johnson', '2018', 'Jan');
+
+# We can access getSummary
+console.log(mag1.getSummary());
+```
+
+
+# More about Classes
+ES6 introduces JavaScript Classes
+JavaScript Classes are templates for JavaScript Objects
+
+We'll create a class with the keyword **class**
+We always add a method named constructor()
+```sh
+class Car {
+
+	constructor(name, year) {
+
+		this.name = name;
+		this.year = year;
+
+	}
+}
+```
+Now we'll use the **Car class** to create **Car objects**
+```sh
+let myCar1 = new Car("Ford", 2014);
+let myCar2 = new Car("Audi", 2016);
+```
+The constructor method is called automatically when a new object is created
+
+## The Constructor Method
+The constructor method is a special method
+- It has to have the exact name "constructor"
+- It is executed automatically when a new object is created
+- It is used to initialize object properties
+
+If we don't defined a constructor method, JavaScript will add an empty constructor method
+
+## Class Methods
+Class methods are created with the same syntax as object methods
+Using the keyword **class** to create a class
+Add a **constructor()** method
+Then adding any number of methods
+```sh
+class ClassName {
+	constructor() { ... }
+	method_1() { ... }
+	method_2() { ... }
+	method_3() { ... }
+}
+```
+We'll create a class method named "age" that returns the Car age
+```sh
+class Car {
+
+	constructor (name, year) {
+		this.name = name;
+		this.year = year;
+	}
+
+	age() {
+		let date = new Date().getFullYear() - this.year;
+		return `This car is ${date} years old`;
+	}
+}
+
+let myCar = new Car("Ford", 2014);
+
+console.log(myCar.age()); # This car is 7 years old
 ```
