@@ -86,3 +86,42 @@ We can create a package.json manually or we can run
 npm init
 ```
 With Node.js we can run the JavaScript files from the command line!
+
+
+## Creating a basic web server
+When we upload our PHP file to Apache, this takes care of all the requests
+With Node.js is a little different, you have to create your own server
+
+So we're gount yo build a simple server that's on the node.js website
+```sh
+# We're including a Node module that it's already including in the system (no need to install it)
+const http = require('http');
+
+# We're bringing the filesystem module
+const fs = require('fs');
+
+# We're working on our localhost so we'll use the loopback address
+const hostname = '127.0.0.1'
+const port = 3000;
+
+fs.readFile('index.html', (err, html) => {
+
+	if(err) {
+		throw err;
+	}
+
+	const server = http.createServer((req, res) => {
+
+		res.statusCode = 200;
+		res.setHeader('Content-type', 'text/html');
+		res.write(html);
+		res.end();
+	});
+
+	server.listen(port, hostname, () => {
+
+		console.log('Server started on port ' + port);
+	});
+});
+```
+Now our server is running and parsing the HTML!
