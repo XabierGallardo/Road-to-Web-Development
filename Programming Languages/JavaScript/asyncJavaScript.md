@@ -5,7 +5,7 @@ A synchronous request blocks the client until operation completes i.e browser is
 In such case, javascript engine of the browser is blocked
 *An example, a full page is refreshed at request time and user is blocked until request completes*
 <p align="center">
-        <img src="../../../Images/synchronousrequest.jpg" alt="Synchronous request">
+        <img src="../../Images/synchronousrequest.jpg" alt="Synchronous request">
 </p>
 
 
