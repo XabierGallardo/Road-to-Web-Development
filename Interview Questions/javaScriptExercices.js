@@ -80,7 +80,3 @@ var separate = string.split(" ");
 var reverse = separate.reverse();
 
 console.log(reverse); //"rings", "the", "of", "lord", "the", "is", "film", "favourite", "my"
-
-
-
-

@@ -9,7 +9,7 @@ JavaScript implements a concept called event loop which you can visualize as que
 When any task starts waiting for any external operation to complete, JavaScript just jumps to another task from queue. When the external operation is completed, task is pushed again to the even queue for execution
 
 ### Can you enumerate and explain the various types of errors that can occur during the execution of a computer program?
--** Logical errors**: This occurs in the scenario of a computer program implementing the wrong logic. There are no reports generated for these types of programming errors and they are the most difficult ones to dealt with
+- **Logical errors**: This occurs in the scenario of a computer program implementing the wrong logic. There are no reports generated for these types of programming errors and they are the most difficult ones to dealt with
 
 - **Runtime errors**: Occurs when the program contains an illegal operation (dividing a number by 0). These are the only errors that are displayed instantly during the program execution. The program execution is stopped and a diagnostic message is displayed
 
@@ -71,3 +71,37 @@ Debugging is teh process of correcting them, in other words, debugging is the pr
 A function that calls itself is called a recursive function
 It's based on a terminating condition and uses a stack, the phenomenon is called recursion
 
+### HTML5. What is DOM?
+When a web page is loaded, the browser creates a Document Object Modedl of the page
+The HTML model is constructed as a tree of objects
+
+The HTML DOM is a standard object model and programming interface for HTML, it defines
+The HTML elemtens as objects
+The properties of all HTML elements
+The methods to access all HTML elements
+The events for all HTML elements
+
+The HTML DOM is a standard for how to get, change, add or delete HTML elements
+
+### What is functional programming?
+Functional programming is a way of thinking about software construction by creating pure functions. It avoid concepts of shared state, mutable data observed in Object Oriented Programming. 
+
+### What is Gitflow?
+Gitflow is an abstract idea of a workflow in git, it assigns specific functions to different branches and defines how and when they have to interact
+
+### What is Pipeline?
+Pipelines are the top-level component of continuous integration, delivery and deployment. There are two main parts
+- Jobs, which define what to do (jobs that compile or test code)
+- Stages, which define when to run the jobs
+
+### What is the difference between undefined and not defined in JavaScript?
+In JavaScript, if you try to use a variable that doesn't exist and has not been declared, it throws an error *var name is not defined* and the script will stop executing
+However, if you use *typeof undeclared_variable* then it will return *undefined*
+
+### What is a closure in JavaScript?
+A closure is a function defined insided another function(called the parent function), and has access to variables that are declared and defined in the parent function scope
+
+The closure has access to variables in three scopes
+- Variables declared in their own scope
+- Variables declared in a parent function scope
+- Variables declared in the global namespace
