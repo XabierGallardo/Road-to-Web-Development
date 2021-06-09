@@ -76,6 +76,21 @@ The problems faced by using global variables are the clash of variable names of 
 ### What are global variables? How are these variable declared?
 Global variables are **available throughout the length of the code** so that **it has no scope**. The var keyword is used to declare a local variable or object. If the var keyword is omitted, a global variable is declared
 
+### What are object prototypes?
+All javascript objects inherit properties from a prototype.
+
+- Date objects inherit properties from the Date prototype
+- Math objects inherit properties from the Math prototype
+- Array objects inherit properties from the Array prototype.
+
+On top of the chain is Object.prototype. Every prototype inherits properties and methods from the Object.prototype.
+
+A prototype is a blueprint of an object. Prototype allows us to use properties and methods on an object even if the properties and methods do not exist on the current object
+
+### What is the use of a constructor function in javascript?
+Constructor functions are used to create objects in javascript.
+If we want to create multiple objects having similar properties and methods, constructor functions are used
+
 ### What is 'this' keyword in JavaScript?
 'This' keyword refers to the object from where it was called
 The value of “this” keyword will always depend on the object that is invoking the function. 
@@ -127,6 +142,9 @@ The delete keyword is used to delete the property as well as its value.
 var student= {age:20, batch:"ABC"};
 Delete student.age
 ```
+
+### What is recursion in a programming language?
+Recursion is a technique to iterate over an operation by having a function call itself repeatedly until it arrives at a result. 
 
 ### What is an undefined value in JavaScript?
 - Variable used in the code doesn't exist
@@ -263,6 +281,10 @@ The 'And' Operator (&&), 'Or' Operator (||), and the 'Not' Operator (!) can be u
 ### How are DOM utilized in JavaScript?
 DOM stands for Document Object Model and is responsible for how various objects in a document interact with each other. DOM is required for developing web pages, which includes objects like paragraphs, links, etc. These objects can be operated to include actions like add or delete. DOM is also required to add extra capabilities to a web page
 
+DOM is a programming interface for HTML and XML documents.
+
+When the browser tries to render a HTML document, it creates an object based on the HTML document called DOM. Using this DOM, we can manipulate or change various elements inside the HTML document
+
 ### How are event handlers utilized in JavaScript?
 Events are the actions that result from activities, such as clicking a link or filling a form by the user. An event handler is required to manage the proper execution of all these events. Event handlers are an extra attribute of the object. This attribute includes the event's name and the action taken if the event takes place
 
@@ -290,3 +312,90 @@ JavaScript Unit Testing is a testing method in which JavaScript tests code writt
 
 Every suite contains several tests designed to be executed for a separate module. Most importantly, they don't conflict with any other module and run with fewer dependencies on each other (some critical situations may cause dependencies)
 
+### What is the rest parameter and spread operator?
+Both rest parameter and spread operator were introduced in the ES6 version of javascript.
+
+**Rest parameter**
+It provides an improved way of handling parameters of a function.
+Using the rest parameter syntax, we can create functions that can take a variable number of arguments.
+Any number of arguments will be converted into an array using the rest parameter.
+It also helps in extracting all or some parts of the arguments.
+Rest parameter can be used by applying three dots (...) before the parameters.
+```sh
+function extractingArgs(...args){
+  return args[1];
+}
+```
+**Spread operator**
+Although the syntax of spread operator is exactly the same as the rest parameter, spread operator is used to spread an array, and object literals. We also use spread operators where one or more arguments are expected in a function call
+The … spread operator is useful for many different routine tasks in JavaScript, including the following:
+- Copying an array
+- Concatenating or combining arrays
+- Using Math functions
+- Using an array as arguments
+- Adding an item to a list
+- Adding to state in React
+- Combining objects
+- Converting NodeList to an array
+
+### What is the use of promises in javascript?
+Promises are used to handle asynchronous operations in javascript.
+
+Before promises, callbacks were used to handle asynchronous operations. But due to limited functionality of callback, using multiple callbacks to handle asynchronous code can lead to unmanageable code.
+
+Promise object has four states
+- Pending - Initial state of promise. This state represents that the promise has neither been fulfilled nor been rejected, it is in the pending state.
+- Fulfilled - This state represents that the promise has been fulfilled, meaning the async operation is completed.
+- Rejected - This state represents that the promise has been rejected for some reason, meaning the async operation has failed.
+- Settled - This state represents that the promise has been either rejected or fulfilled.
+
+A promise is created using the Promise constructor which takes in a callback function with two parameters, resolve and reject respectively
+
+**resolve** is a function that will be called, when the async operation has been successfully completed.
+**reject** is a function that will be called, when the async operation fails or if some error occurs.
+
+Promises are used to handle asynchronous operations like server requests, for the ease of understanding, we are using an operation to calculate the sum of three elements
+
+**then()** method is used to access the result when the promise is fulfilled.
+**catch()** method is used to access the result/error when the promise is rejected
+
+### What are classes in javascript?
+Introduced in the ES6 version, classes are nothing but syntactic sugars for constructor functions.
+They provide a new way of declaring constructor functions in javascript
+
+Unlike functions, classes are not hoisted. A class cannot be used before it is declared.
+A class can inherit properties and methods from other classes by using the extend keyword.
+All the syntaxes inside the class must follow the strict mode(‘use strict’) of javascript. Error will be thrown if the strict mode rules are not followed.
+
+### What is Object Destructuring?
+Object destructuring is a new way to extract elements from an object or an array
+```sh
+const arr = [1, 2, 3, 4];
+const [first,second,third,fourth] = arr;
+
+console.log(first); // Outputs 1
+console.log(second); // Outputs 2
+console.log(third); // Outputs 3
+console.log(fourth); // Outputs 4
+```
+
+### JavaScript Objects
+JavaScript objects are containers for named values called properties or methods.
+**Objects are variables too. But objects can contain many values.
+The values are written as name : value pairs**
+
+**The name:values pairs in JavaScript objects are called properties**
+
+**Objects can also have methods. Methods are actions that can be performed on objects.
+Methods are stored in properties as function definitions**
+
+
+*In JavaScript, objects are king. If you understand objects, you understand JavaScript.*
+*A JavaScript object is a collection of named values*
+
+### Prototypes
+All JavaScript objects inherit properties and methods from a prototype
+- Date objects inherit from Date.prototype
+- Array objects inherit from Array.prototype
+- Person objects inherit from Person.prototype
+The Object.prototype is on the top of the prototype inheritance chain
