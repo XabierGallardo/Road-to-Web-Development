@@ -1,13 +1,5 @@
 # Programming Questions
 
-### Is JavaScript single thread or multi thread?
-It’s not multi threaded. Tough JavaScript is single threaded, it is asynchronous in nature, which means unlike other languages it doesn’t wait for external operations and pick next task from loop and come back to old task when external operations are finished
-
-*Ex. If you are making an HTTP request or reading from database, JavaScript will initiate the task and move on to other task without waiting for compleition of http/database request*
-
-JavaScript implements a concept called event loop which you can visualize as queue which stores all pending tasks to be done, and it executes tasks from this queue one by one.
-When any task starts waiting for any external operation to complete, JavaScript just jumps to another task from queue. When the external operation is completed, task is pushed again to the even queue for execution
-
 ### Can you enumerate and explain the various types of errors that can occur during the execution of a computer program?
 - **Logical errors**: This occurs in the scenario of a computer program implementing the wrong logic. There are no reports generated for these types of programming errors and they are the most difficult ones to dealt with
 
@@ -71,18 +63,6 @@ Debugging is teh process of correcting them, in other words, debugging is the pr
 A function that calls itself is called a recursive function
 It's based on a terminating condition and uses a stack, the phenomenon is called recursion
 
-### HTML5. What is DOM?
-When a web page is loaded, the browser creates a Document Object Modedl of the page
-The HTML model is constructed as a tree of objects
-
-The HTML DOM is a standard object model and programming interface for HTML, it defines
-The HTML elemtens as objects
-The properties of all HTML elements
-The methods to access all HTML elements
-The events for all HTML elements
-
-The HTML DOM is a standard for how to get, change, add or delete HTML elements
-
 ### What is functional programming?
 Functional programming is a way of thinking about software construction by creating pure functions. It avoid concepts of shared state, mutable data observed in Object Oriented Programming. 
 
@@ -94,14 +74,35 @@ Pipelines are the top-level component of continuous integration, delivery and de
 - Jobs, which define what to do (jobs that compile or test code)
 - Stages, which define when to run the jobs
 
-### What is the difference between undefined and not defined in JavaScript?
-In JavaScript, if you try to use a variable that doesn't exist and has not been declared, it throws an error *var name is not defined* and the script will stop executing
-However, if you use *typeof undeclared_variable* then it will return *undefined*
+### Differences between High level and Low level languages
+**High level**
+- Programmer friendly language
+- Less memory efficient
+- Easier to understand
+- Simpler to debug and maintain
+- Portable
+- Can run on any platform
+- It needs compiler or interpreter for translation
+- Used widely for programming
+- C, C++, Java, Python
 
-### What is a closure in JavaScript?
-A closure is a function defined insided another function(called the parent function), and has access to variables that are declared and defined in the parent function scope
+**Low level**
+- Machine friendly language
+- High memory efficient
+- Tough to understand
+- Complex to debug and maintain
+- Non-portable
+- Machine dependent
+- Needs assembler for translation
+- Machine code and Assembly Language
 
-The closure has access to variables in three scopes
-- Variables declared in their own scope
-- Variables declared in a parent function scope
-- Variables declared in the global namespace
+### Differences between Strong, Weak and Dynamic typing
+A **strongly typed language** has stricter rules at compile time, which implies that errors and exceptions are more likely to happend during compilation
+Most of these rules affect variable assignment, function return values, procedure arguments and function calling
+
+A **weakly typed language** has looser typing rules and may produce unpredictable or even erroneous results or may perform implicit type conversion at runtime
+
+A **Dynamic typed language** allows variables to be changed in its type with no problems
+
+Weak or dynamic type normally depends on the point where the compilation phase is done.
+If the compilation is done normally is a static type, but if this is done on the execution, is normally a dynamic type
