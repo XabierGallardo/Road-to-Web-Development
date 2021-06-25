@@ -151,3 +151,94 @@ function palindrome(palabra) {
   }
 }
 palindrome("oso");
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*9.	JavaScript 6 / 1 of 5
+What would be the output of the code given below?
+True, False, TypeError, SyntaxError*/
+const plus =+0;
+const minus = -0;
+const result = plus === minus;
+
+//Returns TRUE
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*10.	JavaScript 6 / 2 of 5
+You have an array of strings as shown.
+How will you create a new array with no duplicates?
+
+- sports.filter(sp => sp.unique())	// sp.unique is not a function
+- [...sports]												// Copy the same array
+- [...new Set(sports)] 							// Removes duplicates!
+- Array.from(new Set(sports))				// Removes duplicates!
+*/
+
+var sports = ["baseball", "basketball", "hockey", "baseball", "running", "basketball"];
+
+// The object Set allows to store unique values of any kind, even primitive values or references to objects!
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*11.	JavaScript 6 / 3 of 5
+ES6 Arrow functions are best used as non-method functions
+Explain why they aren't very useful when used as method functions, like in the example below
+
+- They don't have their own bindings to this or super
+- They don't have their own scope
+- They can't be results
+- They can't be defined inside an object
+*/
+
+var object = { x:1,
+	printXarrow: () => console.log(this.i, this);
+};
+printXarrow logs(undefined, window);
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*12.	JavaScript 6 / 4 of 5
+Given the next code snippet*/
+let target = {
+	qux: "Welcome, qux"
+}
+
+let proxy = new Proxy(target, {
+	get(receiver, name) {
+		return name in receiver ? receiver[name]: `Hello, ${name}`
+	}
+})
+
+proxy.qux === "Welcome, qux"
+proxy.world === "Hello, world"
+
+/*There are two statements
+S1: This snipped is used for hooking into runtime-level object meta-operations
+s2: There is no equivalent in ES5 for this operation
+
+s1 is correct and s2 is correct
+s1 is correct and s2 is incorrect
+s1 is incorrect and s2 is correct
+s1 is incorrect and s2 is incorrect*/
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*13.	JavaScript 6 / 5 of 5
+We have declared a data array in the below code
+Choose the missing code to search the "7" number using the below code*/
+let data = [10,20,7,50,1,100];
+let result = (item) {
+	return item < 10;
+}
+console.warn(result);
+
+//data.find(function
+//data.search(function
+//data.find
+//data.find(7)
