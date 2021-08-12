@@ -1,5 +1,59 @@
 # API / Application Programming Interfaces
 
+# Begginer friendly explanation
+According to Wikipedia:
+
+*REST or Representational state transfer is a software architectural style that defines a set of constraints to be used for creating Web services. RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless operations*
+
+REST is basically a set of rules for communication between a client and server. There are a few constraints on the definition of REST:
+
+1. **Client-Server Architecture**: The user interface of the website/app should be separated from the data request/storage, so each part can be scaled individually.
+
+2. **Statelessness**: The communication should have no client context stored on server. This means each request to the server should be made with all  the required data and no assumptions should be made if the server has any data from previous requests.
+
+3. **Layered system**: Client should not be able to tell if it's communicating directly with the server or some intermediary. These intermediary servers (be it proxy or load balancers) allow for scalability and security of the underlying server.
+
+### REST Client
+The browser can act as an uncontrolled REST client (the website handles the browser requests).
+The browser, for a long time, used an in-built function called XMLHttpRequest for all REST request.
+But this was succeeded by FetchAPI, a modern, promise based approach to request.
+Others examples are code libraries like axios, superagent and got or some dedicated apps like Postman, or a command line took like cURL.
+
+### REST Service
+The server.
+There are many popular libraries that make creation of these servers a breeze, like ExpressJS for NodeJS and Django for Python
+
+### REST API
+This defines the endpoint and methods allowed to access/submit data to the server.
+We will talk about this in great detail below. Other alternatives to this are: GraphQL, JSON-Pure and oData
+
+### How does it work?
+In broad terms, you ask the server for a certain data or ask it to save some data, and the server responds to the requests.
+
+In programming terms, there is an endpoint (a URL) that the server is waiting to get a request.
+We connect to that endpoint and send in some data about us (REST is stateless, no data about the request is stored) and the server responds with the correct response.
+
+### Anatomy of REST
+1. **Endpoint**: It's the URL where the REST Server is listening
+
+2. **Method**: Earlier, I wrote that you can either request data or modify it, but how will the server know what kind of operation the client wants to perform? REST implements multiple 'methods' for different types of request, the following are most popular
+*GET*: Get resource from the server
+*POST*: Create resource to the server
+*PATCH or PUT*: Update existing resource on the server
+*DELETE*: Delete existing resource from the server
+
+3. **Headers**: The additional details provided for communication between client and server. Some of the common headers are:
+
+*Request* host (the IP of client), accept-language (language understandable by the client), user-agent (data about client, operating system and vendor)
+
+*Response* status (the status of request or HTTP code), content-type (type of resource sent by server), set-cookie (sets cookies by server)
+
+4. **Data**: Contains info you want to send to the server.
+
+
+
+# API Explanation 
+
 An API or *Application Programming Interface* is a way for 2 computers to talk to each other
 Using an API would be like using a website on our browser
 But instead of clicking buttons and filling out forms, we write code to explicity request data from a server
