@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Read multiple values on our shell
-read -p "Enter 2 numbers to Sum: " num1 num2
+read -p "Enter 2 numbers to sum separated by a space: " num1 num2
 sum=$((num1+num2))
 echo "$num1 + $num2" = $sum
 
@@ -33,17 +33,16 @@ IFS="$OIFS"
 
 # Parameter expansion
 # To print a value but immediately put some characters after
-name="Derek"
+name="User"
 # ${} is a character expansion
-echo "${name}'s toy"
+echo "${name}'s computer"
 
 # It substitutes the word dog for cat
 samp_string="The dog climbed the tree"
 echo "${samp_string//dog/cat}"
 
 # Print value name, but if its value doesn't exists, set a default value
-echo "I am ${name:=Derek}"
-
+echo "I am ${name:=User}"
 
 # Using case inside shell scripts
 read -p "How old are you? :" age

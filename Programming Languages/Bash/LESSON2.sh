@@ -88,11 +88,12 @@ fi
 
 
 # Create a file and then write onto that file
-touch samp_file && vim samp_file
+# Remember to uncomment this line below!
+# touch samp_file && vim samp_file
 
 # Checks if directory exists, if not, create it
-[ -d samp_dir ] || mkdir samp_dir
-
+# Remember to uncomment this line below!
+#[ -d samp_dir ] || mkdir samp_dir
 
 # Test some strings
 str1=""
