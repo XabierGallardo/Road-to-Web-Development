@@ -1,6 +1,116 @@
 # Asynchronous JavaScript / Callbacks, Promises, Async Await
 
-## Synchronous (Classic Web-Application Model)
+## Asynchronous JavaScript Basics
+**Asynchronous programs** are those that have to stop computing while waiting for data to arrive or for some event to occur
+
+JavaScript programs in a web browser are typically **event-driven**, meaning that they wait for the user to click or tap before they actually do anything
+
+JavaScript-based servers typically wait for client request to arrive over the network before they do anything
+
+This kind of asynchronous programming is commonplace in JavaScript
+
+**Promises**, new in ES6 are objects that represent the not-yet-available result of an asynchronous operation
+
+The keywords **async** and **await** are syntactic sugar that simplifies asynchronous programming by allowing to structure Promised-based code as if it was synchronous
+
+Finally, synchronous iterators and the **for/await** loop allows us to work with streams of synchronous events using simple loops that appear synchronous
+
+
+## Async JS with Callbacks
+As its most fundamental level, asynchronous programming in JavaScript is done with *callbacks*
+A *callback* is a function that you write and then pass to some other function.
+That other function then invokes our function when some condition is met or some asynchronous event occurs
+
+
+### Async JS using Timers
+One of the simplest kinds of asynchrony is using **Timers** that run our code after a certain amount of time has elapsed
+```sh
+# Calling a function checkForUpdates once, and after a minute
+setTimeout(checkForUpdates, 60000);
+
+# Calling a function checkForUpdates each minute
+setInterval(checkForUpdates, 60000);
+```
+
+### Async JS using Events
+Client-side JavaScript programs are almost universally event driven.
+Rather than running some kind of predetermined computation, they typically wait for the user to do something and then respond to the user's actions.
+Event-driven JavaScript programs register callback functions for specified types of events in specified context, and the web browser invokes those functions whenever the specified events occur.
+These callback functions are called *event handlers* or *event listeners* and they are registered with *addEventListener*
+```sh
+# Select element with id okay
+let okay = $(".myDivs #okay");
+
+# Register a callback function to be invoked when the user clicks on our okay element
+okay.addEventListener("click", applyUpdate);
+```
+
+### Async JS with Network Events
+Another common source of asynchrony in JavaScript is network request.
+Client-side JavaScript code can use the XMLHttpRequest class plus callbacks functions to make HTTP request and asynchronously handle the server's response when it arrives
+
+
+### Async JS, Callbacks and Events in Node.js
+The Node.js server-side JavaScript environment is deeply asynchronous and defines many APIs that use callbacks and events.
+The default API for reading the contents of a file, for example, is asynchronous and invokes a callback function when the contents of the file have been read
+```sh
+# The "fs" module has filesystem-related APIs
+const fs = require("fs");
+
+# An object to hold options for our program
+let options {
+# Default options would go here
+};
+
+# Read a configuration file, then call the callback function
+fs.readFile("config.json", "utf-8", (err, text) => {
+	if(err) {
+		# If there was an error, display a warning but continue
+		console.warn("Could not read config file:", err);
+	} else {
+		# Otherwise, parse the file contents and assign to the options object
+		Object.assign(options, JSON.parse(text));
+	}
+
+	# In either case, we can now start running the program
+	startProgram(options);
+});
+```
+In this example below, we use Node's fs.readFile() function to read the specified file asynchronously and then invoke the callback.
+We express the callback as an arrow function
+
+
+
+
+# Promises
+Now that we've seen examples of callback and event-based asynchronous programming in client-side & event-side JavaScript environments, we can introduce *Promises*
+A Core language designed to simplify asynchronous programming.
+
+A Promise is an object that represents the result of an asynchronous computation.
+There is no way to synchronously get the value of a Promise; You can only ask the Promise to call a callback function when the value is ready
+
+At the simplest level, Promises are just a different way of working with callbacks
+However, there are practical benefits to using them.
+
+One real problem with callbacks-based asynchronous programming is that it's common to end up with callbacks inside callbacks inside callbacks.
+Promises allow this kind of nested callback to be re-expressed as a more linear *Promise chain* that tends to be easier to read.
+
+Another problem with callbacks is that they can make handling errors difficult.
+Promises help by standarizing a way to handle errors and providing a way for errors to propagate correctly through a *chain of promises*.
+
+Promises represent the future results of single asynchronous computations.
+They cannot be used to represent repeated asynchronous computations.
+
+We can write Promises as an alternative to:
+- the *setTimeout()* function
+- replace the load event handler of an XMLHttpRequest object, since that callback is only ever called once
+
+We won't use a Promise instead of a "click" event handler of an HTML button-object, since we normally want to allow the user to click a button multiple times
+
+
+
+
+### Synchronous (Classic Web-Application Model)
 A synchronous request blocks the client until operation completes i.e browser is unresponsive
 In such case, javascript engine of the browser is blocked
 *An example, a full page is refreshed at request time and user is blocked until request completes*
@@ -9,7 +119,9 @@ In such case, javascript engine of the browser is blocked
 </p>
 
 
-## Asynchronous (AJAX Web-Application Model)
+
+
+### Asynchronous (AJAX Web-Application Model)
 An Asynchronous request doesn't block the client i.e browser is responsive
 At that time, user can perfom another operation also
 In such case, javascript engine of the browser is not blocked
@@ -19,7 +131,10 @@ In such case, javascript engine of the browser is not blocked
         <img src="../../Images/asynchronousrequest.jpg" alt="Asynchronous request">
 </p>
 
-## AJAX / Asynchronous JavaScript And XML
+
+
+
+### AJAX / Asynchronous JavaScript And XML
 AJAX is a web development technique to create asynchronous web apps
 This apps are executed in the client while it maintains asynchronous communication with the server behind the curtains
 The keystone is the object **XMLHttpRequest**
