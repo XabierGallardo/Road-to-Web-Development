@@ -108,6 +108,58 @@ We can write Promises as an alternative to:
 We won't use a Promise instead of a "click" event handler of an HTML button-object, since we normally want to allow the user to click a button multiple times
 
 
+#### Example with Promises
+```sh
+const films = [
+	{ id: 1, title: 'Midnight Cowboy', year: 1969 },
+	{ id: 2, title: 'Easy Rider', year: 1969 },
+	{ id: 3, title: 'The Searchers', year: 1956 }
+];
+
+const getFilms = () => {
+
+	return new Promise((resolve, reject) => {
+
+		if(films.length === 0) {
+			reject(new Error('there are no films'));
+		}
+
+		# Simulating data delay
+		setTimeout(() => {
+			resolve(films);
+		}, 1500);
+
+	});
+}
+
+# When it's solved
+getFilms()
+	.then((films) => console.log(films));
+	.catch(err => console.log(err.message));
+```
+
+#### Example with Async / Await
+```sh
+# await is valid only in an async function
+async function fetchingFilms () {
+
+	const filmsFetched = await getFilms();
+	console.log(filmsFetched);
+}
+
+fetchingFilms();
+
+# We can also use try / catch
+async function fetchingFilms () {
+
+	try {
+		const filmsFetched = await getFilms();
+		console.log(filmsFetched);
+	} catch (err) {
+		console.log(err.message);
+	}
+}
+```
 
 
 ### Synchronous (Classic Web-Application Model)
