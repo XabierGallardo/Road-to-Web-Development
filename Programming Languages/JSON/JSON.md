@@ -1,6 +1,7 @@
 # JSON Crash Course
 **JSON is a syntax for storing and exchanging data**
 **JSON is text, written in JavaScript object notation**
+
 JSON is extremely important in web development, specially when working with APIs
 
 - JSON stands for **JavaScript Object Notation**
@@ -273,4 +274,60 @@ fetch(URL, {
 		"Content-type": "application/json; charset=UTF-8"
 	}
 });
+```
+
+## JSON Summary
+#### Basics
+- Data representation format
+- Commonly used for APIs & Configs
+- Lightweight and easy to read & write
+- Superset of JavaScript (anything written in JSON is valid JavaScript)
+
+#### JSON Types "key":"value"
+Strings
+Numbers
+Booleans
+null
+Arrays [1,2,3], ["Hello","World"]
+Objects {"key":"value"}, {"age":30}
+
+#### Example myWebsites.json
+As JSON is a data format for store, send and receive data, we can also store and render our websites with JSON!
+<p align="center">
+	<img src="../../Images/json_websites.png" alt="JSON rendering websites">
+</p>
+```sh
+"myWebs":{
+	"web1":{"<!DOCTYPE html><html>..."},
+	"web2":{"<!DOCTYPE html><html>..."}
+}
+```
+
+#### Example user.json
+```sh
+{
+	"name":"Kyle",
+	"friends":[{
+		"name":"Joey",
+		"friends":["..."]
+	}]
+}
+```
+
+#### Example list.json
+```sh
+[
+	{
+		"name":"Big Corporation",
+		"numberOfEmployees": 10000,
+		"CEO":"Mary",
+		"rating":3.6
+	},
+	{
+		"name":"Small Startup",
+		"numberOfEmployees": 3,
+		"CEO":null,
+		"rating":4.3
+	}
+]
 ```

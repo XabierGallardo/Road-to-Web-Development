@@ -131,3 +131,6 @@ The user input is most often sent to a server for processing
 
 ### Form attributes
 *action, autocomplete, enctype, method, name, novalidate, target*
+
+### iframe
+The iframe element is able to display another website inside on our own website. An inline frame is used to embed another document withing the current HTML document

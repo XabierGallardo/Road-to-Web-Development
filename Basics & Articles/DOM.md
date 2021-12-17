@@ -9,7 +9,7 @@ DOM represents the document as nodes and objects which can be modified with a sc
 The Document Object is the core of DOM. To perform any manipulation, you must access the document object first
 
 <p align="center">
-	<img src="../Images/DOM_1.png" alt="DOM structure" />
+	<img src="../Images/DOM_1.png" alt="DOM structure 1" />
 </p>
 
 
@@ -86,7 +86,17 @@ Works similar to querySelector, but returns a node list collection of all matchi
 Since everything in an HTML is a node
 The text inside an HTML element is a text node
 
-With the HTML DOM, it's possible to navigate the node tree and access nodes in the tree using node relationships (parent, children, siblings, etc)
+With the HTML DOM, it's possible to navigate the node tree and access nodes in the tree using node relationships (parent, children, siblings, etc).
+
+<p align="center">
+	<img src="../Images/DOM_2.png" alt="DOM structure 2" />
+</p>
+
+- The node directly above a node is the *parent* of that node
+- The nodes one level directly below another node are the *children* of that node
+- Nodes at the same level, and with the same parent, are *siblings*
+- The set of nodes any number of levels below another node are the *descendants* of that node
+- And the parent, grandparent, and all other nodes above a node are the *ancestors* of that node
 
 Every node has exactly one parent, except the top node
 A node can have more than one child
@@ -121,6 +131,26 @@ Siblings are nodes with the same parent
     console.log(secondchild.nextElementSibling) //<h4>i am alive</h4>
     console.log(secondchild.previousElementSibling) //<div id="firstchild">i am a first child</div>
 ```
+
+#### Equivalent classes in JavaScript
+There is a JavaScript class corresponding to each HTML tag type, and each occurrence of the tag in a document is represented by an instance of the class
+```sh
+<body>
+HTMLBodyElement
+
+<table>
+HTMLTableElement
+```
+Most of the **JavaScript Element Classes** just mirror the attributes of an HTML tag, but some define aditional methods
+```sh
+HTMLAudioElement 
+HTMLVideoElement
+
+# This classes define methods for controlling playback of audio and video files
+play();
+pause();
+```
+
 
 ## How to manipulate elements in the DOM
 
