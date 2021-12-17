@@ -296,6 +296,7 @@ As JSON is a data format for store, send and receive data, we can also store and
 <p align="center">
 	<img src="../../Images/json_websites.png" alt="JSON rendering websites">
 </p>
+
 ```sh
 "myWebs":{
 	"web1":{"<!DOCTYPE html><html>..."},
