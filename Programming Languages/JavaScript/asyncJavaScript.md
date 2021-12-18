@@ -82,7 +82,7 @@ We express the callback as an arrow function
 
 
 
-# Promises
+## Promises
 Now that we've seen examples of callback and event-based asynchronous programming in client-side & event-side JavaScript environments, we can introduce *Promises*
 A Core language designed to simplify asynchronous programming.
 
@@ -159,6 +159,143 @@ async function fetchingFilms () {
 		console.log(err.message);
 	}
 }
+```
+
+## Synchronous vs Asynchronous JavaScript
+#### Basics of Synchronous and Asynchronous
+**Synchronous code** starts at the very top of the file and execute all the way to the bottom of the file
+All the code will be executed in the exact same order
+
+
+**Asynchronous code** also starts at the very top, but during that execution, it will run into asynchronous functions where it will split off, and execute that asynchronous code separately from the rest of the code
+Asynchronous code execute our async code and the rest of the code at the same time, and it will do that for every asynchronous line
+We may end have multiple different threads running in different sections
+
+*Asynchronous code* is harder to work with, because it will be executed in a different order every single time and we'll have to be sure that the code runs no matter the order
+
+*Asynchronous Programming* is very relevant to JavaScript because when making requests to servers we don't our program to be stopped until they get that data
+
+#### Promises & Example
+**Promises** give us a more elegant way to handle asynchronous data
+```sh
+const posts = [
+	{title: "Post One", body: "This is post one" },
+	{title: "Post Two", body: "This is post two"}
+];
+
+function getPosts() {
+	
+	setTimeout(() => {
+		let output = "";
+
+		posts.forEach((post, index) => {
+			output += `<li>${post.title}</li>`;
+		});
+
+		document.body.innerHTML = output;
+	}, 1000);
+}
+
+function createPost(post) {
+
+	return new Promise((resolve, reject) => {
+		
+		setTimeout(( => {
+		
+			post.push(post);
+			const error = false;
+
+			if(!error) {
+				resolve();
+			
+			} else {
+				reject("Error: Something went wrong");
+			}
+
+		}, 2000);
+	});
+}
+
+createPost({title:"Post Three", body: "This is post three"})
+	.then(getPosts)
+	.catch(err => console.log(err));
+
+# Promise.all
+const promise1 = Promise.resolve("Hello World");
+const promise2 = 10;
+const promise3 = new Promise((resolve, reject) => {
+	setTimeout(resolve, 2000, "Goodbye");
+});
+const promise4 = fetch("http://jsonplaceholder.typicode.com/users").then(res => res.json());
+
+# Takes an array of promises
+Promise.all([promise1, promise2, promise3, promise4]).then((values) => {
+	console.log(values);
+});
+```
+
+#### Async/Await, Fetch & Example
+**Async/Await** are syntatic sugar for Promises, easier to read and understand
+```sh
+const posts = [
+	{title: "Post One", body: "This is post one" },
+	{title: "Post Two", body: "This is post two"}
+];
+
+function getPosts() {
+	
+	setTimeout(() => {
+		let output = "";
+
+		posts.forEach((post, index) => {
+			output += `<li>${post.title}</li>`;
+		});
+
+		document.body.innerHTML = output;
+	}, 1000);
+}
+
+function createPost(post) {
+
+	return new Promise((resolve, reject) => {
+		
+		setTimeout(( => {
+		
+			post.push(post);
+			const error = false;
+
+			if(!error) {
+				resolve();
+			
+			} else {
+				reject("Error: Something went wrong");
+			}
+
+		}, 2000);
+	});
+}
+
+# Async/Await
+async function init() {
+	
+	# Awaits until createPost() is done, then executes getPost()
+	await createPost({title:"Post Three", body: "This is post three"});
+
+	getPost();
+}
+
+init();
+
+
+# Fetch
+async function fetchUsers() {
+
+	const res = await fetch("http://jsonplaceholder.typicode.com/users")
+
+	const res = await res.json();
+
+	console.log(data);
+} 
 ```
 
 
