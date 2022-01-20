@@ -1,7 +1,41 @@
 # What is Javascript?
 
+### Basic Concepts
+**JavaScript is a**
+
+- **High level language**: Strong abstraction from the details of the computer, including natural language elements, which means that it's easier to use
+
+
+- **Single threaded, Asynchronous language**: Single threaded means that it contains the execution of instructions in a single sequence, which means that one command is processed at a time. Asynchronous means that instead of waiting for the response before executing the next bit of code, we declare what we want to happen once we receive our response.
+
+The *Non-blocking event loop* can queue up work in the background without blocking the main thread	
+
+
+- **Interpreted | JIT Compiled**: Instead of being a compiled language that needs to converting the program source code into machine-readable binary code before execution. It is interpreted, which executes the program instructions without requiring them to be precompiled. Javascript engines are designed leveraging best of the both approaches & developed the Just In Time (JIT) Compilation model.
+Some of the popular engines are *V8 from Google* (enables Node.js, Chrome & chromium-based browsers), *SpiderMonkey* (enables Firefox & its fork implementations) and *JavaScriptCode* (enables Safari & other WebKit based browsers).
+
+*Just-In-Time* or *JIT* Compiler means that all code coverts to machine code in parallel, then executed immediately
+
+
+- **Prototyped based**: Prototype-based programming is a style of object-oriented programming in which classes are not explicitly defined, but rather derived by adding properties and methods to an instance of another class, which means that this style allows the creation of an object without first defining its class.
+This prototype-based programming style means that inheritance is performed via a process of reusing existing objects that serve as prototypes
+
+
+- **Multi-paradigm**: In JavaScript we can use multiple programming paradigms, from imperative, reactive, functional or object-oriented
+
+
+- **Dynamic**: JavaScript uses a loosely typed data structure, which means that it is possible to use any of the declaration (var, let, const) without specifying the variable type
+
+
+### What can you do with JavaScript?
+- **Front-end** applications
+- **Server-side/Back-end** applications with *Node.js*
+- **Mobile** applications with *React Native* or *Ionic*
+- **Desktop** apps with *Electron*
+
+
 ### High level, interpreted programming language
-*High level* means that there are a lot of abstractions, so we don't have to deal with things like memory management like we would do with a low leve language like C or C++
+*High level* means that there are a lot of abstractions, so we don't have to deal with things like memory management like we would do with a low level language like C or C++
 
 *Interpreted* means that the program is executed directly without having to run through a compiler
 Languages like Java need to run the code through a compiler (that transforms our human readable code into machine language)
