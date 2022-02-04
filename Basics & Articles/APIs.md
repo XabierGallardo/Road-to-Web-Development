@@ -1,18 +1,48 @@
 # API / Application Programming Interfaces
+## What is a REST API
+*REST APIs provide a flexible, lightweight way to integrate applications and it is the most common method for connecting components in microservices architectures*
 
-# Begginer friendly explanation
-According to Wikipedia:
+**An API**, or *Application Programming Interface*, **is a set of rules that define how applications or devices can connect to and communicate with each other**
 
-*REST or Representational state transfer is a software architectural style that defines a set of constraints to be used for creating Web services. RESTful Web services allow the requesting systems to access and manipulate textual representations of Web resources by using a uniform and predefined set of stateless operations*
+**A REST API is an API that conforms to the design principles of the REST** or *Representational State Transfer* architectural style
 
-REST is basically a set of rules for communication between a client and server. There are a few constraints on the definition of REST:
+#### REST design principles
+At the most basic level, **an API is a mechanism that enables an applications or service to access a resource within another application or service**. The application or service doing the accessing is called the client, and the application or service containing the resource is called the server.
 
-1. **Client-Server Architecture**: The user interface of the website/app should be separated from the data request/storage, so each part can be scaled individually.
+Some APIs (SOAP or XML-RPC) impose a strict framework on developers. But REST APIs can be developed using virtually any programming language and support a variety of data formats. The only requirement is that they align to the following 6 REST design principles
 
-2. **Statelessness**: The communication should have no client context stored on server. This means each request to the server should be made with all  the required data and no assumptions should be made if the server has any data from previous requests.
+1. **Uniform interface**: All API request for the same resource should look the same, no matter where the request comes from. The REST API should ensure that the same piece of data, such as the name or email address of an user, belongs to only one uniform resource identifier (URI)
 
-3. **Layered system**: Client should not be able to tell if it's communicating directly with the server or some intermediary. These intermediary servers (be it proxy or load balancers) allow for scalability and security of the underlying server.
+2. **Client-server decoupling**: Client and server apps must be completely independent from each other. The only information the client application should know is the URI of the requested resource; it can't interact with the server application in any other ways. Similarly, a server application shouldn't modify the client application other than passing it to the requested data via HTTP
 
+3. **Statelessness**: REST APIs are stateless, meaning that each request needs to include all the information necessary for processing it. REST APIs do not require any server-side sessions. Server apps aren't allowed to storey any data related to a client request
+
+4. **Cacheability**: When possible, resources should be cacheable on the client or server side. Server responses also need to contain info about wether caching is allowed for the delivered resource. The goal is to improve performance on the client side, while increasing scalability on the server side
+
+5. **Layered system architecture**: In REST APIs, the calls and responses go through different layers. REST APIs need to be designed so that neither the client nor the server can tell wether it communicates with the end application or an intermediary
+
+6. **Code on demand**: This is an optional step, REST APIs usually send static resources, but in certain cases, responses can also contain executable code (Java applets). In these cases, the code should only run on-demand
+
+
+# How REST APIs work
+REST APIs communicate via HTTP request ot perform standard database functions like creating, reading, updating and deleting records (also known as CRUD) within a resource.
+
+A REST API would use
+- A **GET** request to retieve a record
+- A **POST** request to create one
+- A **PUT** request to update a record
+- A **DELETE** request to delete one
+
+All HTTP methods can be used in API calls. A well-designed REST API is similar to a website running in a web browser with built-in HTTP functionality
+
+*The state of a resource at any particular instante or timestamp, is known as the resource representation*
+This information can be delivered to a client in virtually any format including the popular JSON, HTML, XLT, Pyhton, PHP or plain text
+
+Request headers and parameters are also important in REST API calls because they include important identifier information such as metadata, authorizations, uniform resource identifiers (URIs), caching, cookies and more
+Request headers and response headers, along with conventional HTTP status codes, are used within well-designed REST APIs
+
+
+## Some other concepts
 ### REST Client
 The browser can act as an uncontrolled REST client (the website handles the browser requests).
 The browser, for a long time, used an in-built function called XMLHttpRequest for all REST request.
@@ -51,9 +81,7 @@ We connect to that endpoint and send in some data about us (REST is stateless, n
 4. **Data**: Contains info you want to send to the server.
 
 
-
-# API Explanation 
-
+## Another APIs Explanation with examples
 An API or *Application Programming Interface* is a way for 2 computers to talk to each other
 Using an API would be like using a website on our browser
 But instead of clicking buttons and filling out forms, we write code to explicity request data from a server
