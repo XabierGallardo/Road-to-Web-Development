@@ -1,5 +1,19 @@
 # Visual Studio Config & Basics
 
+
+## HTML
+**Emmet Feature**: Creates the whole html basic template
+```sh
+# Write
+html
+# Click on html:5
+```
+
+
+## [Markdown](http://www.freecodecamp.org/news/markdown-cheat-sheet/)
+Download **Auto-Open Markdown Preview** Extension
+
+
 ## Auto Format / Indentation
 Keyboard Shortcut to manual indentation
 Select the text to fix with the keyboard or cursor
@@ -14,7 +28,6 @@ Instead of doing manual indentation, we can automate this process
 Another option for languages that don't have a native support from visual studio is using Extensions like **Prettier** and **Linter**
 
 
-
 ## SSH Connection
 We can use Visual Studio Code on our server using the **Remote -SSH** Extension
 File -> Preferences -> Extensions
@@ -27,7 +40,6 @@ Write *Remote - SSH* from Microsoft and Install it
 4. Once we're connected we'll have our terminal on the bottom of the screen and we can access any folder on File -> Open Folder
 
 That's it! Now simply using **F1** we'll have a shortcut to access our server!
-
 
 
 ## Themes
