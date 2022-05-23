@@ -5,6 +5,16 @@ Sea cual sea la url de nuestro sitio, agregando **/wp-admin** a nuestra página 
 En *Dashboard / Updates* instalar actualizaciones necesarias.
 En *mydomain***/wp-admin** ir a Plugins, Add New, install *Really Simple SSL*.
 
+## Cambiar la url de las publicaciones
+- *https://* Protocolo
+
+- *myurl.com/* Dominio
+
+- *about*/ Slug
+Ajustar en Settings/Permalink/Post name para que la url sea
+**http://apex/sample-post/**
+y no *http://apex/2021/04/06/sample-post*
+
 ## Conceptos básicos de Wordpress
 Wordpress se estructura el contenido del sitio en 4 elementos
 - **Categorías**: Clasifican el contenido, se usan para agrupar contenidos relacionados entre sí y mantener un orden jerárquico y generar subcategorías.
@@ -23,3 +33,14 @@ Las **páginas** son usadas para un contenido más estático, un contenido que s
 
 Recomendable instalar el editor clásico. Se puede previsualizar o ver el código html.
 Creada nuestra entrada, podemos crear nuestra categoría
+
+## Plugins
+- **SSL**: *Really Simple SSL*
+- **Plugins constructores**: *Elementor*, Divi o Beaver Builder
+- **Formulario de contacto**: *WP Forms*, Contact Form 7 o Gravity Forms
+- **Optimizacion de imagenes**: Shortpixel, Smush 
+- **Sliders**: Slider Revolution
+- **Plugins sociales**
+- **Plugins traductores**
+- **Plugins de correo**: Mailchimp
+- **Plugins eCommerce**: WooCommerce
