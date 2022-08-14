@@ -72,7 +72,7 @@ To avoid using the same group of styles, like
 
 We can encapsulate a group of styles and then apply those styles anywhere using the **include** keyword
 ```scss
-@mixing flex-column {
+@mixin flex-column {
 	display: flex;
 	flex-direction: column;
 	background: gray;
