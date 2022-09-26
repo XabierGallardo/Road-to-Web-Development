@@ -1,4 +1,7 @@
-# Wordpress paso a paso
+## WordPress Block Editor
+[WordPress Block Editor Documentation](https://wordpress.org/support/article/wordpress-editor/)
+
+## Wordpress paso a paso
 Sea cual sea la url de nuestro sitio, agregando **/wp-admin** a nuestra página accederemos al menú de administración de nuestro sitio.
 
 ## Actualizar e instalar certificado SSL
