@@ -1,7 +1,5 @@
 '''
 Python introduccion
-https://www.youtube.com/watch?v=BojVB1xyrKo&list=PLgQsqQBBk3lppK4L-1zixaF2rREZ_Vyyu&index=23
-
 Clase 23 - Python / Clase20-Python.pdf
 '''
 
