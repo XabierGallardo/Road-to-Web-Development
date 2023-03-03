@@ -27,8 +27,8 @@
         <img src="media/console log alternatives/2 console time.png" alt="console time">
         <img src="media/console log alternatives/3 console dir.png" alt="console dir">
         <img src="media/console log alternatives/4 console trace.png" alt="console trace">
-        <img src="media/console log alternatives/6 console assert.png" alt="console assert">
-        <img src="media/console log alternatives/7 console count.png" alt="console count">
-        <img src="media/console log alternatives/8 console clear.png" alt="console clear">
-        <img src="media/console log alternatives/1 console group.png" alt="console group">
+        <img src="media/console log alternatives/5 console assert.png" alt="console assert">
+        <img src="media/console log alternatives/6 console count.png" alt="console count">
+        <img src="media/console log alternatives/7 console clear.png" alt="console clear">
+        <img src="media/console log alternatives/8 console group.png" alt="console group">
 </p>
