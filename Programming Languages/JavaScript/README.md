@@ -32,3 +32,13 @@
         <img src="media/console log alternatives/7 console clear.png" alt="console clear">
         <img src="media/console log alternatives/8 console group.png" alt="console group">
 </p>
+
+
+## Parse JSON to other languages [Tool](https://app.quicktype.io/)
+<p align="center">
+        <img src="media/quicktype1.jpeg" alt="Quicktype 1">
+        <img src="media/quicktype2.jpeg" alt="Quicktype 2">
+</p>
+> Herramienta para parsear codigo JSON a varios lenguajes.
+> Me resultó muy práctica para crear interfaces y tipos en base a los datos traídos por una API en Typescript. Ya que muchas veces tenemos que crear las interfaces nosotros mismos esto podría ahorrar bastante tiempo.
+> También posee una extensión para VSCode y Visual Studio. 
