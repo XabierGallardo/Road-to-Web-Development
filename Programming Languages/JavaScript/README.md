@@ -1,4 +1,6 @@
 # JavaScript Index
+
+## [JavaScript W3 Schools](https://www.w3schools.com/js/default.asp)
 ## [HTTP Networking in JavaScript, Handbook](https://www.freecodecamp.org/news/http-full-course/)
 
 ## JS Array Methods
@@ -20,19 +22,6 @@
 <p align="center">
         <img src="media/JavaScript Array Methods.jpeg" alt="ES6 Cheatsheet">
 </p>
-
-## console.log alternatives
-<p align="center">
-        <img src="media/console log alternatives/1 console table.png" alt="console table">
-        <img src="media/console log alternatives/2 console time.png" alt="console time">
-        <img src="media/console log alternatives/3 console dir.png" alt="console dir">
-        <img src="media/console log alternatives/4 console trace.png" alt="console trace">
-        <img src="media/console log alternatives/5 console assert.png" alt="console assert">
-        <img src="media/console log alternatives/6 console count.png" alt="console count">
-        <img src="media/console log alternatives/7 console clear.png" alt="console clear">
-        <img src="media/console log alternatives/8 console group.png" alt="console group">
-</p>
-
 
 ## Parse JSON to other languages [Tool](https://app.quicktype.io/)
 <p align="center">
