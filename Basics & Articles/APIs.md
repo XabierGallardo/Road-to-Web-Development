@@ -1,4 +1,8 @@
 # API / Application Programming Interfaces
+<p align="center">
+    <img src="../Images/queesapi.jpg" alt="que es una API">
+</p>
+
 ## What is a REST API
 *REST APIs provide a flexible, lightweight way to integrate applications and it is the most common method for connecting components in microservices architectures*
 
