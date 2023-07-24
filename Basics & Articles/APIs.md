@@ -1,5 +1,5 @@
 # API / Application Programming Interfaces
-<p align="center">
+<p>
     <img src="../Images/queesapi.jpg" alt="que es una API">
 </p>
 
