@@ -1,9 +1,25 @@
 # API / Application Programming Interfaces
+# Qué es una API? Nociones básicas
+- Las API nos permiten aprovechar el desarrollo de otras empresas para nuestra app. Desde las funcionalidades de mapas y geolocalización de google maps como las pasarelas de pagos de Paypal o Stripe.
+- Las API permite que nuestras aplicaciones se conecten con otras.
+- Capa de abstracción para que dos sistemas se comuniquen. La **capa de abstración** nos permite interactuar con un sistema sin necesidad de saber qué pasa por abajo. Como el volante que nos permite mover el auto sin necesitar saber qué sucede mecánicamente
+- Una API es una interfaz. Application Programming Interface. Una **interfaz** para que se comuniquen aplicaciones y compartan datas entre ellos
+- **Arquitectura de software** es la forma en que está diseñado un sistema y cómo se organizan sus componentes, qué funciones cumplen
+- Un **servicio web** permite la comunicación entre equipos en una red, que se comunican con ciertos estándares y protocolos, como el HTTP. Es la base de las API remotas
+- **REST** es una arquitectura, las APIS pueden ser de varios tipos. Representation State Transfer. Esta arquitectura implica que pueden guardarse los datos en cache, que el estado no se envía en las peticiones y que definimos qué datos permitimos que otra aplicación accede, revise o manipule de nuestra app
+- XML es el formato tradicional de envío de datos, aunque hoy en día el formato más usado es **JSON** y el standard de hoy en día de envío de datos.
+- Las APIS pueden ser locales o remotas. Si desarrollamos una app de Android que require que las notificaciones vibren, nos comunicamos con la API local de vibración del teléfono. Las APIs remotas consumen datos que están físicamente en otro sitio y usan servicios web usando el protocolo HTTP. En su momento se usaba el protocolo SOAP, pero hoy se usa REST, que es la arquitectura más usada para las APIs. Cuando hablamos de REST estamos hablando de **Restful**
+- Cada recurso que consultamos, tiene un identificador único llamado **URI**, así podemos acceder a cualquier recurso o lista de ellos.
+- Cuando solicitamos información a una API, el servidor nos puede contestar con varios códigos para saber qué pasó con nuestra petición. 2xx success, 3xx redirection, 4xx error, 5xx error en el servidor
+- **Métodos HTTP**: *GET* recibir info, *POST* enviar info, *PUT* actualizar info existente, *DELETE* borrar un recurso.
+- Las APIs puede devolver info en formato JSON, XML o texto plano.
+
 <p>
-    <img src="../Images/queesapi.jpg" alt="que es una API">
+    <img src="../Images/tiposAPI.png" alt="Tipos de API">
 </p>
 
-## What is a REST API
+
+# What is a REST API
 *REST APIs provide a flexible, lightweight way to integrate applications and it is the most common method for connecting components in microservices architectures*
 
 **An API**, or *Application Programming Interface*, **is a set of rules that define how applications or devices can connect to and communicate with each other**
