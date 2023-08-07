@@ -1,3 +1,9 @@
+# Que es JSON?
+- **JavaScript Object Notation** es un formato de intercambio de datos
+- Sirve para representar datos estructurados como objetos o arrays
+- Cuenta con una sintaxis muy parecida a los objetos literales de JavaScript
+- Se utiliza para intercambiar información entre servidor y cliente o distintas partes de la aplicación web
+
 # JSON Crash Course
 **JSON is a syntax for storing and exchanging data**
 **JSON is text, written in JavaScript object notation**

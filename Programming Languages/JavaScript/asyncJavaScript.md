@@ -1,4 +1,23 @@
 # Asynchronous JavaScript / Callbacks, Promises, Async Await
+### [Free API for testing](https://jsonplaceholder.typicode.com/)
+
+## Que es la asincronía en JavaScript?
+- Es la capacidad que tiene este lenguaje de realizar tareas sin bloquear la ejecución del programa principal
+- En lugar de esperar a que se complete la tarea para seguir con la siguiente, JavaScript permite hacer muchas tareas en simultaneo e ir manejando a medida que esté lista la info de las tareas anteriores
+- Si bien JavaScript está basado en un lenguaje de un sólo hilo (una tarea a la vez), a través de las funciones asincrónicas y los callbacks JS es capaz de realizar múltiples tareas e ir manejando los resultados a medida que estén disponibles.
+
+## Promesas en JavaScript
+- Son un tipo de objeto en JavaScript que nos permiten realizar tareas asincronas y luego manejar los resultados
+- Una promesa puede fallar o ser exitosa, y esto nos devuelve un valor que utilizaremos en nuestro codigo
+- Las promesas nos permiten manejar una secuencialidad de acciones
+- Las promesas se usan especialmente para consumir APIs que nos traeran informacion de 3os o de un backend, que traera una demora y necesitaremos mantener una secuencialidad en nuestras acciones en el codigo
+
+## Async, Await
+- Es una forma de trabajar promesas utilizando las palabras reservadas async y await
+- Async hace que una función sepa que es asincrona
+- El await lo usaremos para esperar a que las promesas se cumplan
+- El objeto async-await incluye a las promesas, el async await y el fetch para llamar a las APIs
+
 
 ## Asynchronous JavaScript Basics
 **Asynchronous programs** are those that have to stop computing while waiting for data to arrive or for some event to occur
