@@ -1,7 +1,5 @@
 # Basics
-
 Computer science is the subject that studies what computers can do.
-
 
 ### Brief history of Theoretical Computer Science
 Starts with Alan Turing who formalized the concept of a Turing Machine. A simple description of a general purpose computer.
