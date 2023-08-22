@@ -21,8 +21,7 @@ JavaSript puede castear un texto a un número, un número a un boolean, un boole
 
 Esto quiere decir que no lo controla el programador. Por ahí ese dato viene de una función anterior y no sabemos qué devuelve. JavaScript no lanza alertas de error y acepta todo lo que venga, esos errores se ven en producción cuando es tarde.
 
-Por eso JavaScript no suele gustar mucho a los programadores y siempre buscaron reemplazaron por opciones que compilen a JavaScript. Pero al vivir en el navegador, JavaScript es el rey.
-Por tanto, ante la imposibilidad de sustituír JavaScript, se hizo necesario **extender JavaScript**.
+Por eso JavaScript no suele gustar mucho a los programadores y siempre buscaron reemplazaron por opciones que compilen a JavaScript. Por tanto, ante la imposibilidad de sustituír JavaScript, se hizo necesario **extender JavaScript**.
 
 ## Qué es TypeScript?
 **TypeScript extiende a JavaScript agregandole tipos**.
@@ -51,7 +50,7 @@ Además no tenemos que esperar a que la aplicación esté en producción para da
 - TypeScript extends JavaScript by adding **static typing**
 - TypeScript behaves like a compiled language
 - A common way to use TypeScript is to use the official TypeScript compiler, which transpiles TypeScript code into JavaScript
-- Some popular code editors, such as Visual Studio Code, have built-in TypeScript support and can show errores as you write code
+- Some popular code editors, such as Visual Studio Code, have built-in TypeScript support and can show errors as you write code
 - TypeScript has an official compiler which can be installed using npm.
 - We can run the typescript compiler using the **tsc command**, it will take the .ts file and transpile it into vanilla JS
 

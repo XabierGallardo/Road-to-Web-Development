@@ -1,4 +1,9 @@
 # API / Application Programming Interfaces
+## API KEY
+- Una API key es un identificador que sirve para la autenticación de un usuario para el uso de un servicio. Es decir una llave y contraseña para autenticarte cada vez que se utiliza
+- Las API keys facilitan la posibilidad de que diferentes servicios se conecten entre sí.
+- Un ejemplo son las API que se pueden realizar desde otros software con redes sociales como fb, twitter e ig. Siendo la propia red quien facilita estas APIs de integracion destinadas a servicios para poder trabajar sobre el primario
+- Una API es fundamentalmente una forma de hacer una solicitud a otra aplicación
 # Qué es una API? Nociones básicas
 - Las API nos permiten aprovechar el desarrollo de otras empresas para nuestra app. Desde las funcionalidades de mapas y geolocalización de google maps como las pasarelas de pagos de Paypal o Stripe.
 - Las API permite que nuestras aplicaciones se conecten con otras.
