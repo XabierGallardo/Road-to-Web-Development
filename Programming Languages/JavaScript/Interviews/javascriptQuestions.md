@@ -109,12 +109,36 @@ In JavaScript, if you try to use a variable that doesn't exist and has not been 
 However, if you use *typeof undeclared_variable* then it will return *undefined*
 
 ## What is a closure in JavaScript?
-A closure is a function defined insided another function(called the parent function), and has access to variables that are declared and defined in the parent function scope
+**A closure is a function defined insided another function(called the parent function), and has access to variables that are declared and defined in the parent function scope**
 
 The closure has access to variables in three scopes
 - Variables declared in their own scope
 - Variables declared in a parent function scope
 - Variables declared in the global namespace
+
+## Que son los [Closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/)
+En JavaScript, un "closure" es una función que captura variables dentro de su ámbito léxico circundante (también conocido como "scope"). Estas variables pueden ser utilizadas dentro de la función, incluso después de que la función haya terminado de ejecutarse.
+
+*Básicamente, un closure permite que una función acceda a variables externas en el momento en que se define, incluso si esas variables ya no están disponibles en el momento en que se ejecuta la función.* Esto significa que las variables locales de una función y su ámbito circundante permanecen accesibles para la función incluso después de que la ejecución haya salido del ámbito circundante.
+
+Veamos un ejemplo para entender mejor:
+
+```javascript
+function creaFuncion() {
+  var nombre = "Juan";
+  function muestraNombre() {
+    console.log(nombre);
+  }
+  return muestraNombre;
+}
+
+var miFuncion = creaFuncion();
+miFuncion(); // Output: Juan
+```
+
+En este ejemplo, la función `creaFuncion` devuelve la función interna `muestraNombre`, que tiene acceso a la variable `nombre`. Aunque la variable `nombre` se define en el ámbito de `creaFuncion`, la función `muestraNombre` (que es devuelta por `creaFuncion`) tiene acceso a ella incluso después de que `creaFuncion` haya terminado de ejecutarse. Esto es posible debido al closure: `muestraNombre` "cierra" sobre la variable `nombre`, manteniendo una referencia a ella incluso después de que `creaFuncion` haya terminado de ejecutarse.
+
+
 
 ## What are global variables? How are these variable declared?
 Global variables are **available throughout the length of the code** so that **it has no scope**. The var keyword is used to declare a local variable or object. If the var keyword is omitted, a global variable is declared

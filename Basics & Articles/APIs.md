@@ -1,9 +1,51 @@
 # API / Application Programming Interfaces
+
+### Qué es una API? de manera sencilla
+- Imagina que estás en un restaurante y quieres pedir comida. En lugar de ir a la cocina y hacer la comida tú mismo, simplemente le das tu pedido al camarero y él se encarga de llevarlo a la cocina, obtener la comida y traértela a la mesa.
+- En el desarrollo web, una API es como el camarero en este ejemplo. Es un intermediario que te permite solicitar datos o servicios a un sistema externo, como una base de datos o un servicio web, sin necesidad de saber cómo funciona internamente ese sistema. Simplemente envías una solicitud a través de la API y recibes una respuesta con los datos que necesitas.
+- Por ejemplo, si estás construyendo un sitio web de comercio electrónico, podrías utilizar una API para solicitar información sobre los productos disponibles en tu inventario desde una base de datos externa. La API se encargaría de obtener esos datos y devolvértelos en un formato que puedas usar en tu sitio web.
+- En resumen, una API en el desarrollo web es como un camarero que te ayuda a obtener datos o servicios de otros sistemas sin tener que preocuparte por los detalles internos de cómo funcionan esos sistemas. Te permite interactuar con otros sistemas de manera sencilla y eficiente.
+
+Las APIs pueden ser utilizadas para una variedad de propósitos, como acceder a funcionalidades de un sistema operativo, interactuar con servicios web, consumir datos de bases de datos, enviar y recibir datos entre aplicaciones, y mucho más. Permiten la integración de sistemas y aplicaciones de manera eficiente y efectiva.
+
+*En el contexto de desarrollo web, una API generalmente se refiere a un conjunto de puntos de acceso (endpoints) que una aplicación web expone para permitir que otras aplicaciones o servicios accedan a sus datos o funcionalidades de manera controlada y segura. Estos endpoints pueden aceptar solicitudes en ciertos formatos (por ejemplo, JSON o XML) y devolver respuestas estructuradas que contienen la información solicitada.*
+
+En resumen, una API proporciona una manera estándarizada y segura para que las aplicaciones se comuniquen entre sí y accedan a funcionalidades o datos de otras aplicaciones o sistemas. Esto facilita la interoperabilidad y la integración de sistemas en el desarrollo de software.
+
+
+### API Crud y ABM
+"CRUD" es un acrónimo que se utiliza comúnmente en el desarrollo de software para describir las operaciones básicas que pueden realizarse sobre los datos de una aplicación. CRUD significa:
+
+- **Create** (Crear): La capacidad de crear nuevos registros de datos en una base de datos o en algún otro tipo de almacenamiento.
+- **Read** (Leer): La capacidad de leer, recuperar o consultar los datos existentes de la base de datos o de otro tipo de almacenamiento.
+- **Update** (Actualizar): La capacidad de actualizar o modificar los datos existentes en la base de datos o en otro tipo de almacenamiento.
+- **Delete** (Eliminar): La capacidad de eliminar registros de datos existentes en la base de datos o en otro tipo de almacenamiento.
+
+Por lo tanto, un "API CRUD" se refiere a una interfaz de programación de aplicaciones (API) que proporciona métodos o endpoints para realizar estas operaciones CRUD en los datos de una aplicación. Por ejemplo, si estás construyendo una aplicación web que gestiona una lista de tareas, tu API CRUD podría proporcionar endpoints para crear nuevas tareas, recuperar todas las tareas existentes, actualizar tareas existentes y eliminar tareas.
+
+El uso de un API CRUD facilita el desarrollo de aplicaciones al proporcionar una interfaz coherente y predecible para interactuar con los datos, lo que simplifica la implementación tanto del lado del cliente como del servidor.
+
+
+"ABM" es un acrónimo que significa "Alta, Baja y Modificación". En el contexto de la programación y el desarrollo de software, un "ABM" se refiere a un conjunto de operaciones básicas que se realizan sobre una entidad o conjunto de datos. Estas operaciones son:
+
+- **Alta (Create)**: Implica la creación de nuevos registros o entidades en una base de datos o sistema.
+  
+- **Baja (Delete)**: Implica la eliminación de registros o entidades existentes en una base de datos o sistema.
+  
+- **Modificación (Update)**: Implica la actualización o modificación de registros o entidades existentes en una base de datos o sistema.
+
+Un ABM se usa comúnmente en el desarrollo de software para aplicaciones que gestionan datos, como sistemas de gestión de bases de datos, aplicaciones web, aplicaciones móviles, entre otros. Proporciona las operaciones básicas necesarias para administrar y manipular los datos dentro de una aplicación.
+
+Por ejemplo, en un sistema de gestión de empleados, el ABM permitiría agregar nuevos empleados (Alta), eliminar empleados existentes (Baja) y actualizar la información de los empleados (Modificación).
+
+En resumen, un ABM es un conjunto de operaciones básicas que permiten crear, leer, actualizar y eliminar datos en una aplicación o sistema de software.
+
 ## API KEY
 - Una API key es un identificador que sirve para la autenticación de un usuario para el uso de un servicio. Es decir una llave y contraseña para autenticarte cada vez que se utiliza
 - Las API keys facilitan la posibilidad de que diferentes servicios se conecten entre sí.
 - Un ejemplo son las API que se pueden realizar desde otros software con redes sociales como fb, twitter e ig. Siendo la propia red quien facilita estas APIs de integracion destinadas a servicios para poder trabajar sobre el primario
 - Una API es fundamentalmente una forma de hacer una solicitud a otra aplicación
+
 # Qué es una API? Nociones básicas
 - Las API nos permiten aprovechar el desarrollo de otras empresas para nuestra app. Desde las funcionalidades de mapas y geolocalización de google maps como las pasarelas de pagos de Paypal o Stripe.
 - Las API permite que nuestras aplicaciones se conecten con otras.
