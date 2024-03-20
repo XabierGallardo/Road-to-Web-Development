@@ -1,4 +1,9 @@
 # TESTS
+- **En las pruebas unitarias** comprobamos unidades individuales como módulos, funciones o métodos de software. Estas sirven para comprobar que los componentes más pequeños funcionen correctamente
+- **Las pruebas de integración** sirven para probar o testear esos módulos pero en forma de grupo, ver cómo interaccionan entre sí. Por ejemplo, la interacción de una API con un servicio backend o un servicio con una base de datos
+- **En pruebas de funcionalidad** testeamos el código en general en su conjunto. Usualmente forma parte de una técnica de testing que se llama black box donde no vemos el código. Acá el tester simplemente prueba la app con los inputs requeridos y los compara con los outputs o resultados esperados
+- Los tests suelen ser ejecutados por un equipo de QA , como desarrollador lo ideal es centrarse en las pruebas unitarias
+
 ## Unit Testings / Pruebas Unitarias
 #### Pruebas Unitarias
 - Las pruebas unitarias o unit testing son una forma de comprobar que un fragmento de codigo funciona correctamente
