@@ -44,7 +44,7 @@ Promises do just that, they make a promise and then fulfill it when the task is 
 ## Destructuring
 Unpack values from objects and arrays
 Used a ton in frameworks and makes for cleaner and more readable code
-```sh
+```javascript
 const { name, email } = user;
 
 const { name, email, address: {city} } = user;
@@ -65,14 +65,14 @@ We can nest child components wew we can nest and pass properties down
 ## Spread Operator (...) 
 State is usually immutable, meaning we cannot simply change it, we need to make a copy
 The spread operator allows us to do that
-```sh
+```javascript
 const userState = {
 	name: 'John'
 }
 
 const new UserState = {
 
-	# Gives us whatever is inside of userState and adds the age to it
+	// Gives us whatever is inside of userState and adds the age to it
 	...userState,
 
 	age: 30
@@ -87,7 +87,7 @@ Functions like forEach(), map(), filter() are used all the time to iterate throu
 - **map()** - Manipulating the data to create a new array from another array
 - **filter()** - Used to filter out certain pieces of data. Used a lot in state reducers
 
-```sh
+```javascript
 const companies = [
 	{name: "Company One", category: "Finance", start: 1981, end: 2003},
 	{name: "Company Two", category: "Retail", start: 1992, end: 2008},
@@ -105,7 +105,7 @@ const ages = [33, 12, 20, 16, 5, 54, 21, 44, 61, 13, 15, 45, 25,64, 32];
 
 #### forEach()
 forEach loop is a better way to loop through an array rather than using a for loop
-```sh
+```javascript
 companies.forEach(function(company) {
 
 	console.log(company);
@@ -118,8 +118,8 @@ companies.forEach(function(company) {
 - *index*: Optional, the array index of the current element
 - *arr*: Optional, The array object the current element belongs to
 
-```sh
-# Another example of forEach, updating the value with 10 times the original value
+```javascript
+// Another example of forEach, updating the value with 10 times the original value
 
 let numbers = [65, 44, 12, 4];
 
@@ -129,7 +129,7 @@ function myFunction(item, index, arr) {
 
 	arr[index] = item * 10; # 650 440 120 40
 
-# Looking at each individual value
+// Looking at each individual value
 
 	console.log(item); # 65 44 12 4
 
@@ -142,8 +142,8 @@ function myFunction(item, index, arr) {
 #### filter()
 filter allows to filter things out from the array
 Lets get the ages that are 21 and over
-```sh
-# filter example
+```javascript
+// filter example
 const canDrink = ages.filter(function(age) {
 
 	if(age >= 21) {
@@ -155,12 +155,12 @@ const canDrink = ages.filter(function(age) {
 console.log(canDrink);
 
 
-# filter example using ES6 arrow functions
+// filter example using ES6 arrow functions
 const canDrink = ages.filter(age => age >= 21); # Same output!
 ```
 
 Now filtering retail companies
-```sh
+```javascript
 const retailCompanies = companies.filter(function(company) {
 
 	if(company.category === 'Retail') {
@@ -171,17 +171,17 @@ const retailCompanies = companies.filter(function(company) {
 
 console.log(retailCompanies); #Returns three object in our array, Company Two, Company Four and Company Nine
 
-# ES6 arrow function
+// ES6 arrow function
 const retailCompanies = companies.filter(company => company.category === 'Retail'); # Same result!
 ```
 
 Filtering 80's companies
-```sh
+```javascript
 const eightiesCompanies = companies.filter(company => (company.start >= 1980 && company.start < 1990));
 ```
 
 Getting the companies that lasted at least 10 years
-```sh
+```javascript
 const lastedTenYears = companies.filter(company => (company.end - company.start >= 10));
 
 console.log(lastedTenYears);
@@ -192,8 +192,8 @@ console.log(lastedTenYears);
 Map works differently, instead of just filtering things out, we can create new arrays of anything from a current array
 
 We'll grab all the company names and put them into their own array
-```sh
-# Create array of company names
+```javascript
+// Create array of company names
 
 const companyNames = companies.map(function(company) {
 
@@ -210,26 +210,26 @@ const testMap = companies.map(function(company) {
 console.log(testMap); # Returns an array and each value has this format: Company One [1981 - 2003] ...
 
 
-# Using ES6 arrow functions
+// Using ES6 arrow functions
 const testMap = companies.map(company => `${company.name} [${company.start} - ${company.end}]`;);
 ```
 
 An example using the ages array
-```sh
-# Storing the square root values
+```javascript
+// Storing the square root values
 
 const agesSquare = ages.map(age => Math.sqrt(age));
 
 console.log(agesSquare);
 
 
-# Multiplying each one by 2
+// Multiplying each one by 2
 const agesTimesTwo = ages.map(age => age * 2);
 
 console(ageTimesTwo);
 
 
-# We could square the numbers and then multiplying them by 2
+// We could square the numbers and then multiplying them by 2
 
 const ageMap = ages
 

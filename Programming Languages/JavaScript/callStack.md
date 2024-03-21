@@ -8,7 +8,7 @@ The call stack is primarily used for function invocation (call). Since the call 
 
 
 ## How does the call stack handle function calls?
-```sh
+```javascript
 function firstFunction() {
 	console.log("Hello from firstFunction");
 }
@@ -18,9 +18,9 @@ function secondFunction() {
 	console.log("The end from secondFunction");
 }
 
-# Output
-# Hello from firstFunction
-# The end from secondFunction
+// Output
+// Hello from firstFunction
+// The end from secondFunction
 ```
 
 
@@ -34,7 +34,7 @@ Same scenario as being on a queue in a grocery store cash point. You can only be
 ## What causes a stack overflow?
 A stack overflow occurs when there is a recursive function (a function that calls itself) without an exit point.
 The browser (hosting environment) has a maximum stack call that it can accomodate before throwing a stack error, for example:
-```sh
+```javascript
 function callMyself() {
 	callMyself();
 }

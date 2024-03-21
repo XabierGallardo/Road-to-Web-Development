@@ -19,7 +19,7 @@ NodeJS is built for quick **I/O** operations. It makes heavy use of callbacks wh
 The handler for the event delegates a task and starts procesing it while the main thread returns to listen for more events immediately. If another request comes in, the main thread will be able to intercept it even while the handler is still running its long process and the main thread will fire another handler function to execute while it listens for more events.
 
 This makes Nodejs callback functions **non-blocking** and allows for asynchronous (concurrent) operations
-```sh
+```javascript
 let callbackFunc = (arg, callback) => {
     let arr = [];
     for(i = 0; i < arg; i++>) {
@@ -28,13 +28,13 @@ let callbackFunc = (arg, callback) => {
     callback(arr);
 }
 
-# An asynchronous callbackFunc that returns an array of 'n' objects where 'n' = arg
+// An asynchronous callbackFunc that returns an array of 'n' objects where 'n' = arg
 ```
 
 
 ## Promises
 A promise is an **object** that represents the eventual completion or failure of an asynchronous opreation like requesting data using the *fetch()* api
-```sh
+```javascript
 let promise1 = new Promise((resolve, reject) => {
     setTimeout(() => {
         resolve('success');
@@ -43,13 +43,13 @@ let promise1 = new Promise((resolve, reject) => {
 
 promise1.then(value => {
     console.log(value);
-    #outputs 'success' after 5 seconds
+    // outputs 'success' after 5 seconds
 }).catch(err => {
     console.log(err);
 });
 
 console.log(promise1);
-# outputs [object Promise]
+// outputs [object Promise]
 ```
 A promise is merely a proxy for an unkown value when the promise is created. This allows us to create statements that handle the eventual success value or failure reason of the promise.
 This lets asynchronous methods values similar to synchronous methods that we can work with before the promise is returned at some point in future
@@ -67,7 +67,7 @@ The *async function()* defines an asynchronous function that returns an *AsyncFu
 
 An async function can contain **await** expression that puases the execution of the async function and awaits for the passed promise resolution or rejection. It then resumes the *async* method and returns a resolved value
 *The await keyword is only valud inside async functions, a SyntaxError will be raised if used outside async functions*
-```sh
+```javascript
 var resolveAfter25Seconds = (func) => {
     console.log(`starting a slow promise on: ${func}`)
     return new Promise(resolve => {
@@ -186,7 +186,7 @@ Any of the web APIs, when they're done they push the callback on to the task que
 **Heap**
 **Queue**
 
-```sh
+```javascript
 function f(b) {
     var a = 12;
     return a + b + 35;
@@ -199,7 +199,7 @@ function g(x) {
 
 g(21);
 
-# 131
+// 131
 ```
 1. When we call **g**, a first frame is created, which contains **g** arguments and local variables
 
@@ -228,7 +228,7 @@ The processed message ends when the stack is empty again
 JavaScript has a runtime model based on an **event loop**, which is responsible for executing the code, collecting and processing events, and executing queue sub-tasks.
 
 The event loop has to wait until the stack is clear before it can push the callback onto the stack
-```sh
+```javascript
 console.log("Hi");
 
 setTimeout(function cb() {
@@ -237,13 +237,13 @@ setTimeout(function cb() {
 
 console.log("reader!");
 
-# Output
-# Hi
-# reader!
-# there
+// Output
+// Hi
+// reader!
+// there
 ```
 All Web APIs works the same way, if we have an AJAX request to the URL with a callback, it will work the same way
-```sh
+```javascript
 console.log("Hi");
 
 $.get('url', function cb(data) {
@@ -252,17 +252,17 @@ $.get('url', function cb(data) {
 
 console.log("reader!");
 
-# Output
-# Hi
-# reader!
-# { "some" : "json" }
+// Output
+// Hi
+// reader!
+// { "some" : "json" }
 ```
 This is what happens when an **async call** happen
 
 
 #### setTimeout example
 Let's see another example, when we write a setTimeout function is added to the queue after the specified delay in milisecs
-```sh
+```javascript
 console.log("hello");
 
 setTimeout(() => {
@@ -280,7 +280,7 @@ Basically if we write slow code on the stack, the browser can't do what it needs
 This happens often when working with image processing or animating too many elements. We must then queue up the code
 
 In the next example we can see how the scrolling event it's queuing up a ton of callbacks
-```sh
+```javascript
 function animateSomething() {
     delay();
 }
@@ -290,7 +290,7 @@ $.on('document', 'scroll', animateSomething);
 
 Everytime we scroll, we add a ton of Callbacks to the Queue
 In our **Callback Queue** we have a ton of queued events
-```sh
+```javascript
 [scroll]
 animateSomething()
 
@@ -306,20 +306,20 @@ animateSomething()
 [scroll]
 animateSomething()
 
-# And so on
+// And so on
 ```
 
 Our **Web API** is dealing with the event
-```sh
+```javascript
 $.on('document','scroll', ...);
 ```
 
 Our **Call Stack** is taking one by one every Callback from the queue
-```sh
-# 1
+```javascript
+// 1
 [scroll]
 animateSomething()
 
-# 2
+// 2
 delay()
 ```

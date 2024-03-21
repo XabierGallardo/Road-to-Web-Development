@@ -52,9 +52,9 @@ To just download files over the internet, wget is a quicker choice. For some mor
 - **wget** command downloads the data as a file
 
 ```sh
-//Curl example, download a website and store it onto a text file
+# Curl example, download a website and store it onto a text file
 curl google.com > google_website.txt
-//Wget example, by default stores the output in a file by default
+# Wget example, by default stores the output in a file by default
 wget google.com
 ```
 
@@ -90,7 +90,7 @@ But from a technical marketer perspective, scraping and automation libraries are
 Cheerio is another NPM library, also called "JQuery for Node". It allows to scrape data with a lightweight, simple and quick framework.
 Cheerio works with Ray HTML data that input to it, that means that if the data you need to parse can be extracted from a URL, it is very simple to work with Cheerio.
 
-```sh
+```javascript
 //Cheerio example to extract information from twitter about a list of users
 
 const axios = require("axios");
@@ -153,7 +153,7 @@ module.exports = async function run(userList) {
 
 
 
-#### Puppeteer
+###Puppeteer
 Puppeteer is a Node open source library developed by Google. It's basically a way to launch a browservia Node and automate actions on Chrome.
 The main use for Puppeteer is **Automation** and when you need to **log in** to get data.
 

@@ -74,7 +74,7 @@ Ahora puedes acceder al endpoint que has creado navegando a `http://localhost:30
 - Para procesar tareas con muchos datos, tiene más sentido usar lenguajes multihilo como Java. Pero para apps en tiempo real, Node.js es la opción obvia
 
 <p>
-  <img src="img/nodejsArch.png" alt="Node Architecture">
+  <img src="../../img/nodejsArch.png" alt="Node Architecture">
 </p>
 
 1. Node.js mantiene un pool de hilos limitado para atender las peticiones
@@ -106,12 +106,12 @@ Ahora puedes acceder al endpoint que has creado navegando a `http://localhost:30
 **package.json** is a really important file that is used in node packages and applications
 - It goes in the root of your package/application
 - Tells npm how your package is structured and what will do to install it
-```sh
+```json
 {
 	"name": "mytasklist",
 	"version": "1.0.0",
 	"description": "Simple task manager",
-	# main describes the file that it's the entry point of our application like index.js
+	// main describes the file that it's the entry point of our application like index.js
 	"main": "server.js",
 	"author": "Johnny Melavo",
 	"license": "ISC",
@@ -134,14 +134,14 @@ When we upload our PHP file to Apache, this takes care of all the requests
 With Node.js is a little different, you have to create your own server
 
 So we're gount yo build a simple server that's on the node.js website
-```sh
-# We're including a Node module that it's already including in the system (no need to install it)
+```javascript
+// We're including a Node module that it's already including in the system (no need to install it)
 const http = require('http');
 
-# We're bringing the filesystem module
+// We're bringing the filesystem module
 const fs = require('fs');
 
-# We're working on our localhost so we'll use the loopback address
+// We're working on our localhost so we'll use the loopback address
 const hostname = '127.0.0.1'
 const port = 3000;
 
@@ -201,7 +201,7 @@ But mostly we'll want to execute JavaScript code that lives in an actual file
 The default entry point into a node.js app is the index.js file
 
 On index.js
-```sh
+```javascript
 console.log("Hello World");
 ```
 
@@ -240,20 +240,20 @@ The functions isn't called the first time node.js sees it
 Its only called after the exit event occurs at some point in the future
 
 This event is built-int in node, but we can also create our own from scratch
-```sh
-# Importing an event emitter from the events module that is built into node
+```javascript
+// Importing an event emitter from the events module that is built into node
 const { EventEmitter } = require('events');
 
-# We can create a custom event emitter by instantiating the class
+// We can create a custom event emitter by instantiating the class
 const eventEmitter = new EventEmitter();
 
-# Then we'll register a callback that fires on the lunch event
+// Then we'll register a callback that fires on the lunch event
 eventEmitter.on('lunch', () => {
 
 	console.log("I'm having a lunch!");
 });
 
-# Now the callback is registered, we can call it. This triggers our callback function
+// Now the callback is registered, we can call it. This triggers our callback function
 eventEmitter.emit('lunch'); # I'm having a lunch!
 ```
 
@@ -266,7 +266,7 @@ It can read, write and delete files on the file system among other things
 It also can do things in a blocking or non-blocking way
 
 We'll create a *hello.txt* file
-```sh
+```txt
 This is a text example!
 ```
 
@@ -276,27 +276,27 @@ In our JavaScript code, we'll import two functions from the file system module, 
 Anytime we see a function that ends in sync, think blocking, because it will need to finish all of its work before any of our other code can run
 
 #### Blocking example
-```sh
+```javascript
 const { readFile, readFileSync } = require('fs');
 
-# We can read a text file on node by passing the path to that file, then we'll specify the enconding as UTF-8
+// We can read a text file on node by passing the path to that file, then we'll specify the enconding as UTF-8
 const txt = readFileSync('./hello.txt', 'utf8');
 
 console.log(txt);
 
-# This console.log won't run until after that file has been read
+// This console.log won't run until after that file has been read
 console.log("do this ASAP");
 
-# RESULTS
-# This is a text example!
-# do this ASAP
+// RESULTS
+// This is a text example!
+// do this ASAP
 ```
 
 #### Non-blocking example
 Luckily we can make our code non-blocking by refactoring this to a callback
 
 Inside the callback function we can access an error object if the operation fails, or when successful, the actual text from the file
-```sh
+```javascript
 const { readFile, readFileSync } = require('fs');
 
 
@@ -323,7 +323,7 @@ Promises are also asynchronous and non-blocking and they tend to produce much cl
 We're importing read file from the promises namespace, this gives us a function that returns a promise when called
 
 This code is much easier to read specially with many async calls in the same function
-```sh
+```
 const { readFile } = require('fs').promises;
 
 async function hello() {
@@ -341,16 +341,15 @@ Node also has a support for ES6 modules which use the import-export syntax (but 
 
 We'll create a new file called *my-module.js*
 We'll reference this module with module.exports and whatever we add inside, it will be available to use in the other file
-```sh
-# 
+```javascript
 module.exports = {
 	science: 'sociology'
 }
 ```
 
 On *index.js*
-```sh
-# We'll import our mode
+```javascript
+// We'll import our mode
 const myModule = require('./my-module')
 ```
 
@@ -386,24 +385,24 @@ When an user navigates to a URL in the browser, it's what's known as a get reque
 This means they're requesting some data on the server and not trying to modify or update anything on the server
 
 With express we can set up an endpoint by calling **app.get()**
-```sh
+```javascript
 const express = require('express');
 
 const app = express();
 
-# The first argument is the URL that the user will navigate to
-# The second argument is the callback function
+// The first argument is the URL that the user will navigate to
+// The second argument is the callback function
 app.get('/foo/bar', (request, response) => {
 
-	# We need to read some HTML from our file system and then send it back to the browser
+	// We need to read some HTML from our file system and then send it back to the browser
 	readFile('./home.html', 'utf8', (err, html) => {
 
-		# If theres an error, we can handle that by sending a response
+		// If theres an error, we can handle that by sending a response
 		if (err) {
 			response.status(500).send('sorry out of order!')
 		}
 
-		# Now we send the response back down to the client
+		// Now we send the response back down to the client
 		response.send(html)
 	});
 });
@@ -415,7 +414,7 @@ We can think of every request to a URL as an event and then we handle that event
 
 Now we just need to tell our Express app to start listening to incoming requests
 We do that by defining a port which will normally come from a node environment variable
-```sh
+```javascript
 app.listen(process.env.PORT || 3000, () => console.log('App available on http://localhost:3000'));
 ```
 
@@ -426,13 +425,13 @@ node . # App available on http://localhost:3000
 
 To avoid nested callbacks, it's recommended to use promises instead of callbacks
 Instead of importing readFile from fs, we'll import it from fs.promises
-```sh
+```javascript
 const { readFile } = require('fs').promises;
 ```
 
 We can make our callback function async and then we can write the response in a single line of code by saying response.send and then await the operation to read file
 
-```sh
+```javascript
 const { readFile } = require('fs').promises;
 
 app.get('/', async (request, response) => {

@@ -7,21 +7,21 @@ We can extract info or a full website using jQuery to select specific parts
 ## First steps
 
 ```sh
-//Install nodejs, npm & cheerio
+# Install nodejs, npm & cheerio
 sudo apt update
 sudo apt install nodejs npm
 npm install cheerio
 
-//Create a package .json
+# Create a package .json
 npm init -y
 
-//Install cheerio and request (lightweight http module to make request)
+# Install cheerio and request (lightweight http module to make request)
 npm i cheerio request
 ```
 
 ## Doing the basics on scrape.js
 Code on scrape.js
-```sh
+```javascript
 //Bring dependencies
 const request = require('request');
 const cheerio = require('cheerio');
@@ -77,7 +77,7 @@ request('putyoururl.com', (error, response, html) => {
 
 ## Looping on scrape2.js
 Code on scrape2.js
-```sh
+```javascript
 //Bring dependencies
 const request = require('request');
 const cheerio = require('cheerio');

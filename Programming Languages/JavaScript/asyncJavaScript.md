@@ -43,11 +43,11 @@ That other function then invokes our function when some condition is met or some
 
 ### Async JS using Timers
 One of the simplest kinds of asynchrony is using **Timers** that run our code after a certain amount of time has elapsed
-```sh
-# Calling a function checkForUpdates once, and after a minute
+```javascript
+// Calling a function checkForUpdates once, and after a minute
 setTimeout(checkForUpdates, 60000);
 
-# Calling a function checkForUpdates each minute
+// Calling a function checkForUpdates each minute
 setInterval(checkForUpdates, 60000);
 ```
 
@@ -56,11 +56,11 @@ Client-side JavaScript programs are almost universally event driven.
 Rather than running some kind of predetermined computation, they typically wait for the user to do something and then respond to the user's actions.
 Event-driven JavaScript programs register callback functions for specified types of events in specified context, and the web browser invokes those functions whenever the specified events occur.
 These callback functions are called *event handlers* or *event listeners* and they are registered with *addEventListener*
-```sh
-# Select element with id okay
+```javascript
+// Select element with id okay
 let okay = $(".myDivs #okay");
 
-# Register a callback function to be invoked when the user clicks on our okay element
+// Register a callback function to be invoked when the user clicks on our okay element
 okay.addEventListener("click", applyUpdate);
 ```
 
@@ -72,26 +72,26 @@ Client-side JavaScript code can use the XMLHttpRequest class plus callbacks func
 ### Async JS, Callbacks and Events in Node.js
 The Node.js server-side JavaScript environment is deeply asynchronous and defines many APIs that use callbacks and events.
 The default API for reading the contents of a file, for example, is asynchronous and invokes a callback function when the contents of the file have been read
-```sh
-# The "fs" module has filesystem-related APIs
+```javascript
+// The "fs" module has filesystem-related APIs
 const fs = require("fs");
 
-# An object to hold options for our program
+// An object to hold options for our program
 let options {
-# Default options would go here
+// Default options would go here
 };
 
-# Read a configuration file, then call the callback function
+// Read a configuration file, then call the callback function
 fs.readFile("config.json", "utf-8", (err, text) => {
 	if(err) {
-		# If there was an error, display a warning but continue
+		// If there was an error, display a warning but continue
 		console.warn("Could not read config file:", err);
 	} else {
-		# Otherwise, parse the file contents and assign to the options object
+		// Otherwise, parse the file contents and assign to the options object
 		Object.assign(options, JSON.parse(text));
 	}
 
-	# In either case, we can now start running the program
+	// In either case, we can now start running the program
 	startProgram(options);
 });
 ```
@@ -128,7 +128,7 @@ We won't use a Promise instead of a "click" event handler of an HTML button-obje
 
 
 #### Example with Promises
-```sh
+```javascript
 const films = [
 	{ id: 1, title: 'Midnight Cowboy', year: 1969 },
 	{ id: 2, title: 'Easy Rider', year: 1969 },
@@ -143,7 +143,7 @@ const getFilms = () => {
 			reject(new Error('there are no films'));
 		}
 
-		# Simulating data delay
+		// Simulating data delay
 		setTimeout(() => {
 			resolve(films);
 		}, 1500);
@@ -151,15 +151,15 @@ const getFilms = () => {
 	});
 }
 
-# When it's solved
+// When it's solved
 getFilms()
 	.then((films) => console.log(films));
 	.catch(err => console.log(err.message));
 ```
 
 #### Example with Async / Await
-```sh
-# await is valid only in an async function
+```javascript
+// await is valid only in an async function
 async function fetchingFilms () {
 
 	const filmsFetched = await getFilms();
@@ -168,7 +168,7 @@ async function fetchingFilms () {
 
 fetchingFilms();
 
-# We can also use try / catch
+// We can also use try / catch
 async function fetchingFilms () {
 
 	try {
@@ -196,7 +196,7 @@ We may end have multiple different threads running in different sections
 
 #### Promises & Example
 **Promises** give us a more elegant way to handle asynchronous data
-```sh
+```javascript
 const posts = [
 	{title: "Post One", body: "This is post one" },
 	{title: "Post Two", body: "This is post two"}
@@ -239,7 +239,7 @@ createPost({title:"Post Three", body: "This is post three"})
 	.then(getPosts)
 	.catch(err => console.log(err));
 
-# Promise.all
+// Promise.all
 const promise1 = Promise.resolve("Hello World");
 const promise2 = 10;
 const promise3 = new Promise((resolve, reject) => {
@@ -247,7 +247,7 @@ const promise3 = new Promise((resolve, reject) => {
 });
 const promise4 = fetch("http://jsonplaceholder.typicode.com/users").then(res => res.json());
 
-# Takes an array of promises
+// Takes an array of promises
 Promise.all([promise1, promise2, promise3, promise4]).then((values) => {
 	console.log(values);
 });
@@ -255,7 +255,7 @@ Promise.all([promise1, promise2, promise3, promise4]).then((values) => {
 
 #### Async/Await, Fetch & Example
 **Async/Await** are syntatic sugar for Promises, easier to read and understand
-```sh
+```javascript
 const posts = [
 	{title: "Post One", body: "This is post one" },
 	{title: "Post Two", body: "This is post two"}
@@ -294,7 +294,7 @@ function createPost(post) {
 	});
 }
 
-# Async/Await
+// Async/Await
 async function init() {
 	
 	# Awaits until createPost() is done, then executes getPost()
@@ -306,7 +306,7 @@ async function init() {
 init();
 
 
-# Fetch
+// Fetch
 async function fetchUsers() {
 
 	const res = await fetch("http://jsonplaceholder.typicode.com/users")
@@ -323,7 +323,7 @@ A synchronous request blocks the client until operation completes i.e browser is
 In such case, javascript engine of the browser is blocked
 *An example, a full page is refreshed at request time and user is blocked until request completes*
 <p align="center">
-        <img src="../../Images/synchronousrequest.jpg" alt="Synchronous request">
+        <img src="../../img/synchronousrequest.jpg" alt="Synchronous request">
 </p>
 
 
@@ -336,7 +336,7 @@ In such case, javascript engine of the browser is not blocked
 
 *An example, full page is not refreshed at request time and user gets response from the AJAX engine*
 <p align="center">
-        <img src="../../Images/asynchronousrequest.jpg" alt="Asynchronous request">
+        <img src="../../img/asynchronousrequest.jpg" alt="Asynchronous request">
 </p>
 
 

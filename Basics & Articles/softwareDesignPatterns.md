@@ -34,7 +34,7 @@ The customer controller will handle all the interactions and inputs from the cus
 The same controller will be used to view the customer data
 
 <p align="center">
-        <img src="../Images/mvc_3.png" alt="Model View Controller img 3">
+        <img src="../img/mvc_3.png" alt="Model View Controller img 3">
 </p>
 
 
@@ -96,7 +96,7 @@ This means the logic of the application and the interface never interacts with e
 3. The Controller will ask the Model to find the list of movies from the database
 
 *The Controller sending request to ask for Movie List*
-```sh
+```javascript
 router.get('/',ensureAuth, async (req,res)=>{ 
 	try{ 
 		const movies = await Movies.find() (*) 
@@ -109,7 +109,7 @@ router.get('/',ensureAuth, async (req,res)=>{
 
 4. Then the Model searches the database and returns the list of movies to the Controller
 *Movies Model Schema*
-```sh
+```javascript
 const mongoose = require('mongoose') 
 const MovieSchema = new mongoose.Schema
 ({ 
@@ -127,7 +127,7 @@ module.exports = mongoose.model('Movies',MovieSchema)
 
 5. If the Controller gets the list of movies from the Model, the Controller will ask the View to present the list of movies
 *The Controller sending the Movie list to View to Render the list of movies*
-```sh
+```javascript
 router.get('/',ensureAuth, async (req,res)=>{ 
 	try{ const movies = await Movies.find() 
 		res.render('movies/index', { movies (*) }) } 
@@ -139,7 +139,7 @@ router.get('/',ensureAuth, async (req,res)=>{
 
 6. Then the View will receive the request and returns the rendered list of movies to the Controller in HTML
 *The View Returning List of Movies in form of HTML*
-```sh
+```javascript
 <div class="col" style="margin-top:20px;padding-bottom:20px">
     <div class="ui fluid card"> 
         <div class="content"> 
@@ -157,14 +157,14 @@ router.get('/',ensureAuth, async (req,res)=>{
 
 #### MVC How it works
 <p align="center">
-        <img src="../Images/mvc_1.png" alt="Model View Controller img 1">
+        <img src="../img/mvc_1.png" alt="Model View Controller img 1">
 </p>
 
 
 
 #### MVC example
 <p align="center">
-        <img src="../Images/mvc_2.png" alt="Model View Controller img 2">
+        <img src="../img/mvc_2.png" alt="Model View Controller img 2">
 </p>
 
 ##### [Wikipedia - Software design patterns](https://en.wikipedia.org/wiki/Software_design_pattern) / Wikipedia

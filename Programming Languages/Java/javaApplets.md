@@ -24,7 +24,7 @@ Applets are used to make website more dynamic and entertaining
 2. destroy()
 
 ## Example of a Hello World applet
-```sh
+```java
 import java.applet.Applet;
 import java.awt.Graphics;
 

@@ -1,17 +1,3 @@
-# SQL Cheatsheets
-<p>
-	<img src="sqlCheatsheet1.jpeg" alt="sql cheatsheet 1">
-</p>
-
-<p>
-	<img src="sqlCheatsheet2.jpeg" alt="sql cheatsheet 2">
-</p>
-
-<p>
-	<img src="basicSqlCommands.jpeg" alt="sql commands">
-</p>
-
-
 # MySQL
 - MySQL is the most popular database system used with PHP
 - It's a free and open-source Relational Database Management System (RDBMS)
@@ -49,3 +35,13 @@ sudo mysql -u root -p
 create database newDatabase;
 show databases;
 ```
+
+# SQL Cheatsheets
+<p>
+	<img src="../../img/sqlCheatsheet2.jpeg" alt="sql cheatsheet 2">
+</p>
+
+<p>
+	<img src="../../img/basicSqlCommands.jpeg" alt="sql commands">
+</p>
+

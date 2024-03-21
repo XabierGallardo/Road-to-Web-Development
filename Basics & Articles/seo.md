@@ -1,6 +1,9 @@
 # SEO / Search Engine Optimization
 It's a set of practices designed for increasing ranking position on search engines and traffic to your websites.
 
+## [¿Qué es SEO? Guía completa de posicionamiento web / Hostinger](https://www.hostinger.es/tutoriales/que-es-seo)
+
+
 ## Key facts in SEO
 - **Website speed**: Defines the amount of time a web takes to load. The fastest the better. There are tools like PageSpeed Insights from google and Pingdom speedtest.
 - **Mobile compatibility**: A responsive design adjust automatically all elements to adapt on different screen. Reponsive websites will appear on top.
@@ -119,6 +122,3 @@ Check the loading speed of your website
 - Leverage Quora to Indirectly rank your content
 - Continues monitoring of rankings for targeted search terms
 - Always lookin for adding quality content
-
-## Links
-[hostinger](https://www.hostinger.es/tutoriales/que-es-seo)

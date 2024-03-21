@@ -64,16 +64,16 @@ The bytecode. Java compiler converts the Java programs into the class file (byte
 
 ### Is emplty .java file name a valid source file name?
 Yes, Java allows to save our java file by  *.java* only, we need to compile it by *javac* and run by *java classname*
-```sh
-# save by .java only
+```java
+// save by .java only
 class A{
 	public static void main(String args[]) {
 		System.out.println("Hello Java");
 	}
 }
 
-# Compile by javac .java
-# Run by java A
+// Compile by javac .java
+// Run by java A
 ```
 
 ### What if I write static public void instead of public static void?
@@ -92,7 +92,7 @@ The methods or variables defined as static are shared among all the objects of t
 *For example, in the class simulationg the collection of the students in a college, the name of the college is the common attribute to all the students. Therefore, the college name will be defined as static*
 
 ### What is the output of the following Java program?
-```sh
+```java
     class Test   
     {  
         public static void main (String args[])   
@@ -100,7 +100,8 @@ The methods or variables defined as static are shared among all the objects of t
             System.out.println(10 * 20 + "Javatpoint");   
             System.out.println("Javatpoint" + 10 * 20);  
         }  
-    }  
+    }
+
+// 200Javatpoint
+// Javatpoint1020  
 ```
-200Javatpoint
-Javatpoint1020

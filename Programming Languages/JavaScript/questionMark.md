@@ -11,27 +11,27 @@ Using the ? as our strating place
 condition to test **?** value if true **:** value if false  
 
 The operator if often used to replace a traditional if statement
-```sh
+```javascript
 (condition) ? truthyValue : falsyValue
 
-# instead of
+// instead of
 if (condition) {
 
-	# Truthy value
+	// Truthy value
 
 } else {
-	# Falsy value
+	// Falsy value
 }
 ```
 As we see, the ternary expression is concise, but less readable than an if statement
 
 But this changes when we need to assign a variable
 A statement like **if** is imperative, it does something
-```sh
-# It begins with a state
+```javascript
+// It begins with a state
 let status;
 
-# Then, as the program's is executed, it mutates the state
+// Then, as the program's is executed, it mutates the state
 if (bankAccount > 100) {
 
 	status = 'rich';
@@ -41,27 +41,27 @@ if (bankAccount > 100) {
 	status = 'poor';
 
 }
-# Takes multiple lines of code just to assign a variable based on a simple condition
+// Takes multiple lines of code just to assign a variable based on a simple condition
 ```
 
 The **ternary operator** creates an expression, which means that it produces a value that we can then assign to a variable
-```sh
+```javascript
 const status = bankAccount > 100 ? 'rich' : 'poor';
 ```
 This code is declarative, it describes the state of a variable as opossed to mutating it
 This is why we use *let* in the if example and *const* in the ternary operator example
 
 **Declarative code** is great because it can also be used in function arguments and in array and object literals
-```sh
-# Functions
+```javascript
+// Functions
 fun(cond ? a : b);
 
-# Objects
+// Objects
 const obj = {
 	prop: cond ? a : b;
 }
 
-# Arrays
+// Arrays
 const arr = [
 	cond ? a : b;
 ];
@@ -71,19 +71,19 @@ const arr = [
 ### Optional ? Chaining
 In 2020 a new feature landed in JavaScript called optional chaining
 This is very useful in cases when we call an object property that does not exists and then, it triggers an error
-```sh
+```javascript
 const user = {
 	name: 'jeff'
 }
 
 user.write.code(); # Uncaugh TypeError
 
-# This could be changed by adding
+// This could be changed by adding
 
 user && user.write && user.write.code();
 ```
 But this is simplified just adding a **?** between the property name and the period between the next property
-```sh
+```javascript
 const user = {
 	name: 'jeff'
 }
@@ -96,26 +96,26 @@ user.write?.code(); # If it's undefined it'll return just undefined, it doesn't 
 In many cases, we want to set a default value for a missing variable or property name
 We can do that with a **||** (logical OR operator) 
 But to avoid errors with **||** because of JavaScript rules
-```sh
+```javascript
 const order = {
 
 	amount: undefined || 23.99, # may return 0
 
 	description: undefined || 'some product', # may return ''
 
-# This sometimes may return an empty string or 0 being set to a default value
+// This sometimes may return an empty string or 0 being set to a default value
 }
 ```
 
 To avoid this error, we can substitute *||* with **??**
-```sh
+```javascript
 const order = {
 
 	amount: 0 ?? 23.99,
 
 	description: '' ?? 'some product',
 
-	# It works like || except undefined null are the only values that short circuit to the right side
+	// It works like || except undefined null are the only values that short circuit to the right side
 }
 ```
 

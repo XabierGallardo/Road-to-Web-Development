@@ -8,17 +8,17 @@ DOM represents the document as nodes and objects which can be modified with a sc
 
 The Document Object is the core of DOM. To perform any manipulation, you must access the document object first
 
-<p align="center">
-	<img src="../Images/DOM_1.png" alt="DOM structure 1" />
-</p>
 
+<p align="center">
+	<img src="../img/DOM.png" alt="DOM structure 2" />
+</p>
 
 ## How to select elements in the DOM
 
 **getElementById()**
 The most common way to access an HTML element
 
-```sh
+```html
 <p id="master">This is a paragraph</p>
 <script>
 	const masterEl = document.getElementById("master");
@@ -30,7 +30,7 @@ The most common way to access an HTML element
 **getElementsByClassName()**
 Returns a collecions of all elements with the specified class name
 
-```sh
+```html
 <p class="master2">This is paragraph 1</p>
 <p class="master2">This is paragraph 2</p>
 <p class="master2">This is paragraph 3</p>
@@ -44,7 +44,7 @@ Returns a collecions of all elements with the specified class name
 **getElementsByTagName()**
 Returns all elements of the specified tag name in the order which they appear in the document
 
-```sh
+```html
 <p>This is paragraph 1</p>
 <p>This is paragraph 2</p>
 <p>This is paragraph 3</p>
@@ -61,7 +61,7 @@ Returns all elements of the specified tag name in the order which they appear in
 Returns the first value that matches the selector it's given
 It can accept all CSS style selectors, allowing it to select by tag, class or ID
 
-```sh
+```html
 <div id="master">This is a div</div>
 <script>
 	const mater = document.querySelector("#master");
@@ -71,7 +71,7 @@ It can accept all CSS style selectors, allowing it to select by tag, class or ID
 
 **querySelectorAll()**
 Works similar to querySelector, but returns a node list collection of all matching elements
-```sh
+```html
 <p id="master">This is paragraph 1</p>
 <p id="master">This is paragraph 2</p>
 <p id="master">This is paragraph 3</p>
@@ -87,10 +87,6 @@ Since everything in an HTML is a node
 The text inside an HTML element is a text node
 
 With the HTML DOM, it's possible to navigate the node tree and access nodes in the tree using node relationships (parent, children, siblings, etc).
-
-<p align="center">
-	<img src="../Images/DOM_2.png" alt="DOM structure 2" />
-</p>
 
 - The node directly above a node is the *parent* of that node
 - The nodes one level directly below another node are the *children* of that node
@@ -109,7 +105,7 @@ Siblings are nodes with the same parent
 - **nextElementSibling**
 - **previousElementSibling**
 
-```sh
+```html
  <div id="parent">
         <div id="firstchild">i am a first child</div>
         <p id="secondchild">i am the second child</p>
@@ -134,7 +130,7 @@ Siblings are nodes with the same parent
 
 #### Equivalent classes in JavaScript
 There is a JavaScript class corresponding to each HTML tag type, and each occurrence of the tag in a document is represented by an instance of the class
-```sh
+```html
 <body>
 HTMLBodyElement
 
@@ -142,7 +138,7 @@ HTMLBodyElement
 HTMLTableElement
 ```
 Most of the **JavaScript Element Classes** just mirror the attributes of an HTML tag, but some define aditional methods
-```sh
+```html
 HTMLAudioElement 
 HTMLVideoElement
 
@@ -157,7 +153,7 @@ pause();
 ##### How to create elements
 We'll create a new element with **createElement()** method
 
-```sh
+```html
 const createEl = document.createElement('div');
 console.log(createEl); //<div></div>
 ```
@@ -167,7 +163,7 @@ console.log(createEl); //<div></div>
 Our new div doesn't have any text node
 We'll use **innerHTML()** to add its text node
 
-```sh
+```html
 const innerhtml = createEl.innerHTML = "I'm a frontend developer";
 console.log(createEl); //<div>I'm a frontend developer</div>
 ```
@@ -177,7 +173,7 @@ console.log(createEl); //<div>I'm a frontend developer</div>
 Our new element with its text is still not part of the DOM tree yet
 We'll append it to that HTML page
 
-```sh
+```html
 const parentEl = document.getElementById('parent');
 parentEl.appendChild(createEl);
 ```
@@ -190,7 +186,7 @@ If we want to add it before we'll use **insertBefore()**
 This method accepts two parameters, **newNode** and **existingNode**
 *document.insertBefore(newNode, existingNode)*
 
-```sh
+```html
 const firstChildEl = document.getElementById('firstchild');
 const parentEl = document.getElementById('parent');
 const createEl = document.createElement('div');
@@ -204,7 +200,7 @@ parentEl.insertBefore(createEl, firstchildEl);
 **replaceChild()** method accepts two paramenters to replace our first element with the newly created
 *document.replaceChild(newNode, existingNode)*
 
-```sh
+```html
 const firstChildEl = document.getElementById('firstchild');
 const parentEl = document.getElementById('parent');
 const createEl = document.createElement('div');
@@ -217,7 +213,7 @@ parentEl.replaceChild(createEl, firstchildEl);
 ##### How to remove a child element
 We'll use the method **removeChild()**
 
-```sh
+```html
 const firstchildEl = document.getElementById('firstchild');
 const parentEl = document.getElementById('parent');
 parentEl.removeChild(firstchildEl);
@@ -227,7 +223,7 @@ parentEl.removeChild(firstchildEl);
 ## Add styling with CSS
 
 ##### Add a CSS class
-```sh
+```html
 <style>
 	.button { background-color: blueviolet; }
 </style>
@@ -235,7 +231,7 @@ buttonEl.classList.add('button');
 ```
 
 ##### Remove a CSS class
-```sh
+```html
 <style>
 	.button { background-color: blueviolet; }
 </style>
@@ -243,7 +239,7 @@ buttonEl.classList.remove('button');
 ```
 
 ##### Toggle a CSS class
-```sh
+```html
 <style>
 	.button { background-color: blueviolet; }
 </style>

@@ -25,7 +25,7 @@ Is it possible to create malicious urls with beefproject.com and take control of
 
 ### Response Headers
 
-```sh
+```txt
 HTTP/1.1 200 OK
 X-Powered-By: Express
 Access-Control-Allow-Origin: http://localhost:5000
@@ -39,7 +39,7 @@ Connection: keep-alive
 
 ### Request Headers
 
-```sh
+```txt
 GET /HTTP/1.1
 Host: localhost: 3000
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64)
@@ -56,7 +56,7 @@ This results as an error in the browser, but for security reasons, there's limit
 ## Solution
 The solution to a CORS error relies on the server, this means we have to control the server
 If we have control on the server, we must configure it to respond with the proper header
-```sh
+```javascript
 const express = require('express');
 const app = express();
 const cors = require('cors');

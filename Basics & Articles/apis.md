@@ -28,7 +28,12 @@ En resumen, una API proporciona una manera estándarizada y segura para que las 
 - Las APIs puede devolver info en formato JSON, XML o texto plano.
 
 <p>
-    <img src="../Images/tiposAPI.png" alt="Tipos de API">
+    <img src="../img/tiposAPI.png" alt="Tipos de API">
+</p>
+
+# API Security
+<p align="center">
+    <img src="../img/apiSecurity.png" alt="API Security">
 </p>
 
 

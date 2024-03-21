@@ -1,22 +1,27 @@
-# HTML
+# HTML Inputs
+<p align="center">
+	<img src="../../img/htmlInputs1.jpeg" alt="HTML inputs 1">
+	<img src="../../img/htmlInputs2.jpeg" alt="HTML inputs 2">
+</p>
+
 ## HTML CSS
 Inline CSS 
-```sh
+```html
 <h1 style="color:blue;">A blue heading</h1>
 ```
 
 Internal CSS
-```sh
+```html
 <style>body{background-color:blue;}</style>
 ```
 
 External CSS
-```sh
+```html
 <link rel="stylesheet" href="styles.css">
 ```
 
 ## HTML Table
-```sh
+```html
 <table>
 	<tr> # Table Row
 		<th>Table Header</th>
@@ -28,7 +33,7 @@ External CSS
 ```
 
 ## HTML List
-```sh
+```html
 <ul> # Unordered list
 	<li>List item</li>
 </ul>
@@ -41,7 +46,7 @@ External CSS
 - Always take the full width available
 - Has a top & bottom margin
 
-```sh
+```html
 <article>
 <div>
 <fieldset>
@@ -65,7 +70,7 @@ External CSS
 - Doesn't start on a new line
 - Only takes neccesary width
 
-```sh
+```html
 <a>
 <br>
 <button>
@@ -83,11 +88,11 @@ HTML metadata is data about the HTML document
 Tipically define the doc title, character sset, styles, scripts
 
 ## meta element
-```sh
+```html
 <meta charset="UTF-8">
 ```
 Define the **character set** used
-```sh
+```html
 <meta name="keywords" content="HTML, CSS, JavaScript">
 # Defines keywords for search engines
 
@@ -118,7 +123,7 @@ initial-scale=1.0
 	<img src="img/HTMLlayout.png" alt="HTML layout">
 </p>
 
-```sh
+```html
 <header> # Defines a header for a document or a section
 <nav> # Defines a set of navigation links
 <section> # Defines a section in a document
@@ -131,7 +136,7 @@ initial-scale=1.0
 An HTML form is used to **collect user input**
 The user input is most often sent to a server for processing
 
-```sh
+```html
 <form> # Element is a container for different types of input elements
 	<input type="text"> # Single-line text input field
 	<input type="radio"> # Displays a radio button (selection 1 of many choices)
