@@ -242,3 +242,132 @@ console.warn(result);
 //data.search(function
 //data.find
 //data.find(7)
+
+
+/////////////////////////////////////////////////////////////////////
+
+/*14. Write the FizzBuzz algorith which returns an array of strings from 1 to N, but
+	- For multiples of 3, prints "Fizz"
+	- For multiples of 5, prints "Buzz"
+	- For multiples of both 3 and 5 prints "FizzBuzz"
+The function takes an integer N as a parameter and returns the FizzBuzz sequence as an array os strings up to index N.Examples:
+
+Input: 2
+Output: 1,2
+
+Input: 5
+Output: 1,2,Fizz,4,Buzz
+
+Input: 9
+Output: 1,2,Fizz,4,Buzz,Fizz,7,8,Fizz
+
+Input: 15
+Output: 1,2,Fizz,4,Buzz,Fizz,Bizz,11,Fizz,13,15,FizzBuzz*/
+
+function fizzbuzz(input) {
+	let result = [];
+	for(let i = 1; i <= input; i++) {
+	
+		if (i % 3 === 0 && i % 5 === 0) {
+			result.push("FizzBuzz");
+		} else if (i % 3 === 0) {
+			result.push("Fizz");
+		} else if (i % 5 === 0) {
+			result.push("Buzz");
+		} else {
+			result.push(i);
+		}
+	}
+	console.log(result);
+}
+
+fizzbuzz(2);
+fizzbuzz(5);
+fizzbuzz(9);
+fizzbuzz(15);
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+/*15. Export a list of student records in comma separated values (CSV) format.
+The student records are imported from a database in JSON format. It contains student details such as studentID, name, etc.
+
+The function formatRecords parses the students records and returns a comma separated string to be subsequently exported to CSVa. The function accepts an array containing a JSON encoded list of student objects. It should return a list of only graduating students for whom the student IDs are available.
+Each item in the list should be separated from th enex item by a comma followed by a space, like:
+
+Input:
+[
+	'{
+		"studentId": 20,
+		"name": "chad west",
+		"graduating": true
+	}',
+	'{
+		"studentId": 23,
+		"name": "jake paul",
+		"graduating": true
+	}',
+	'{
+		"studentId": 21,
+		"name": "brad stanly",
+		"graduating": false
+	}',
+]
+
+Output: "chad west, jake paul"
+
+The function uses the map, reduce and filter functions*/
+
+let receivedData = `
+	[
+		{
+			"studentId": 20,
+			"name": "chad west",
+			"graduating": true
+		},
+		{
+			"studentId": 23,
+			"name": "jake paul",
+			"graduating": true
+		},
+		{
+			"studentId": 21,
+			"name": "brad stanly",
+			"graduating": false
+		},
+		{
+			"studentId": 7530,
+			"name": "Robert Lee",
+			"graduating": true
+		},
+		{
+			"name": "Carli B.",
+			"graduating": false
+		},
+		{
+			"studentId": 6679,
+			"name": "Jacqui Ostermann",
+			"graduating": true
+		},
+		{
+			"studentId": 8357,
+			"name": "Abeke Teka",
+			"graduating": true
+		}
+	]
+`;
+
+let myJson = JSON.parse(receivedData);
+
+function formatRecords(studentsRecords) {
+	let graduating = myJson
+		.filter(student => student.hasOwnProperty("studentId") && student.graduating === true)
+		.map(student => student.name)
+		.toString();
+
+	
+	return console.log(graduating)
+}
+
+formatRecords()

@@ -19,16 +19,16 @@ const ages = [33, 12, 20, 16, 5, 54, 21, 44, 61, 13, 15, 45, 25,64, 32];
 ## forEach()
 forEach loop is a better way to loop through an array rather than using a for loop
 ```javascript
-# Printing every iteration with a for loop
+// Printing every iteration with a for loop
 
 for(let i = 0; i < companies.length; i++) {
 
-	console.log(companies[i]); # Returning the objects
+	console.log(companies[i]); // Returning the objects
 
-	console.log(companies.name); #Company One Company Two...
+	console.log(companies.name); //Company One Company Two...
 }
 
-# Using forEach
+// Using forEach
 companies.forEach(function(company) {
 
 	console.log(company);
@@ -43,7 +43,7 @@ companies.forEach(function(company) {
 - *arr*: Optional, The array object the current element belongs to
 
 ```javascript
-# Another example of forEach, updating the value with 10 times the original value
+// Another example of forEach, updating the value with 10 times the original value
 
 let numbers = [65, 44, 12, 4];
 
@@ -51,15 +51,15 @@ numbers.forEach(myFunction);
 
 function myFunction(item, index, arr) {
 
-	arr[index] = item * 10; # 650 440 120 40
+	arr[index] = item * 10; // 650 440 120 40
 
-# Looking at each individual value
+// Looking at each individual value
 
-	console.log(item); # 65 44 12 4
+	console.log(item); // 65 44 12 4
 
-	console.log(index); # 0 1 2 3
+	console.log(index); // 0 1 2 3
 
-	console.log(arr); # [65,44,12,4] x 4
+	console.log(arr); // [65,44,12,4] x 4
 }
 ```
 
@@ -93,7 +93,7 @@ console.log(canDrink);
 
 
 // filter example using ES6 arrow functions
-const canDrink = ages.filter(age => age >= 21); # Same output!
+const canDrink = ages.filter(age => age >= 21); // Same output!
 ```
 
 Now filtering retail companies
@@ -106,10 +106,10 @@ const retailCompanies = companies.filter(function(company) {
 	}
 });
 
-console.log(retailCompanies); #Returns three object in our array, Company Two, Company Four and Company Nine
+console.log(retailCompanies); //Returns three object in our array, Company Two, Company Four and Company Nine
 
 // ES6 arrow function
-const retailCompanies = companies.filter(company => company.category === 'Retail'); # Same result!
+const retailCompanies = companies.filter(company => company.category === 'Retail'); // Same result!
 ```
 
 Filtering 80's companies
@@ -137,14 +137,14 @@ const companyNames = companies.map(function(company) {
 	return company.name; 
 });
 
-console.log(companyNames); # Returns an array of all the company names
+console.log(companyNames); // Returns an array of all the company names
 
 const testMap = companies.map(function(company) {
 
 	return `${company.name} [${company.start} - ${company.end}]`;
 });
 
-console.log(testMap); # Returns an array and each value has this format: Company One [1981 - 2003] ...
+console.log(testMap); // Returns an array and each value has this format: Company One [1981 - 2003] ...
 
 
 // Using ES6 arrow functions
@@ -265,15 +265,15 @@ console.log(totalYears); // 119
 ```javascript
 const combined = ages
 	
-	.map(age => age * 2) # Returns an array of all the ages times 2
+	.map(age => age * 2) // Returns an array of all the ages times 2
 
 	// Now we have an unsorted array of all the ages
 
-	.filter(age => age >= 40) # Filters anything that was under 40
+	.filter(age => age >= 40) // Filters anything that was under 40
 
-	.sort((a, b) => a - b) # Sorts the results
+	.sort((a, b) => a - b) // Sorts the results
 
 	// Now we'll reduce to sort them all together
 	
-	.reduce((a, b) => a + b, 0); # Returns 798
+	.reduce((a, b) => a + b, 0); // Returns 798
 ```
