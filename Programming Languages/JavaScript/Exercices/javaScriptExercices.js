@@ -371,3 +371,112 @@ function formatRecords(studentsRecords) {
 }
 
 formatRecords()
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+/* 16. Complete the solution so that it returns true if the first argument(string) passed in ends with the 2nd argument (also a string).
+Examples:
+solution('abc', 'bc') // returns true
+solution('abc', 'd') // returns false*/
+
+function checkEnding(str, ending) {
+
+	let endingLength = ending.length
+	let lastStrChars = str.slice(-endingLength);
+
+	if(lastStrChars === ending) {
+		console.log('true')
+	} else {
+		console.log('false')
+	}
+}
+
+let str1= 'abcde'
+let str2 = 'cde'
+let str3 = 'abcde'
+let str4 = 'abc'
+checkEnding(str1, str2); // true
+checkEnding(str3, str4) // false
+
+
+/////////////////////////////////////////////////////////////////////
+
+
+/* 17. Reproduce the include() built in function without using it*/
+
+function checkReps(str, ending) {
+	let repetitions = 0;
+	let repeatedChar = '';
+		for(let s = 0; s < str.length; s++){
+			for(let e = 0; e < ending.length; e++){
+				if(str[s] === ending[e]) {
+					repeatedChar += ending[e];
+					repetitions++;
+				}
+			}
+		}
+		console.log(`There are: ${repetitions} reps\nand it is: ${repeatedChar}` )
+	
+	}
+	
+	let str1= 'abcdefghijk'
+	let str2 = 'def'
+	checkReps(str1, str2);	// There are: 3 reps
+							// and it is: def
+	
+
+
+/////////////////////////////////////////////////////////////////////
+
+	
+/* 18. Fibonacci sequence
+Write a function that takes a number n as input and returns the nth number in the Fibonacci sequence. 
+The Fibonacci sequence is a series of numbers where each number is the sum of the two preceding ones, starting with 0 and 1. For example, the sequence goes: 0, 1, 1, 2, 3, 5, 8, 13, 21, ...*/
+
+function fibonacci(seq) {
+	let fibo = [0,1];
+	for(let i = 0; i < seq; i++) {
+		fibo.push(fibo[fibo.length -1] + fibo[fibo.length -2]);
+	}
+	console.log(fibo);
+}
+
+
+fibonacci(8); // [  0, 1,  1,  2,  3,  5, 8, 13, 21, 34]
+
+
+/////////////////////////////////////////////////////////////////////	
+
+
+/*19. Palindrome Checker:
+Create a function that takes a string as input and returns true if the string is a palindrome (reads the same forwards and backwards), and false otherwise. For example, "racecar" and "level" are palindromes.*/
+
+function palindrome(str) {
+	let split = str.split('').join('');
+
+	let reversed = str.split('').reverse().join('');
+
+	if(split === reversed) {
+		console.log("true\t" + reversed);
+	} else {
+		console.log("false\t" + reversed);
+
+	}
+}
+
+palindrome('racecar'); // true	racecar
+palindrome('gorilla'); // false	allirog
+
+// HOW JOIN WORKS
+const elements = ['Fire', 'Air', 'Water'];
+
+console.log(elements.join());
+// Expected output: "Fire,Air,Water"
+
+console.log(elements.join(''));
+// Expected output: "FireAirWater"
+
+console.log(elements.join('-'));
+// Expected output: "Fire-Air-Water"
