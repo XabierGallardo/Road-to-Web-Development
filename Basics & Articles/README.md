@@ -48,6 +48,94 @@
 En resumen, Internet funciona como una red global de servidores y clientes que se comunican entre sí mediante protocolos estándar como HTTP, utilizando nombres de dominio y DNS para identificar y acceder a recursos en la web, y utilizando servicios de hosting para alojar y publicar contenido en línea. Es importante entender estos conceptos básicos para crear aplicaciones web efectivas y comprender cómo se realiza la transferencia de datos entre los usuarios y los servidores a través de la red.
 
 
+# Generic structure of a web app
+The directory structure of a web application can vary depending on factors such as the technology stack used, project size, and personal or team preferences. However, there are some common conventions and best practices that can help organize the files and folders in a web application directory effectively. Here's a basic example of what a typical web application directory structure might look like:
+
+```
+/my-web-app
+│
+├── /public
+│   ├── index.html
+│   ├── styles.css
+│   ├── script.js
+│   └── /images
+│       ├── logo.png
+│       └── banner.jpg
+│
+├── /src
+│   ├── /components
+│   │   ├── Header.js
+│   │   ├── Sidebar.js
+│   │   └── ...
+│   │
+│   ├── /pages
+│   │   ├── Home.js
+│   │   ├── About.js
+│   │   └── ...
+│   │
+│   ├── /services
+│   │   ├── ApiService.js
+│   │   ├── AuthService.js
+│   │   └── ...
+│   │
+│   ├── index.js
+│   └── App.js
+│
+├── /config
+│   ├── settings.js
+│   └── routes.js
+│
+├── /server
+│   ├── server.js
+│   ├── controllers
+│   │   ├── HomeController.js
+│   │   ├── ApiController.js
+│   │   └── ...
+│   ├── models
+│   │   ├── UserModel.js
+│   │   ├── PostModel.js
+│   │   └── ...
+│   ├── routes
+│   │   ├── homeRoutes.js
+│   │   ├── apiRoutes.js
+│   │   └── ...
+│   └── /middlewares
+│       ├── authMiddleware.js
+│       ├── errorMiddleware.js
+│       └── ...
+│
+├── /tests
+│   ├── unit-tests
+│   ├── integration-tests
+│   └── e2e-tests
+│
+├── /node_modules
+│
+├── package.json
+└── README.md
+```
+
+Here's a brief explanation of each directory:
+
+- **public**: Contains files that will be served statically by the web server, such as HTML, CSS, JavaScript, and images.
+  
+- **src**: Contains the source code of the web application. This directory is often organized into subdirectories like `components`, `pages`, and `services`, which contain reusable components, page components, and service modules, respectively.
+
+- **config**: Contains configuration files for the application, such as settings and route definitions.
+
+- **server**: Contains server-side code for a backend application, including the main server file (`server.js`), controllers, models, routes, and middleware.
+
+- **tests**: Contains various types of tests for the application, such as unit tests, integration tests, and end-to-end tests.
+
+- **node_modules**: Contains third-party dependencies installed via npm.
+
+- **package.json**: Contains metadata about the project and its dependencies, as well as scripts for running tasks like building and testing.
+
+- **README.md**: Contains documentation and instructions for developers working on the project.
+
+This directory structure provides a logical organization of files and folders for a web application, separating concerns between client-side and server-side code, as well as organizing code into reusable components and modules. However, depending on the specific requirements and technologies used in your web application, you may need to adjust or extend this structure accordingly.
+
+
 # Computer Science
 Computer science is the subject that studies what computers can do.
 
