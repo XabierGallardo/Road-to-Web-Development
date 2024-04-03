@@ -1,4 +1,14 @@
 # Linux
+## Grant full permissions to a directory in Linux
+```sh
+sudo mkdir /var/szDirectoryName
+
+# Method 1
+sudo chmod -R 777 /var/DirectoryName
+
+# Method 2
+sudo chmod a+rwx /var/szDirectoryName
+```
 
 ### [Understand Linux & Free Software](https://www.youtube.com/watch?v=UUJ0dFpj1-M) - Brief and entertaining history about Linux
 

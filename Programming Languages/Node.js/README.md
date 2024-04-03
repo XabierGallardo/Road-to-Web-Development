@@ -2,6 +2,21 @@
 # [ES Node.js](https://developer.mozilla.org/es/docs/Learn/Server-side/Express_Nodejs/Introduction)
 # [EN Node.js](https://developer.mozilla.org/es/docs/Learn/Server-side/Express_Nodejs/Introduction)
 
+## Fix outdated npm packages
+```sh
+# Check outdated npm packages
+npm outdated 
+
+# Check updates outdated on npm packages
+npx npm-check-updates -u
+
+# Update npm packages
+npm install
+
+# Fix vulnerability
+# npm audit fix --force
+```
+
 ## NPM Basics
 - NPM is the **package manager for Node.js packages**. It contains thousands of free packages available to download
 - With the **CLI** or **command line interface** it's easy to download and update those packages
