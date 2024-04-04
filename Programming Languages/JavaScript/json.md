@@ -1,3 +1,83 @@
+# Using objects or JSON?
+Both objects and JSON can be used to represent and manipulate data in a JavaScript application, but they serve different purposes and have different use cases.
+
+1. **Objects**:
+   - Objects in JavaScript are key-value pairs, where keys are strings (or Symbols) and values can be of any data type.
+   - Objects are useful when you need to represent structured data with named properties.
+   - They provide flexibility in terms of adding, updating, and accessing properties dynamically.
+   - Objects are commonly used when you need to work with data that has a well-defined structure and behavior associated with it.
+
+   Example:
+   ```javascript
+   let person = {
+       name: "John",
+       age: 30,
+       gender: "male"
+   };
+   ```
+
+2. **JSON (JavaScript Object Notation)**:
+   - JSON is a lightweight data interchange format that is easy for humans to read and write and easy for machines to parse and generate.
+   - JSON is a string representation of data and can be converted to JavaScript objects using `JSON.parse()` and vice versa using `JSON.stringify()`.
+   - JSON is commonly used for data interchange between client and server or for storing data in a file.
+   - JSON is especially useful when you need to transmit data over the network or store it in a file, as it provides a standardized format that can be easily understood by other systems.
+
+   Example:
+   ```json
+   {
+       "name": "John",
+       "age": 30,
+       "gender": "male"
+   }
+   ```
+
+In your JavaScript application, whether you should use objects or JSON depends on your specific requirements:
+- If you need to work with data in your application and manipulate it dynamically, using JavaScript objects is more appropriate.
+- If you need to transmit data between your application and a server or store data in a file, using JSON for serialization and deserialization is more suitable.
+
+In many cases, you may find yourself using both objects and JSON within your application, converting between them as needed based on your requirements.
+
+# How to write our JSON
+
+Both objects of objects and arrays can be valid structures in JSON, and the choice between them depends on the nature of the data you're representing and how you intend to access and manipulate it in your application.
+
+Here are some considerations:
+
+1. **Objects of Objects**:
+   - This structure is suitable when each object has a unique identifier (key), and you need to access objects by their keys.
+   - Useful when the data doesn't need to be iterated over in a specific order.
+   - Provides a more structured approach when each object has different properties.
+
+   Example:
+   ```json
+   {
+     "city1": {"name": "Buenos Aires", "latitude": -34.6037, "longitude": -58.3816},
+     "city2": {"name": "Córdoba", "latitude": -31.4201, "longitude": -64.1888}
+   }
+   ```
+
+2. **Arrays**:
+   - Arrays are suitable when the order of elements is important or when you need to perform operations like iteration, filtering, or mapping over the elements.
+   - Useful when all objects share the same structure or when you need to access objects by index.
+   - Typically more convenient for representing lists of homogeneous data.
+
+   Example:
+   ```json
+   [
+     {"name": "Buenos Aires", "latitude": -34.6037, "longitude": -58.3816},
+     {"name": "Córdoba", "latitude": -31.4201, "longitude": -64.1888}
+   ]
+   ```
+
+As for the best way to write JSON, there isn't a one-size-fits-all answer. However, here are some tips:
+
+- **Consistency**: Stick to a consistent structure throughout your JSON data.
+- **Readability**: Format your JSON for readability by using indentation and line breaks.
+- **Validation**: Ensure your JSON is valid by using tools or libraries to validate its syntax.
+- **Comments**: JSON doesn't support comments, but you can include comments in your JSON files for documentation purposes if you're not using a strict JSON parser.
+
+Ultimately, the best way to write JSON depends on your specific requirements and the structure of your data. Choose the format that makes the most sense for how you'll be using and manipulating the data in your application.
+
 # Que es JSON?
 - **JavaScript Object Notation** es un formato de intercambio de datos
 - Sirve para representar datos estructurados como objetos o arrays
