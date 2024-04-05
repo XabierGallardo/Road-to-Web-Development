@@ -1,6 +1,68 @@
 # Asynchronous JavaScript / Callbacks, Promises, Async Await
 ### [Free API for testing](https://jsonplaceholder.typicode.com/)
 
+# Example working with multiple fetch calls in order
+To ensure that multiple `fetch` calls are completed in a specific order, you can use the `async/await` syntax in JavaScript. Here's an example of a function that makes three `fetch` calls sequentially and returns the results:
+
+```javascript
+async function fetchDataInOrder() {
+  try {
+    // Make the first fetch call
+    const response1 = await fetch('url1');
+    if (!response1.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data1 = await response1.json();
+    console.log('Data 1:', data1);
+
+    // Make the second fetch call
+    const response2 = await fetch('url2');
+    if (!response2.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data2 = await response2.json();
+    console.log('Data 2:', data2);
+
+    // Make the third fetch call
+    const response3 = await fetch('url3');
+    if (!response3.ok) {
+      throw new Error('Network response was not ok');
+    }
+    const data3 = await response3.json();
+    console.log('Data 3:', data3);
+
+    // Return the results
+    return { data1, data2, data3 };
+  } catch (error) {
+    console.error('There was a problem with the fetch operation:', error);
+    // Handle errors if needed
+    return null;
+  }
+}
+```
+
+In this function:
+
+1. Each `fetch` call is made sequentially, one after the other.
+2. The `await` keyword is used to wait for each `fetch` call to complete before moving to the next one.
+3. If any `fetch` call encounters an error (i.e., the response is not ok), an error is thrown.
+4. The data returned from each `fetch` call is logged to the console, and the final results are returned as an object containing the data from all three calls.
+
+You can call this function and handle the returned data accordingly:
+
+```javascript
+fetchDataInOrder()
+  .then(data => {
+    // Handle the returned data
+    console.log('All data:', data);
+  })
+  .catch(error => {
+    console.error('There was a problem:', error);
+  });
+```
+
+This ensures that the `fetch` calls are completed in order, and you can use the fetched data as needed.
+
 ## Que es la asincronía en JavaScript?
 - Es la capacidad que tiene este lenguaje de realizar tareas sin bloquear la ejecución del programa principal
 - En lugar de esperar a que se complete la tarea para seguir con la siguiente, JavaScript permite hacer muchas tareas en simultaneo e ir manejando a medida que esté lista la info de las tareas anteriores
