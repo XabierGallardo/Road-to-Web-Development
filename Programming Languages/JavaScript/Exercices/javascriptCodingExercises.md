@@ -1,10 +1,64 @@
 
 ## Top 20 coding exercises for a JR JavaScript developer
-1. Write a function that takes in an array of numbers and returns the sum of all the numbers.
+### 1. Write a function that takes in an array of numbers and returns the sum of all the numbers.
+```js
+// 1. Write a function that takes an array of numbers and returns the sum of all the numbers
+let arr1 = [1,2,3,4,5];
 
-2. Write a function that takes in a string and returns the string reversed.
+// Solution 1, for loop
+let result = 0;
+function for1(arr) {
+	for(let i = 0; i < arr.length; i++) {
+		result += arr[i];
+	}
+	return result;	// 15
+}
 
-3. Write a function that takes in an array of numbers and returns the largest number in the array.
+// Solution 2, forEach
+arr1.forEach(function (item) {
+	result += item;	//15
+});
+
+
+// Solution 3, map
+let result2 = 0;
+arr1.map( n => result2 += n); // result2 = 15
+
+
+// Solution 4, for of
+let result3 = 0
+for (let number of arr1) {
+	result3 += number;	// result3 = 15
+}
+```
+
+### 2. Write a function that takes in a string and returns the string reversed.
+```js
+// 2. Write a function that takes in a string and returns the string reversed
+let str2 = "Hello world!";
+let finalStr2 = str2.split('').reverse().join(''); // !dlrow olleH
+```
+
+### 3. Write a function that takes in an array of numbers and returns the largest number in the array.
+```js
+// 3. Write a function that takes in an array of numbers and returns the largest number in the array
+let arr3 = [1,2,11,34,65,25,43,17];
+
+// Solution 1, Math.max()
+let res3 = Math.max(...arr3);	// 65
+
+
+// Solution 2, for lop
+function max3(arr) {
+	let maxNum = 0;
+	for(let i = 0; i < arr.length; i++) {
+		if(arr[i] > maxNum) {
+			maxNum = arr[i];
+		}
+	}
+	return maxNum;	// 65
+}
+```
 
 4. Write a function that takes in an array of numbers and returns a new array with only the even numbers.
 
