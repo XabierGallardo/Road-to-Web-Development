@@ -163,12 +163,87 @@ Comprender cómo `this` funciona en JavaScript es fundamental para escribir cód
 
 
 
-## Parse JSON to other languages [Tool](https://app.quicktype.io/)
-> Herramienta para parsear codigo JSON a varios lenguajes.
-> Me resultó muy práctica para crear interfaces y tipos en base a los datos traídos por una API en Typescript. Ya que muchas veces tenemos que crear las interfaces nosotros mismos esto podría ahorrar bastante tiempo.
-> También posee una extensión para VSCode y Visual Studio. 
-<p align="center">
-        <img src="media/quicktype1.jpeg" alt="Quicktype 1">
-        <img src="media/quicktype2.jpeg" alt="Quicktype 2">
-</p>
+## Summary of JavaScript String, Arrays, Objects & ES6 Methods
+### String Methods:
+
+1. `charAt()`
+2. `charCodeAt()`
+3. `concat()`
+4. `includes()`
+5. `indexOf()`
+6. `lastIndexOf()`
+7. `match()`
+8. `replace()`
+9. `search()`
+10. `slice()`
+11. `split()`
+12. `substring()`
+13. `toLowerCase()`
+14. `toUpperCase()`
+15. `trim()`
+
+### Array Methods:
+
+1. `concat()`
+2. `every()`
+3. `filter()`
+4. `find()`
+5. `findIndex()`
+6. `forEach()`
+7. `includes()`
+8. `indexOf()`
+9. `join()`
+10. `map()`
+11. `pop()`
+12. `push()`
+13. `reduce()`
+14. `reduceRight()`
+15. `reverse()`
+16. `shift()`
+17. `slice()`
+18. `some()`
+19. `sort()`
+20. `splice()`
+21. `toString()`
+22. `unshift()`
+
+### Object Methods:
+
+1. `Object.keys()`
+2. `Object.values()`
+3. `Object.entries()`
+4. `Object.assign()`
+5. `Object.freeze()`
+6. `Object.seal()`
+7. `Object.create()`
+8. `Object.defineProperty()`
+9. `Object.getOwnPropertyDescriptor()`
+10. `Object.getOwnPropertyNames()`
+11. `Object.getPrototypeOf()`
+12. `Object.setPrototypeOf()`
+13. `Object.is()`
+
+### ES6 Features for Arrays and Objects:
+
+1. `Array.from()`
+2. `Array.of()`
+3. `Array.isArray()`
+4. `Array.prototype.find()`
+5. `Array.prototype.findIndex()`
+6. `Array.prototype.fill()`
+7. `Array.prototype.includes()`
+8. `Array.prototype.entries()`
+9. `Array.prototype.keys()`
+10. `Array.prototype.values()`
+11. `Array.prototype.forEach()`
+12. `Array.prototype.map()`
+13. `Array.prototype.filter()`
+14. `Array.prototype.reduce()`
+15. `Array.prototype.reduceRight()`
+16. `Array.prototype.some()`
+17. `Array.prototype.every()`
+18. `Object.entries()`
+19. `Object.values()`
+20. `Object.getOwnPropertyDescriptors()`
+21. `Object.fromEntries()`
 
