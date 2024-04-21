@@ -1,4 +1,80 @@
 # JavaScript Index
+## JavaScript complex data structures
+- **Objects** are used for storing key collections
+- **Arrays** are used for storing ordered collections
+- **Maps** are similar to objects but you can use anything as a key
+- **Sets** are a great choice to store data without duplicates
+
+## Callbacks, Promesas y Async/Await
+### Callbacks
+- Un **callback** es una funcion que se pasa a otra funcion como argumento para ser llamada mas tarde
+- Los callbacks son tradicionales en el manejo de eventos en JavaScript, y tambi'en se usan en métodos de array y operaciones asícronas
+- Los callbacks también son usados en métodos de array. Por ejemplo al `map()` le pasamos un callback que se llamara para transformar cada elemento
+- Uno de sus problemas es el callback hell, que consiste en anidar callbacks haciendo el codigo poco legible
+```js
+// Event callback example
+document.getElementById("myBtn")
+  .addEventListener("click", function() {
+    console.log("clicked");
+  });
+
+// Array callback example
+let numbers = [1,2,3,4];
+let squares = numbers.map(function(num) {
+  return num * num;
+});
+
+// Callback example in Node.js
+fs.readFile('archivo.txt', 'utf-8', (err, file) => {
+  console.log(file);
+});
+```
+
+### Promesas
+- Introducidas en ES6 para resolver los problemas asociados a los callbacks
+- Una promesa representa una operacion que aun no se ha completado pero se espera que lo haga en el futuro
+- Una promesa puede tener tres estados: pendiente, resuelta o rechazada
+- Las promesas tienen los metodos `then()`, `catch()` y `finally()`. Que podemos utilizar para adjuntar **callbacks** que se ejecutaran cuando la promesa se resuelva o se rechace
+- Algunos metodos como `fetch()` directamente devuelven una promesa y se puede usar `then()` o `catch()` 
+```js
+// Promise creation
+let promise = new Promise(function(resolve, reject) {
+  let condition = true;
+  if(condition){
+    resolve("Your result here");
+  } else {
+    reject(new Error("Something happened"));
+  }
+})
+
+// Using .then, .catch & .finally
+promise.then(function(result) {
+  console.log(result);
+}).catch(function(error) {
+  console.log(error);
+}).finally(function() {
+  console.log("After all...");
+})
+```
+
+### Async/Await
+- ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas
+- **async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
+- `await`*operator makes your program behave as if it were waiting for the asynchronous computation to complete (but it does this without actually blocking, and it does not prevent other asynchronous operations from proceeding at the same time). The value of the await operator is the fulfillment value of the Promise object. Importantly, await is only legal within functions that have been declared asynchronous with the async keyword*
+```js
+// asnyc/await example
+async function fetchUserData() {
+  try {
+    let response = await
+    fetch('https://api.example.com/user');
+    let data = await response.json();
+    console.log(data);
+  } catch(error) {
+    console.error("Error:", error)
+  }
+}
+```
+
 ## Function declaration in JavaScript
 In JavaScript, you can define functions using either the `function` keyword or by assigning them to a variable using `let` or `const` declarations. The choice between these methods often depends on the specific use case and coding style preferences.
 
