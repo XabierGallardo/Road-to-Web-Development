@@ -1,3 +1,5 @@
+# [SQL W3](https://www.w3schools.com/sql/default.asp)
+
 # MySQL
 - MySQL is the most popular database system used with PHP
 - It's a free and open-source Relational Database Management System (RDBMS)

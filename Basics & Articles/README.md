@@ -136,7 +136,40 @@ Here's a brief explanation of each directory:
 This directory structure provides a logical organization of files and folders for a web application, separating concerns between client-side and server-side code, as well as organizing code into reusable components and modules. However, depending on the specific requirements and technologies used in your web application, you may need to adjust or extend this structure accordingly.
 
 
-# Computer Science
+## Arquitectura de Software
+*La arquitectura de software se refiere a la estructura fundamental y organización de un sistema de software.* Define los componentes del sistema, sus relaciones, las reglas y directrices que gobiernan su diseño y evolución. La arquitectura de software proporciona una visión de alto nivel del sistema y guía las decisiones de diseño y desarrollo durante todo el ciclo de vida del software.
+
+Algunos aspectos clave de la arquitectura de software son:
+
+1. **Componentes**:
+   - Los componentes son las partes fundamentales del sistema de software.
+   - Pueden ser *módulos, clases, servicios, APIs, bases de datos, interfaces de usuario, entre otros.*
+   - La arquitectura define qué componentes existen en el sistema y cómo se relacionan entre sí.
+
+2. **Relaciones**:
+   - Las relaciones entre componentes describen cómo se comunican y cooperan entre sí.
+   - Pueden ser relaciones de dependencia, comunicación, herencia, composición, entre otras.
+   - La arquitectura especifica las relaciones entre los diferentes componentes del sistema para lograr los objetivos deseados, como la modularidad, la cohesión y el bajo acoplamiento.
+
+3. **Patrones arquitectónicos**:
+   - Los patrones arquitectónicos son soluciones probadas para problemas recurrentes en el diseño de sistemas de software.
+   - *Definen estructuras de organización y comportamiento que guían la arquitectura de un sistema.*
+   - Algunos ejemplos de patrones arquitectónicos son la arquitectura en capas, la *arquitectura cliente-servidor*, la *arquitectura orientada a microservicios*, entre otros.
+
+4. **Decisiones de diseño**:
+   - La arquitectura de software guía las decisiones de diseño en todas las etapas del desarrollo del software.
+   - Incluye decisiones sobre tecnologías, plataformas, lenguajes de programación, frameworks, bibliotecas, etc.
+   - Estas decisiones se toman con el objetivo de cumplir con los requisitos funcionales y no funcionales del sistema, como el rendimiento, la escalabilidad, la seguridad y la mantenibilidad.
+
+5. **Evolución y mantenimiento**:
+   - La arquitectura de software debe ser flexible y adaptable para permitir la evolución del sistema a lo largo del tiempo.
+   - Debe ser capaz de incorporar cambios y nuevas funcionalidades sin comprometer la integridad y la estabilidad del sistema.
+   - El mantenimiento continuo de la arquitectura es necesario para garantizar que siga siendo relevante y efectiva a medida que cambian los requisitos y las tecnologías.
+
+En resumen, *la arquitectura de software es esencial para el diseño, desarrollo y evolución exitosos de sistemas de software complejos.* Proporciona una guía estructurada para la organización y el diseño del sistema, facilitando la comprensión, la colaboración y la gestión efectiva del desarrollo de software.
+
+# Theory
+## Computer Science
 Computer science is the subject that studies what computers can do.
 
 ## Brief history of Theoretical Computer Science
