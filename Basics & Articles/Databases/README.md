@@ -1,3 +1,8 @@
+# Bases de datos Relacionales vs No Relacionales
+<p align="center">
+   <img src="../../img/dbComparisons.jpeg" alt="Database comparisons">
+</p>
+
 # Desarrollo de una base de datos
 1. **Requisitos y análisis**:
    - Comprender los requisitos del sistema y las necesidades de almacenamiento de datos.

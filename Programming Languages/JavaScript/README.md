@@ -5,10 +5,42 @@
 - **Maps** are similar to objects but you can use anything as a key
 - **Sets** are a great choice to store data without duplicates
 
+## Object destructuring
+```js
+// Object destructuring is a way to extract properties from an object and assign them to variables. It makes working with objects simpler and easier to read
+
+const userProfile = {
+	name: 'Alex',
+	email: 'alex@example.com',
+	phone: '555-123-4567'
+}
+
+// Extracting name & email only and assigning them to new variables
+const { name, email } = userProfile;
+
+console.log(name + ", " + email); // Alex, alex@example.com
+```
+
 ## Callbacks, Promesas y Async/Await
 ### Callbacks
+```js
+// A callback function is a function that is passed as an argument to another function and it's executed after some operation/event is executed
+
+function sendMessage(message) {
+	console.log("Message: ", message);
+}
+
+function getMessage(sendMessage) {
+	const message = "This is the secret message";
+
+	sendMessage(message); // calling function to send message
+}
+
+getMessage(sendMessage); // Message: This is the secret message
+```
+
 - Un **callback** es una funcion que se pasa a otra funcion como argumento para ser llamada mas tarde
-- Los callbacks son tradicionales en el manejo de eventos en JavaScript, y tambi'en se usan en métodos de array y operaciones asícronas
+- *Los callbacks son tradicionales en el manejo de eventos en JavaScript, y también se usan en métodos de array y operaciones asícronas*
 - Los callbacks también son usados en métodos de array. Por ejemplo al `map()` le pasamos un callback que se llamara para transformar cada elemento
 - Uno de sus problemas es el callback hell, que consiste en anidar callbacks haciendo el codigo poco legible
 ```js
