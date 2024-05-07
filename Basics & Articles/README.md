@@ -1,3 +1,11 @@
+# Keys for good code
+1. Simplicity
+2. Readability
+3. Performance
+4. Maintainability
+5. Testability
+6. Reusability
+
 # Frontend roadmap
 - **HTML**: Tags, basic structure, forms, links, tables
 - **CSS**: Selectors, box model, positions, sizing, flexbox vs grid
