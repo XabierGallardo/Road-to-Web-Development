@@ -1,3 +1,4 @@
+# Angular :a:
 # 0. Conceptos basicos
 ### 0.1 Que es Angular?
 Angular es un framework de desarrollo de aplicaciones que permite crear aplicaciones de una sola página, SPAs. Es de codigo abierto y utiliza TypeScript. 
@@ -151,7 +152,7 @@ Son una parte fundamental de la arquitectura de la aplicación. Ayudan a dividir
 
 Un módulo es un mecanismo de organización y encapsulación que se utiliza para agrupar componentes, directivas, pipes (filtros) y servicios para proporcionar funcionalidades específicas a una aplicación. 
 
-Un módulo en Angular se define mediante la decoración `@NgModule`, que se importa desde `@angular/core`. Al definir un módulo, puedes especificar qué componentes, directivas, pipes y servicios pertenecen a ese módulo, así como también qué otros módulos necesita importar.
+Un módulo en Angular se define mediante la decoración `@NgModule`, que se importa desde `@angular/core`. *Al definir un módulo, puedes especificar qué componentes, directivas, pipes y servicios pertenecen a ese módulo, así como también qué otros módulos necesita importar.*
 
 Los módulos en Angular pueden dividirse en dos tipos principales:
 
@@ -159,9 +160,10 @@ Los módulos en Angular pueden dividirse en dos tipos principales:
 
 2. **Módulos de funcionalidad (Feature Modules)**: Estos son módulos que encapsulan características específicas de la aplicación, como funcionalidades relacionadas con la autenticación, el enrutamiento, el formulario, etc. Los módulos de funcionalidad permiten organizar el código de la aplicación en unidades lógicas y promueven la reutilización. Por lo general, cada característica importante de la aplicación tiene su propio módulo de funcionalidad.
 
-En resumen, los módulos en Angular son contenedores que encapsulan y organizan el código de la aplicación en unidades lógicas y cohesivas, lo que facilita su desarrollo, mantenimiento y escalabilidad.
+En resumen, **el modulo es la división organizativa**, los módulos son contenedores que encapsulan y organizan el código de la aplicación en unidades lógicas y cohesivas, lo que facilita su desarrollo, mantenimiento y escalabilidad.
 
-Son la forma en que se organiza la aplicación, los módulos no se ven, los componentes sí. Son unidades organizativas, encapsulan funcionalidades, dividen la aplicación, importan y exportan elementos, registran proveedores y evitan conflictos de nombres.
+*Son la forma en que se organiza la aplicación, los módulos no se ven, los componentes sí. Son unidades organizativas, encapsulan funcionalidades, dividen la aplicación, importan y exportan elementos, registran proveedores y evitan conflictos de nombres.*
+
 ```sh
 ng generate module module-name
 ```
@@ -188,7 +190,7 @@ import { AppComponent } from './app.component'; // Mi componente
 })
 export class AppModule { }
 ```
-**El modulo es la división organizativa**
+
 
 
 
@@ -207,12 +209,12 @@ Cada componente consta de tres partes principales:
 
 Los componentes son la piedra angular de la arquitectura de una aplicación Angular y se utilizan para construir la interfaz de usuario de manera modular y reutilizable. Cada componente representa una parte específica de la aplicación y se puede integrar fácilmente en otras partes de la aplicación según sea necesario.
 
-Angular utiliza el Atomic Design, consiste en diseñar en cadena bloques reutilizablesz. Toda la pantalla acaba siendo un componente grande compuesto a su vez por otros componentes
+Angular utiliza el Atomic Design, consiste en diseñar en cadena bloques reutilizables. Toda la pantalla acaba siendo un componente grande compuesto a su vez por otros componentes
 
 
-Para crear un componente en Angular, se utiliza el comando `ng generate component` o su forma abreviada `ng g c nombrecomponente`. Este comando crea automáticamente los archivos necesarios para el componente, incluida la clase de componente, la plantilla y los estilos, y los coloca en la ubicación adecuada dentro del proyecto.
+Para crear un componente en Angular, se utiliza el comando `ng generate component` o su forma abreviada `ng g c nombre-componente`. Este comando crea automáticamente los archivos necesarios para el componente, incluida la clase de componente, la plantilla y los estilos, y los coloca en la ubicación adecuada dentro del proyecto. El más recomendado es `ng g c components/nuevo-componente`
 
-### El comando `n g c padre` nos agrega automaticamente nuestro nuevo componente al modulo raiz! `app.module.ts`
+### El comando `n g c components/padre` nos agrega automaticamente nuestro nuevo componente al modulo raiz! `app.module.ts`
 ```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -269,3 +271,110 @@ export class AppComponent implements OnInit {
 - **El archivo HTML de la plantilla**: `component-name.component.html`
 - **El archivo de estilos**: `component-name.component.css`
 - **El archivo de prueba**: `component-name.component.specs.ts`
+
+
+# 4. Binding o Enlace de datos
+
+Es el ida y vuelta de datos entre la vista y el controlador en un componente. 
+
+<p>
+  <img src="img/binding-esquema.jpeg" alt="Esquema de binding">
+</p>
+
+En Angular, el data binding es una característica fundamental que permite establecer una conexión bidireccional entre el modelo de datos de la aplicación y la interfaz de usuario (UI). Esto *significa que los cambios en el modelo de datos se reflejan automáticamente en la UI, y viceversa, sin necesidad de escribir código manualmente para sincronizar los datos*.
+
+El data binding en Angular se puede dividir en tres tipos principales:
+
+1. **Interpolación ({{ }})**: La interpolación se utiliza para mostrar valores de propiedades del componente en la plantilla HTML. Se utiliza la sintaxis de doble llave `{{ }}` para insertar dinámicamente el valor de una expresión del componente en la plantilla.
+
+   Ejemplo:
+   ```html
+   <h1>{{ title }}</h1>
+   ```
+
+2. **Enlace de propiedades (Property Binding)**: El enlace de propiedades permite establecer el valor de un atributo de HTML dinámicamente en función de una propiedad del componente. Se utiliza la sintaxis de corchetes `[]` para enlazar una propiedad del componente con un atributo HTML.
+
+   Ejemplo:
+   ```html
+   <img [src]="imageUrl">
+   ```
+
+3. **Enlace de eventos (Event Binding)**: El enlace de eventos permite responder a eventos del usuario, como clics de botón, pulsaciones de teclas, etc., y ejecutar funciones en respuesta a esos eventos en el componente. Se utiliza la sintaxis de paréntesis `()` para enlazar eventos del DOM con métodos del componente.
+
+   Ejemplo:
+   ```html
+   <button (click)="onClick()">Click me</button>
+   ```
+
+Además de estos tipos de data binding, Angular también ofrece la capacidad de realizar data binding bidireccional con `ngModel`, que combina la funcionalidad de enlace de propiedades y enlace de eventos para permitir la sincronización automática de datos entre un elemento de formulario HTML y una propiedad del componente.
+
+En resumen, el data binding en Angular facilita la sincronización de datos entre el modelo y la vista de una aplicación, lo que permite una experiencia de usuario dinámica y receptiva sin la necesidad de escribir mucho código manualmente. Entre sus características están:
+
+- **Conexión automática**: Sincroniza datos entre el modelo y la vista
+- **Unidireccional**: Los cambios en el modelo se reflejan en la vista
+- **Bidireccional**: Los cambios en la vista actualizan el modelo
+- **Reactivo**: utiliza observables para actualizaciones en tiempo real
+- **Simplifica la interacción**: Facilita la creación de aplicaciones interactivas
+- **Automatiza las actualizaciones**: Los cambios se reflejan sin intervención manual
+
+En nuestro nuevo componente `ng g c components/contador`
+```ts
+// contador.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-contador',
+  templateUrl: './contador.component.ts',
+  stylesUrls: ['./contador.component.css']
+})
+export class ContadorComponent {
+  valorContador: number = 0; // binding de propiedad
+
+  incrementar() {
+    this.valorContador++;
+  }
+
+  decrementar() {
+    this.valorContador--;
+  }
+}
+```
+
+```html
+<!-- contador.component.html -->
+<p>contador works!</p>
+<h1>Contador: {{ valorContador }}</h1>
+<button (click)="incrementar()">Incrementar</button>
+<button (click)="decrementar()">Decrementar</button>
+```
+
+<p>
+  <img src="img/contador-component.png" alt="Componente contador">
+</p>
+
+### Metadata
+La metadata es la información adicional que se proporciona mediante decoradores para configurar y definir el comportamiento de una clase, un componente, un servicio o cualquier otra estructura en una aplicación Angular.
+
+La metadata se utiliza en Angular para decorar clases y proporcionar información sobre cómo deben comportarse esas clases en tiempo de ejecución. Los decoradores son funciones que modifican el comportamiento de las clases a las que se aplican.
+
+La metadata en Angular se define utilizando decoradores especiales proporcionados por el framework. Algunos de los decoradores más comunes utilizados para definir metadata en Angular incluyen:
+
+1. **@NgModule**: Se utiliza para decorar clases de módulo y proporcionar información sobre cómo se compila y ejecuta el módulo.
+
+2. **@Component**: Se utiliza para decorar clases de componente y proporcionar información sobre cómo se debe crear y procesar el componente.
+
+3. **@Injectable**: Se utiliza para decorar clases de servicio y proporcionar información sobre cómo se debe crear y proporcionar el servicio en la aplicación.
+
+4. **@Directive**: Se utiliza para decorar clases de directiva personalizada y proporcionar información sobre cómo se debe comportar la directiva.
+
+5. **@Input** y **@Output**: Se utilizan para decorar propiedades y eventos de componente respectivamente, para permitir el enlace de datos y la comunicación entre componentes.
+
+
+Entre sus características:
+- **Configuración**: Define cómo se comportan las partes de la aplicación
+- **Decoradores**: Se utiliza con decoradores como `@Component`, `@NgModule` o `@Injectable`
+- **Personalización**: Ajusta el comportamiento con propiedades clave
+- **Componente**: Metadata para componentes, incluye plantilla y estilos
+- **Módulo**: Configuración de módulos como declaraciones e importaciones
+- **Servicio**: Metadata para servicios, define su alcance y proveedores
+- **Directiva**: Define metadata de directivas personalizadas como selectores
