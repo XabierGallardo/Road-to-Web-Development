@@ -378,3 +378,133 @@ Entre sus características:
 - **Módulo**: Configuración de módulos como declaraciones e importaciones
 - **Servicio**: Metadata para servicios, define su alcance y proveedores
 - **Directiva**: Define metadata de directivas personalizadas como selectores
+
+
+
+
+
+# 5. Comunicacion entre Componentes / Input-Output
+### Version resumida Input Output
+En Angular, se pueden enviar datos entre componentes utilizando las propiedades de entrada (`@Input`) y las propiedades de salida (`@Output`). 
+
+1. **Propiedades de entrada (`@Input`)**:
+   - Las propiedades de entrada se utilizan para pasar datos desde un componente padre a un componente hijo.
+   - Se definen en el componente hijo utilizando el decorador `@Input`.
+   - En el componente padre, se enlazan con valores de la plantilla utilizando la sintaxis de enlace de propiedades `[]`.
+   - Cuando el valor de la propiedad de entrada cambia en el componente padre, se refleja automáticamente en el componente hijo.
+
+   Ejemplo:
+   ```typescript
+   // En el componente hijo
+   @Input() inputValue: string;
+   ```
+
+   ```html
+   <!-- En el componente padre -->
+   <app-child [inputValue]="parentValue"></app-child>
+   ```
+
+2. **Propiedades de salida (`@Output`)**:
+   - Las propiedades de salida se utilizan para emitir eventos desde un componente hijo hacia un componente padre.
+   - Se definen en el componente hijo utilizando el decorador `@Output`, que se asocia con un EventEmitter.
+   - Cuando ocurre un evento en el componente hijo, se emite a través de la propiedad de salida y puede ser capturado por el componente padre.
+   - En el componente padre, se enlazan con manejadores de eventos utilizando la sintaxis de enlace de eventos `()`.
+   
+   Ejemplo:
+   ```typescript
+   // En el componente hijo
+   @Output() outputEvent = new EventEmitter<string>();
+
+   emitEvent() {
+     this.outputEvent.emit('data from child');
+   }
+   ```
+
+   ```html
+   <!-- En el componente padre -->
+   <app-child (outputEvent)="handleEvent($event)"></app-child>
+   ```
+
+### Padre -> Hijo / @Input() 
+1. En el componente hijo, puedes definir propiedades de entrada utilizando el decorador `@Input()`. Estas propiedades representarán los datos que se esperan recibir del componente padre
+```ts
+// Componente hijo
+@Input() datoEntrada : string;
+```
+
+2. En el componente padre, puedes vincular datos a la propiedad de entrada del componente hijo utilizando la sintaxis de corchetes `[]` en el template
+```html
+<!-- padre.component.html -->
+<app-hijo [datoEntrada]="valorDesdePadre"></app-hijo>
+```
+
+
+3. Cuando el valor de la propiedad en el componente padre cambia, Angular actualiza automaticamente la propiedad de entrada en el componente hijo, asi se mantienen sincronizados los datos entre componentes
+```ts
+// Componente padre
+valorDesdePadre = "Hola mundo!";
+```
+
+4. En el componente hijo, puedes utilizar la propiedad de entrada (datoEntrada) como cualquier otra propiedad local y mostrarla en el template
+```html
+<!-- Componente hijo html -->
+<p>{{ datoEntrada }}</p
+
+```
+
+
+### Hijo -> Padre / @Output()
+1. Se usa `@Output` y `EventEmitter` para lograr la comunicación entre un componente hijo y su componente padre. Declaras una propiedad con `@Output` en el componente hijo y emites eventos con `EventEmitter`
+```ts
+// hijo.component.ts
+@Output() messageEvent = new EventEmitter<string>();
+message: string = '';
+
+sendMessage() {
+  this.messageEvent.emit(this.message);
+}
+```
+
+2. Este archivo HTML contiene la IU del componenente hijo. Incluye un input para que el usuario ingrese un mensaje y un boton para enviarlo. Utiliza `ngModel` para vincular el input con la propiedad message del componente TypeScript.
+```html
+<!-- hijo.component.html -->
+<div>
+  <label for="childInput">Mensaje:</label>
+  <input id="childInput" [(ngModel)]="Message" />
+  <button (click)="sendMessage()">Enviar Mensaje</button>
+</div>
+```
+
+3. El archivo TypeScript define el componente ParentComponent, que tiene una propiedad (receivedMessage) que actualiza esta propiedad cuando se emite el evento desde el componente hijo
+```ts
+// padre.component.ts
+receivedMessage: string = '';
+
+receiveMessage(message: string) {
+  this.receivedMessage = message;
+}
+```
+
+4. La plantilla HTML del componente padre incluye el componente hijo app-child y utiliza el evento de salida messageEvent para llamar al método receiveMessage cuando se emite un mensaje desde el componente hijo. Muestra el mensaje recibido en la interfaz del componente padre.
+```html
+<!-- padre.component.html -->
+<div>
+  <app-child (messageEvent)="receiveMessage($event)"></app-child>
+  <p>Mensaje recibido en el padre: {{ receivedMessage }}</p>
+</div>
+```
+
+
+
+
+
+# 5. Servicios y Dependencias
+En Angular, los servicios son clases que se utilizan para organizar y compartir lógica de negocio, funciones y datos entre diferentes partes de una aplicación. Los servicios son una parte fundamental de la arquitectura de una aplicación Angular y se utilizan para centralizar la lógica que no pertenece directamente a un componente en particular, como el acceso a datos externos, la manipulación de datos, la autenticación, etc.
+
+Los servicios en Angular se definen como clases decoradas con el decorador `@Injectable()`. Esto les permite ser inyectados como dependencias en otros componentes, directivas o servicios utilizando el mecanismo de inyección de dependencias de Angular.
+
+La inyección de dependencias es un patrón de diseño que se utiliza en Angular para gestionar las dependencias entre diferentes partes de una aplicación de manera eficiente y desacoplada. Con la inyección de dependencias, los servicios se pueden inyectar en los componentes que los necesitan en lugar de que los componentes creen o gestionen directamente las instancias de los servicios.
+
+Las dependencias en Angular son los objetos o instancias que un componente, directiva o servicio necesita para realizar su trabajo. Estas dependencias pueden ser otros servicios, módulos, servicios externos, o incluso instancias de clases personalizadas. Angular se encarga de gestionar la creación y la inyección de dependencias automáticamente, lo que simplifica la configuración y el mantenimiento de la aplicación.
+
+En resumen, los servicios y las dependencias son conceptos fundamentales en Angular que se utilizan para organizar y compartir la lógica de la aplicación de manera modular, reutilizable y desacoplada. Los servicios encapsulan la lógica de negocio y los datos, mientras que la inyección de dependencias permite a los componentes y otros servicios acceder a estas funcionalidades de manera sencilla y eficiente.
