@@ -499,12 +499,46 @@ receiveMessage(message: string) {
 
 
 # 5. Servicios y Dependencias
-En Angular, los servicios son clases que se utilizan para organizar y compartir lógica de negocio, funciones y datos entre diferentes partes de una aplicación. Los servicios son una parte fundamental de la arquitectura de una aplicación Angular y se utilizan para centralizar la lógica que no pertenece directamente a un componente en particular, como el acceso a datos externos, la manipulación de datos, la autenticación, etc.
+### Resumen de servicios, inyección y dependencias
+En Angular, **los servicios** son clases que se utilizan para organizar y compartir lógica de negocio, funciones y datos entre diferentes partes de una aplicación. **Se utilizan para centralizar la lógica que no pertenece directamente a un componente en particular, como el acceso a datos externos, la manipulación de datos, la autenticación, etc.**
 
 Los servicios en Angular se definen como clases decoradas con el decorador `@Injectable()`. Esto les permite ser inyectados como dependencias en otros componentes, directivas o servicios utilizando el mecanismo de inyección de dependencias de Angular.
 
-La inyección de dependencias es un patrón de diseño que se utiliza en Angular para gestionar las dependencias entre diferentes partes de una aplicación de manera eficiente y desacoplada. Con la inyección de dependencias, los servicios se pueden inyectar en los componentes que los necesitan en lugar de que los componentes creen o gestionen directamente las instancias de los servicios.
+La inyección de dependencias es un patrón de diseño que se utiliza en Angular para gestionar las dependencias entre diferentes partes de una aplicación de manera eficiente y desacoplada. **Con la inyección de dependencias, los servicios se pueden inyectar en los componentes que los necesitan en lugar de que los componentes** creen o gestionen directamente las instancias de los servicios.
 
-Las dependencias en Angular son los objetos o instancias que un componente, directiva o servicio necesita para realizar su trabajo. Estas dependencias pueden ser otros servicios, módulos, servicios externos, o incluso instancias de clases personalizadas. Angular se encarga de gestionar la creación y la inyección de dependencias automáticamente, lo que simplifica la configuración y el mantenimiento de la aplicación.
+**Las dependencias en Angular son los objetos o instancias que un componente, directiva o servicio necesita para realizar su trabajo. Estas dependencias pueden ser otros servicios, módulos, servicios externos**, o incluso instancias de clases personalizadas. Angular se encarga de gestionar la creación y la inyección de dependencias automáticamente, lo que simplifica la configuración y el mantenimiento de la aplicación.
 
 En resumen, los servicios y las dependencias son conceptos fundamentales en Angular que se utilizan para organizar y compartir la lógica de la aplicación de manera modular, reutilizable y desacoplada. Los servicios encapsulan la lógica de negocio y los datos, mientras que la inyección de dependencias permite a los componentes y otros servicios acceder a estas funcionalidades de manera sencilla y eficiente.
+
+### Que son los Servicios?
+Otra manera de comunicar nuestros componentes es a través de los servicios.
+
+Un servicio es una clase typescript que se utiliza para organizar y compartir lógica, datos o funcionalidades comunes entre diferentes componentes de una aplicación. Los servicios son una parte fundamental de la arquitectura de Angular y proporcionan una **forma de centralizar y reutilizar la lógica que no está relacionada directamente con la IU**.
+Así como los componentes nos permiten reutilizar fragmentos de código en la IU, los servicios nos permiten reutilizar fragmentos de código de lógica. Entre sus características destacamos
+
+- **Reutilización**: Lógica compartida
+- **Separación de preocupaciones**: Divide lógica e IU
+- **Inyección de dependencias**: Instancias proporcionadas
+- **Centralización de datos**: Almacena y gestiona datos compartidos
+- **Comunicación entre componentes**: Facilita la comunicación
+- **Lifecycle independiente**: No vinculado a vistas
+- **Testeabilidad**: Fácil de probar
+
+```sh
+ng generate service nombre-servicio
+
+ng g s nombre-servico
+```
+
+```ts
+import { Injectable } from '@angular/core';
+
+@Injectable({
+  provideIn: 'root'
+})
+export class MiServicioService {
+  
+  constructor() { }
+  // Metodos y lógica del servicio
+}
+```
