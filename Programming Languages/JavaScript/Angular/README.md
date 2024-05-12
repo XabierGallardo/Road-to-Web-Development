@@ -514,7 +514,7 @@ En resumen, los servicios y las dependencias son conceptos fundamentales en Angu
 Otra manera de comunicar nuestros componentes es a través de los servicios.
 
 Un servicio es una clase typescript que se utiliza para organizar y compartir lógica, datos o funcionalidades comunes entre diferentes componentes de una aplicación. Los servicios son una parte fundamental de la arquitectura de Angular y proporcionan una **forma de centralizar y reutilizar la lógica que no está relacionada directamente con la IU**.
-Así como los componentes nos permiten reutilizar fragmentos de código en la IU, los servicios nos permiten reutilizar fragmentos de código de lógica. Entre sus características destacamos
+*Así como los componentes nos permiten reutilizar fragmentos de código en la IU, los servicios nos permiten reutilizar fragmentos de código de lógica. Entre sus características destacamos*
 
 - **Reutilización**: Lógica compartida
 - **Separación de preocupaciones**: Divide lógica e IU
@@ -542,3 +542,183 @@ export class MiServicioService {
   // Metodos y lógica del servicio
 }
 ```
+En nuestro componente se puede inyectar el servicio de la siguiente manera
+```ts
+// Metodo 1 de inyeccion de dependencias
+constructor(
+  private _nuevoServicio: NuevoServicioService
+) { }
+
+// Metodo 2 de inyeccion de dependencias
+private _nuevoServicio = inject(NuevoServicioService)
+```
+
+
+
+
+
+# 6. Directivas
+### Que son las directivas?
+Son instrucciones en el marcado HTML que proporcionan funcionalidad adicional a los elementos DOM o personalizan su comportamiento. Son un componente clave en la construcción de aplicaciones web en Angular ya que permiten extender y manipular el DOM de manera declarativa, lo que facilita la creación e interfaces de usuario dinámicas e interactivas.
+
+- **Instrucciones HTML**: Extienden o personalizan elementos HTML
+- **Directivas Incorporadas**: Ofrecen funcionalidad predefinida
+- **Directivas Estructurales**: Manipulan la estructura del DOM
+- **Directivas de Atributos**: Cambian atributos y propiedades
+- **Directivas de Eventos**: Capturan y responden a eventos del usuario
+- **Directivas Personalizadas**: Creadas para necesidades específicas
+- **Inyección de Dependencias**: Acceso a servicios y datos
+- **Flexibilidad de Aplicación**: Se pueden aplicar como atributos o elementos
+
+```sh
+# Crear una directiva
+ng generate directive nombre-directiva
+ng g d nombre-directiva
+```
+Nuestra directiva se ve de la siguiente forma
+```ts
+// nombre-directiva.directive.ts
+import { Directive, ElementRef } from '@angular/core';
+
+@Directive({
+  selector: '[appMiDirectiva]'
+})
+export class MiDirectivaDirective {
+  constructor(private el: ElementRef) {
+    // Accede al elemento del DOM en el que se aplica la directiva (this.el.nativeElement)
+    this.el.nativeElement.style.backgroundColor = 'yellow';
+  }
+}
+```
+Se llama a nuestra directiva con el tag HTML
+```html
+<div appMiDirectiva>
+  <!-- Se pondra de color amarillo como indicamos arriba -->
+  Este es un elemento con mi directiva personalizada.
+</div>
+```
+
+La directiva no sólo sirve para poner estilos, se usa mucho para ocultar si no tiene permisos, poner en mayúsculas el texto, etc.
+Todo lo que se escribe al lado de los tags son directivas
+
+
+## Directivas estructurales y Directivas de atributo
+### Resumen
+Las directivas en Angular son una característica clave que permite agregar comportamiento dinámico y manipular la estructura del DOM (Document Object Model) en una aplicación Angular. Las directivas pueden ser personalizadas o predefinidas y se utilizan para extender el lenguaje HTML con funcionalidades adicionales.
+
+Hay dos tipos principales de directivas en Angular:
+
+1. **Directivas Estructurales**: Estas directivas modifican la estructura del DOM añadiendo, eliminando o reemplazando elementos HTML en función de ciertas condiciones.
+
+   - **ngIf**: La directiva `ngIf` muestra o elimina un elemento HTML basado en una expresión booleana.
+   - **ngFor**: La directiva `ngFor` repite un elemento HTML basado en una colección de datos.
+   - **ngSwitch**: La directiva `ngSwitch` muestra uno de varios elementos HTML basado en el valor de una expresión.
+
+2. **Directivas de Atributos**: Estas directivas modifican el comportamiento o la apariencia de los elementos HTML existentes agregando o eliminando atributos.
+
+   - **ngModel**: La directiva `ngModel` proporciona enlace bidireccional de datos para los elementos de formulario.
+   - **ngClass**: La directiva `ngClass` añade o elimina clases CSS de un elemento HTML basado en una expresión.
+   - **ngStyle**: La directiva `ngStyle` añade o elimina estilos CSS de un elemento HTML basado en una expresión.
+
+Además de las directivas integradas de Angular, también podes crear tus propias directivas personalizadas para encapsular comportamientos o manipulaciones específicas del DOM que necesites en tu aplicación.
+
+Las directivas en Angular son una poderosa herramienta para crear aplicaciones dinámicas y flexibles, permitiendo la manipulación del DOM de manera declarativa y manteniendo un código limpio y mantenible.
+
+
+
+
+
+# 7. Pipes
+### Resumen
+Los pipes en Angular son una característica que permite transformar datos en la interfaz de usuario de manera declarativa en las plantillas HTML. Los pipes se utilizan para formatear, filtrar y transformar datos antes de que se muestren en la vista de la aplicación.
+
+1. **Formateo de Datos**: Los pipes se utilizan comúnmente para formatear datos en diferentes formatos, como fechas, números, monedas, etc. Angular proporciona varios pipes integrados para este propósito, como `DatePipe`, `DecimalPipe`, `CurrencyPipe`, entre otros.
+
+   ```html
+   <p>{{ fecha | date:'dd/MM/yyyy' }}</p>
+   <p>{{ cantidad | currency:'USD':'symbol':'1.2-2' }}</p>
+   ```
+
+2. **Filtrado de Datos**: Los pipes también se pueden utilizar para filtrar datos en una lista o colección, mostrando sólo los elementos que cumplan ciertos criterios.
+
+   ```html
+   <ul>
+     <li *ngFor="let producto of productos | filter:'categoria':'electrónica'">{{ producto.nombre }}</li>
+   </ul>
+   ```
+
+3. **Ordenación de Datos**: Los pipes pueden ordenar una lista de elementos basados en ciertos criterios, como el nombre, la fecha, el valor numérico, etc.
+
+   ```html
+   <ul>
+     <li *ngFor="let producto of productos | orderBy:'nombre'">{{ producto.nombre }}</li>
+   </ul>
+   ```
+
+4. **Personalización de Pipes**: También puedes crear tus propios pipes personalizados para adaptarse a tus necesidades específicas. Esto se hace creando una clase TypeScript que implementa la interfaz `PipeTransform` y proporciona la lógica de transformación deseada.
+
+   ```typescript
+   import { Pipe, PipeTransform } from '@angular/core';
+
+   @Pipe({
+     name: 'miPipePersonalizado'
+   })
+   export class MiPipePersonalizado implements PipeTransform {
+     transform(valor: any, ...args: any[]): any {
+       // Implementa la lógica de transformación aquí
+     }
+   }
+   ```
+
+   ```html
+   <p>{{ dato | miPipePersonalizado }}</p>
+   ```
+
+En resumen, los pipes en Angular son una forma poderosa y flexible de transformar datos en las plantillas HTML, permitiendo formatear, filtrar y ordenar datos de manera declarativa y mantener así una interfaz de usuario dinámica y rica en funcionalidades.
+
+### Que son los Pipes?
+Son una característica que permite formatear y transformar datos en la vista de una aplicación web de manera sencilla y legible.
+Los pipes son funciones que toman un valor de entrada y lo procesan para proporcionar una representación modificada o formateada en la IU.
+
+Los pipes se usan en las plantillas HTML de Angular y se aplican utilizando el símbolo `|`. Algunos ejemplos comunes de uso de pipes incluyen el formateo de fechas, números, monedas, texto en mayúsculas o minúsculas, etc.
+
+*Angular proporciona una serie de pipes integrados, como DatePipe, UpperCasePipe, LowerCasePipe, CurrencyPipe, DecimalPipe, PercentPipe, etc.*
+También podes crear tus propios pipes personalizados cuando necesites realizar transformaciones específicas.
+
+- **Formateo de Datos**: Transforma datos para presentarlos
+- **Sintaxis de Pipe**: Se aplica en plantillas con `|`
+- **Pipes Integrados**: Angular propociona pipes predefinidos
+- **Pipes Encadenados**: Se pueden combinar varios pipes
+- **Pipes Personalizados**: Creados para necesidades específicas
+- **Parámetros de Pipe**: Aceptan configuración adicional
+- **Inmutabilidad**: No alteran los datos originales
+
+```sh
+# Generar un pipe
+ng generate pipe nombre-pipe
+ng g p nombre-pipe
+```
+Nuestro pipe se ve de la siguiente forma
+```ts
+// nombre-pipe.pipe.ts
+import { Pipe, PipeTransform } from '@angular/core';
+
+@Pipe({
+  name: 'miPipe'
+})
+export class MiPipe implements PipeTransform {
+
+  transform(valor: any): any {
+
+    // Implementa la logica de transformacion
+    return valor.toUpperCase();
+  }
+}
+```
+
+Se aplica de la siguiente manera
+```html
+<p>{ texto | miPipe }}</p>
+```
+
+La inmutabilidad quiere decir que la variable mantiene su formato original. El pipe muestra la forma que queremos pero sin cambiar el valor original

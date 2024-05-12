@@ -1,3 +1,112 @@
+# POO en TypeScript
+1. **Clases**: Las clases son la base de la programación orientada a objetos en TypeScript. Se definen utilizando la palabra clave `class` y pueden contener propiedades y métodos.
+
+   ```typescript
+   class Persona {
+       nombre: string;
+       edad: number;
+
+       constructor(nombre: string, edad: number) {
+           this.nombre = nombre;
+           this.edad = edad;
+       }
+
+       saludar() {
+           console.log(`Hola, soy ${this.nombre} y tengo ${this.edad} años.`);
+       }
+   }
+   ```
+
+2. **Objetos**: Los objetos son instancias de una clase. Se crean utilizando el operador `new`.
+
+   ```typescript
+   let persona1 = new Persona("Juan", 30);
+   ```
+
+3. **Propiedades y Métodos**: Las clases pueden tener propiedades (variables) y métodos (funciones) que definen su comportamiento.
+
+4. **Herencia**: TypeScript soporta la herencia de clases, lo que permite que una clase herede propiedades y métodos de otra clase.
+
+   ```typescript
+   class Estudiante extends Persona {
+       grado: string;
+
+       constructor(nombre: string, edad: number, grado: string) {
+           super(nombre, edad);
+           this.grado = grado;
+       }
+
+       estudiar() {
+           console.log(`${this.nombre} está estudiando en ${this.grado}.`);
+       }
+   }
+   ```
+
+5. **Interfaces**: Las interfaces en TypeScript se utilizan para definir la estructura de los objetos y garantizar que las clases implementen ciertos métodos o propiedades.
+
+   ```typescript
+   interface Animal {
+       nombre: string;
+       hacerSonido(): void;
+   }
+
+   class Perro implements Animal {
+       nombre: string;
+
+       constructor(nombre: string) {
+           this.nombre = nombre;
+       }
+
+       hacerSonido() {
+           console.log("Guau");
+       }
+   }
+   ```
+
+6. **Modificadores de Acceso**: TypeScript proporciona modificadores de acceso (`public`, `private` y `protected`) para controlar el acceso a propiedades y métodos de una clase.
+
+   ```typescript
+   class Coche {
+       private marca: string;
+       protected modelo: string;
+
+       constructor(marca: string, modelo: string) {
+           this.marca = marca;
+           this.modelo = modelo;
+       }
+   }
+   ```
+
+7. **Getters y Setters**: Los getters y setters son métodos especiales que permiten acceder y modificar propiedades de una clase de manera controlada.
+
+   ```typescript
+   class Producto {
+       private _precio: number;
+
+       get precio(): number {
+           return this._precio;
+       }
+
+       set precio(nuevoPrecio: number) {
+           if (nuevoPrecio > 0) {
+               this._precio = nuevoPrecio;
+           } else {
+               console.error("El precio debe ser mayor que 0");
+           }
+       }
+
+       constructor(precio: number) {
+           this._precio = precio;
+       }
+   }
+
+   let producto = new Producto(50);
+   console.log(producto.precio); // Devuelve 50
+   producto.precio = 60; // Utiliza el setter
+   console.log(producto.precio); // Devuelve 60
+   ```
+
+
 # [ES TypeScript](https://ed.team/cursos/typescript)
 ## Lenguajes dinámicos vs lenguajes tipados
 Al no ser un lenguaje tipado, JavaScript puede traer problemas a veces, si sumamos un entero con un string, JavaScript simplemente suma:
