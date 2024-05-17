@@ -1,6 +1,24 @@
 # Angular :a:
 # 0. Conceptos basicos
-### 0.1 Que es Angular?
+
+### 0.1 Que es una SPA?
+Una SPA es una forma moderna de construir aplicaciones web que ofrece una experiencia de usuario más fluida y receptiva al cargar una sola página HTML inicial y actualizar dinámicamente el contenido en respuesta a las acciones del usuario, todo dentro del navegador web.
+En lugar de cargar páginas completamente nuevas desde el servidor, en una SPA, toda la interfaz de usuario se construye y se actualiza dinámicamente en el navegador web a medida que el usuario interactúa con la aplicación, sin la necesidad de recargar la página. Entre sus características están:
+
+1. **Carga inicial rápida**: Cuando un usuario accede a una SPA por primera vez, se carga una única página HTML inicial que contiene la estructura básica de la aplicación y los recursos necesarios, como JavaScript, CSS y posiblemente algunas plantillas de contenido.
+
+2. **Interacciones sin recarga de página**: Una vez que la SPA se ha cargado inicialmente, todas las interacciones del usuario, como hacer clic en enlaces, enviar formularios o interactuar con elementos de la interfaz, se manejan a través de JavaScript. En lugar de cargar páginas completamente nuevas desde el servidor, la SPA utiliza JavaScript para hacer solicitudes al servidor y actualizar dinámicamente el contenido de la página actual en función de la respuesta del servidor.
+
+3. **Navegación fluida**: La navegación en una SPA es fluida y rápida, ya que las transiciones entre vistas se realizan de forma dinámica en el navegador, sin la necesidad de cargar una nueva página desde el servidor.
+
+4. **Mejora de la experiencia del usuario**: Debido a su enfoque en la actualización dinámica del contenido y la navegación fluida, las SPAs suelen ofrecer una experiencia de usuario más interactiva y receptiva en comparación con las aplicaciones web tradicionales.
+
+5. **Frameworks y bibliotecas populares**: Hay varios frameworks y bibliotecas populares para desarrollar SPAs, como React, Angular, Vue.js, entre otros. Estas herramientas proporcionan funcionalidades avanzadas y patrones de desarrollo que facilitan la construcción de aplicaciones web modernas y eficientes.
+
+6. **Gestión del estado**: Dado que las SPAs tienden a ser más complejas en términos de interacciones y vistas dinámicas, a menudo *requieren una gestión avanzada del estado de la aplicación*. Los frameworks y bibliotecas modernas proporcionan *herramientas para facilitar esta gestión del estado, como el uso de componentes reactivos, patrones de diseño como Flux o Redux, y el enlace de datos bidireccional*.
+
+
+### 0.2 Que es Angular?
 Angular es un framework de desarrollo de aplicaciones que permite crear aplicaciones de una sola página, SPAs. Es de codigo abierto y utiliza TypeScript. 
 
 Es un framework o marco de trabajo rígido y robusto, lo que nos permite construír apps sólidas y estrictas. Se trabaja de una forma muy particular y poco flexible, al contrario que la librería React.js. 
@@ -15,7 +33,63 @@ Entre sus características se destacan:
 6. **Enrutamiento**: Angular ofrece un enrutador incorporado que permite a los desarrolladores gestionar las rutas y la navegación dentro de una app de forma eficiente
  
 
-### 0.2 Que es MVC?
+### 0.3 Que es MVC?
+#### MVC en Angular con ejemplos
+Angular se basa en el patrón de diseño Modelo-Vista-Controlador (MVC), que es un enfoque de arquitectura de software que separa la aplicación en tres componentes principales: Modelo, Vista y Controlador.
+
+1. **Modelo (Model)**:
+   - El Modelo representa los datos y el estado de la aplicación. Esto puede incluir datos de usuario, datos de la aplicación, información de configuración, etc.
+   - En Angular, los Modelos se definen utilizando clases TypeScript o interfaces para representar la estructura de los datos.
+
+   Ejemplo en Angular:
+   ```typescript
+   export class Usuario {
+       id: number;
+       nombre: string;
+       email: string;
+   }
+   ```
+
+2. **Vista (View)**:
+   - La Vista es la interfaz de usuario con la que interactúa el usuario final. Muestra los datos al usuario y recibe las interacciones del usuario, como clics de botones o entradas de formulario.
+   - En Angular, las Vistas están definidas usando plantillas HTML que están vinculadas a los datos y comportamientos definidos en los componentes de Angular.
+
+   Ejemplo en Angular (archivo `usuario.component.html`):
+   ```html
+   <div>
+       <p>Nombre: {{ usuario.nombre }}</p>
+       <p>Email: {{ usuario.email }}</p>
+   </div>
+   ```
+
+3. **Controlador (Controller)**:
+   - El Controlador actúa como intermediario entre el Modelo y la Vista. Se encarga de manejar las interacciones del usuario, actualizar el Modelo en consecuencia y actualizar la Vista para reflejar los cambios en los datos.
+   - En Angular, los Controladores se implementan mediante componentes, que son clases TypeScript decoradas con el decorador `@Component`.
+
+   Ejemplo en Angular (archivo `usuario.component.ts`):
+   ```typescript
+   import { Component, OnInit } from '@angular/core';
+   import { Usuario } from './usuario.model';
+
+   @Component({
+       selector: 'app-usuario',
+       templateUrl: './usuario.component.html',
+       styleUrls: ['./usuario.component.css']
+   })
+   export class UsuarioComponent implements OnInit {
+       usuario: Usuario;
+
+       ngOnInit(): void {
+           // Aquí podrías obtener los datos del usuario desde una API
+           this.usuario = { id: 1, nombre: 'Juan', email: 'juan@example.com' };
+       }
+   }
+   ```
+
+En este ejemplo, el Modelo (`Usuario`) representa los datos del usuario, la Vista (`usuario.component.html`) muestra la información del usuario utilizando la sintaxis de interpolación de Angular (`{{ usuario.nombre }}`, `{{ usuario.email }}`), y el Controlador (`UsuarioComponent`) proporciona la lógica para obtener los datos del usuario y manejar su representación en la Vista.
+
+
+#### MVC Teoría
 Es un patron de diseño de software muy popular cuyo objetivo es dividir una app en tres componentes para mejorar la modularidad, mantenibilidad y escalabilidad del código.
 
 En Angular, el patrón Modelo-Vista-Controlador (MVC) se aplica de manera similar a otros frameworks que siguen este patrón, pero con algunas diferencias debido a la arquitectura específica de Angular:
@@ -42,7 +116,9 @@ En Angular, el patrón Modelo-Vista-Controlador (MVC) se aplica de manera simila
 
 En Angular, el patrón MVC se implementa mediante la separación de responsabilidades entre modelos (datos y lógica), vistas (interfaz de usuario) y controladores (componentes y servicios) para crear aplicaciones web escalables y mantenibles.
 
-### 0.3 Angular CLI
+
+
+### 0.4 Angular CLI
 **Angular Command Line Interface** es una herramienta de línea de comandos para crear, desarrollar y administrar apps web en Angular.
 El CLI proporciona una serie de utilidades y comandos que simplifican muchas tareas comunes en el proceso de desarrollo.
 ```sh
@@ -52,6 +128,7 @@ ng new nombre-aplicacion
 # Nuevo componente en Angular
 ng generate component <component-name>
 ```
+
 
 
 
@@ -123,12 +200,14 @@ ng generate component <component-name>
 
 También incluiremos aquí al directorio `node_modules` para no subir gigas de módulos de node que podemos instalarlos con npm install cuando bajemos nuestro repositorio.
 
+
 #### src/
 Todo por fuera de la carpeta source es configuración de nuestro proyecto angular. El código de nuestra aplicación Angular está en source o `src`
 
 - **styles.css**: Archivo general de estilos globales de la app
 - **main.ts**: No se suele tocar, archivo de configuración general de typescript
 - **index.html**: Es el archivo inicial que buscan todos los servidores. La clave acá está en `<app-root>` que indica el punto de entrada de la aplicación Angular
+
 
 #### El elemento `<app-root>`
 En una aplicación de Angular, `<app-root>` es la etiqueta raíz que se utiliza en el archivo HTML principal (`index.html`) para indicar el punto de entrada de la aplicación Angular. Esta etiqueta se define en el archivo `app.component.html` del proyecto Angular.
@@ -144,6 +223,7 @@ Es el directorio principal de nuestra aplicación Angular, acá tenemos tres arc
 - `app-routing-module`: El archivo de enrutamiento o **routing**
 - `app-module-module`: El archivo de **modulo**
 - `app-component-module`: El archivo de **componente**
+
 
 
 
@@ -214,6 +294,7 @@ Angular utiliza el Atomic Design, consiste en diseñar en cadena bloques reutili
 
 Para crear un componente en Angular, se utiliza el comando `ng generate component` o su forma abreviada `ng g c nombre-componente`. Este comando crea automáticamente los archivos necesarios para el componente, incluida la clase de componente, la plantilla y los estilos, y los coloca en la ubicación adecuada dentro del proyecto. El más recomendado es `ng g c components/nuevo-componente`
 
+
 ### El comando `n g c components/padre` nos agrega automaticamente nuestro nuevo componente al modulo raiz! `app.module.ts`
 ```ts
 import { NgModule } from '@angular/core';
@@ -273,8 +354,9 @@ export class AppComponent implements OnInit {
 - **El archivo de prueba**: `component-name.component.specs.ts`
 
 
-# 4. Binding o Enlace de datos
 
+
+# 4. Binding o Enlace de datos
 Es el ida y vuelta de datos entre la vista y el controlador en un componente. 
 
 <p>
@@ -352,6 +434,7 @@ export class ContadorComponent {
   <img src="img/contador-component.png" alt="Componente contador">
 </p>
 
+
 ### Metadata
 La metadata es la información adicional que se proporciona mediante decoradores para configurar y definir el comportamiento de una clase, un componente, un servicio o cualquier otra estructura en una aplicación Angular.
 
@@ -369,7 +452,6 @@ La metadata en Angular se define utilizando decoradores especiales proporcionado
 
 5. **@Input** y **@Output**: Se utilizan para decorar propiedades y eventos de componente respectivamente, para permitir el enlace de datos y la comunicación entre componentes.
 
-
 Entre sus características:
 - **Configuración**: Define cómo se comportan las partes de la aplicación
 - **Decoradores**: Se utiliza con decoradores como `@Component`, `@NgModule` o `@Injectable`
@@ -382,9 +464,8 @@ Entre sus características:
 
 
 
-
 # 5. Comunicacion entre Componentes / Input-Output
-### Version resumida Input Output
+### Resumen Input Output
 En Angular, se pueden enviar datos entre componentes utilizando las propiedades de entrada (`@Input`) y las propiedades de salida (`@Output`). 
 
 1. **Propiedades de entrada (`@Input`)**:
@@ -425,6 +506,7 @@ En Angular, se pueden enviar datos entre componentes utilizando las propiedades 
    <app-child (outputEvent)="handleEvent($event)"></app-child>
    ```
 
+
 ### Padre -> Hijo / @Input() 
 1. En el componente hijo, puedes definir propiedades de entrada utilizando el decorador `@Input()`. Estas propiedades representarán los datos que se esperan recibir del componente padre
 ```ts
@@ -449,7 +531,6 @@ valorDesdePadre = "Hola mundo!";
 ```html
 <!-- Componente hijo html -->
 <p>{{ datoEntrada }}</p
-
 ```
 
 
@@ -497,7 +578,6 @@ receiveMessage(message: string) {
 
 
 
-
 # 5. Servicios y Dependencias
 ### Resumen de servicios, inyección y dependencias
 En Angular, **los servicios** son clases que se utilizan para organizar y compartir lógica de negocio, funciones y datos entre diferentes partes de una aplicación. **Se utilizan para centralizar la lógica que no pertenece directamente a un componente en particular, como el acceso a datos externos, la manipulación de datos, la autenticación, etc.**
@@ -509,6 +589,7 @@ La inyección de dependencias es un patrón de diseño que se utiliza en Angular
 **Las dependencias en Angular son los objetos o instancias que un componente, directiva o servicio necesita para realizar su trabajo. Estas dependencias pueden ser otros servicios, módulos, servicios externos**, o incluso instancias de clases personalizadas. Angular se encarga de gestionar la creación y la inyección de dependencias automáticamente, lo que simplifica la configuración y el mantenimiento de la aplicación.
 
 En resumen, los servicios y las dependencias son conceptos fundamentales en Angular que se utilizan para organizar y compartir la lógica de la aplicación de manera modular, reutilizable y desacoplada. Los servicios encapsulan la lógica de negocio y los datos, mientras que la inyección de dependencias permite a los componentes y otros servicios acceder a estas funcionalidades de manera sencilla y eficiente.
+
 
 ### Que son los Servicios?
 Otra manera de comunicar nuestros componentes es a través de los servicios.
@@ -552,7 +633,6 @@ constructor(
 // Metodo 2 de inyeccion de dependencias
 private _nuevoServicio = inject(NuevoServicioService)
 ```
-
 
 
 
@@ -627,7 +707,6 @@ Las directivas en Angular son una poderosa herramienta para crear aplicaciones d
 
 
 
-
 # 7. Pipes
 ### Resumen
 Los pipes en Angular son una característica que permite transformar datos en la interfaz de usuario de manera declarativa en las plantillas HTML. Los pipes se utilizan para formatear, filtrar y transformar datos antes de que se muestren en la vista de la aplicación.
@@ -676,6 +755,7 @@ Los pipes en Angular son una característica que permite transformar datos en la
 
 En resumen, los pipes en Angular son una forma poderosa y flexible de transformar datos en las plantillas HTML, permitiendo formatear, filtrar y ordenar datos de manera declarativa y mantener así una interfaz de usuario dinámica y rica en funcionalidades.
 
+
 ### Que son los Pipes?
 Son una característica que permite formatear y transformar datos en la vista de una aplicación web de manera sencilla y legible.
 Los pipes son funciones que toman un valor de entrada y lo procesan para proporcionar una representación modificada o formateada en la IU.
@@ -720,5 +800,4 @@ Se aplica de la siguiente manera
 ```html
 <p>{ texto | miPipe }}</p>
 ```
-
 La inmutabilidad quiere decir que la variable mantiene su formato original. El pipe muestra la forma que queremos pero sin cambiar el valor original
