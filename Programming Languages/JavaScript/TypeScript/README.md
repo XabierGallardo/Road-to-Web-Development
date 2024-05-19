@@ -1,4 +1,238 @@
-# POO en TypeScript
+# Fundamentos de la Programación Orientada a Objetos en TypeScript
+
+#### 1. **Clases**
+Una clase en TypeScript es una plantilla para crear objetos. Define propiedades y métodos que los objetos creados a partir de la clase tendrán. 
+
+```typescript
+class Animal {
+  // Propiedad
+  name: string;
+
+  // Constructor
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  // Método
+  makeSound(): void {
+    console.log(`${this.name} makes a sound`);
+  }
+}
+
+// Crear una instancia de la clase
+const dog = new Animal('Dog');
+dog.makeSound(); // Dog makes a sound
+```
+
+#### 2. **Herencia**
+La herencia permite que una clase derive las propiedades y métodos de otra clase. La clase derivada se llama subclase y la clase base se llama superclase.
+
+```typescript
+class Animal {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  makeSound(): void {
+    console.log(`${this.name} makes a sound`);
+  }
+}
+
+class Dog extends Animal {
+  constructor(name: string) {
+    super(name); // Llamar al constructor de la superclase
+  }
+
+  bark(): void {
+    console.log(`${this.name} barks`);
+  }
+}
+
+const dog = new Dog('Dog');
+dog.makeSound(); // Dog makes a sound
+dog.bark(); // Dog barks
+```
+
+#### 3. **Encapsulación**
+La encapsulación es el principio de restringir el acceso a ciertos detalles de un objeto y sólo exponer lo necesario. Esto se logra mediante modificadores de acceso (`public`, `private`, y `protected`).
+
+```typescript
+class Animal {
+  // Propiedad privada
+  private name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  // Método público
+  public makeSound(): void {
+    console.log(`${this.name} makes a sound`);
+  }
+
+  // Método privado
+  private secretMethod(): void {
+    console.log('This is a secret');
+  }
+}
+
+const dog = new Animal('Dog');
+dog.makeSound(); // Dog makes a sound
+// dog.secretMethod(); // Error: Property 'secretMethod' is private and only accessible within class 'Animal'.
+```
+
+#### 4. **Abstracción**
+La abstracción es el principio de esconder los detalles de implementación y mostrar sólo la funcionalidad necesaria. En TypeScript, esto se logra mediante clases y métodos abstractos.
+
+```typescript
+abstract class Animal {
+  // Método abstracto
+  abstract makeSound(): void;
+
+  // Método concreto
+  move(): void {
+    console.log('Moving...');
+  }
+}
+
+class Dog extends Animal {
+  makeSound(): void {
+    console.log('Bark');
+  }
+}
+
+const dog = new Dog();
+dog.makeSound(); // Bark
+dog.move(); // Moving...
+```
+
+#### 5. **Polimorfismo**
+El polimorfismo permite que se trate a objetos de diferentes clases derivadas de una misma superclase de manera uniforme.
+
+```typescript
+class Animal {
+  makeSound(): void {
+    console.log('Some generic sound');
+  }
+}
+
+class Dog extends Animal {
+  makeSound(): void {
+    console.log('Bark');
+  }
+}
+
+class Cat extends Animal {
+  makeSound(): void {
+    console.log('Meow');
+  }
+}
+
+const animals: Animal[] = [new Dog(), new Cat()];
+animals.forEach(animal => animal.makeSound()); // Bark, Meow
+```
+
+### Getters y Setters
+Los getters y setters permiten definir métodos especiales para acceder y modificar las propiedades de una clase de manera controlada.
+
+```typescript
+class Animal {
+  private _name: string;
+
+  constructor(name: string) {
+    this._name = name;
+  }
+
+  // Getter
+  get name(): string {
+    return this._name;
+  }
+
+  // Setter
+  set name(name: string) {
+    if (name.length > 3) {
+      this._name = name;
+    } else {
+      console.log('Name too short');
+    }
+  }
+}
+
+const dog = new Animal('Dog');
+console.log(dog.name); // Dog
+dog.name = 'Do'; // Name too short
+dog.name = 'Buddy';
+console.log(dog.name); // Buddy
+```
+
+### Interfaces
+Las interfaces en TypeScript definen la estructura de los objetos y garantizan que las clases implementen ciertos métodos o propiedades.
+
+```typescript
+interface Animal {
+  name: string;
+  makeSound(): void;
+}
+
+class Dog implements Animal {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+
+  makeSound(): void {
+    console.log('Bark');
+  }
+}
+
+const dog = new Dog('Buddy');
+dog.makeSound(); // Bark
+```
+
+### Mixins
+Los mixins permiten combinar múltiples clases para crear nuevas clases. Esto se logra mediante la composición en lugar de la herencia.
+
+```typescript
+type Constructor<T = {}> = new (...args: any[]) => T;
+
+function CanEat<T extends Constructor>(Base: T) {
+  return class extends Base {
+    eat() {
+      console.log('Eating');
+    }
+  };
+}
+
+function CanBark<T extends Constructor>(Base: T) {
+  return class extends Base {
+      bark() {
+      console.log('Barking');
+    }
+  };
+}
+
+class Dog {
+  name: string;
+
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+
+const DogMixin = CanEat(CanBark(Dog));
+
+const dog = new DogMixin('Buddy');
+dog.eat(); // Eating
+dog.bark(); // Barking
+```
+
+
+
+
+# Resumen POO en TypeScript
 1. **Clases**: Las clases son la base de la programación orientada a objetos en TypeScript. Se definen utilizando la palabra clave `class` y pueden contener propiedades y métodos.
 
    ```typescript

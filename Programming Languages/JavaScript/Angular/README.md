@@ -18,6 +18,18 @@ En lugar de cargar páginas completamente nuevas desde el servidor, en una SPA, 
 6. **Gestión del estado**: Dado que las SPAs tienden a ser más complejas en términos de interacciones y vistas dinámicas, a menudo *requieren una gestión avanzada del estado de la aplicación*. Los frameworks y bibliotecas modernas proporcionan *herramientas para facilitar esta gestión del estado, como el uso de componentes reactivos, patrones de diseño como Flux o Redux, y el enlace de datos bidireccional*.
 
 
+### 0.2 Que es el estado en una SPA?
+El estado se refiere a la representación de los datos de la aplicación en un momento dado. 
+Define cómo se comporta y se presenta la aplicación en cualquier momento. Un manejo eficiente del estado es crucial para crear aplicaciones web interactivas y responsivas.
+
+El estado es un objeto que contiene toda la información necesaria para que la interfaz de usuario de la SPA funcione y se muestre correctamente. Este concepto es crucial para el manejo y la actualización dinámica de la UI sin necesidad de recargar la página completa. Entre sus componentes destacan:
+
+1. **Datos de la Aplicación**: Información como los datos del usuario, el contenido mostrado, los resultados de búsquedas, etc.
+2. **Estado de la UI**: Datos sobre el estado visual de la aplicación, como cuál pestaña está activa, si un modal está abierto, etc.
+3. **Datos Temporales**: Información que puede no necesitarse permanentemente, como valores de formularios no guardados.
+4. **Configuraciones y Preferencias**: Preferencias del usuario, configuraciones de la aplicación, etc.
+
+
 ### 0.2 Que es Angular?
 Angular es un framework de desarrollo de aplicaciones que permite crear aplicaciones de una sola página, SPAs. Es de codigo abierto y utiliza TypeScript. 
 
@@ -87,6 +99,39 @@ Angular se basa en el patrón de diseño Modelo-Vista-Controlador (MVC), que es 
    ```
 
 En este ejemplo, el Modelo (`Usuario`) representa los datos del usuario, la Vista (`usuario.component.html`) muestra la información del usuario utilizando la sintaxis de interpolación de Angular (`{{ usuario.nombre }}`, `{{ usuario.email }}`), y el Controlador (`UsuarioComponent`) proporciona la lógica para obtener los datos del usuario y manejar su representación en la Vista.
+
+
+### No siempre tiene por que haber un Modelo
+Aunque Angular se considera un framework que sigue el patrón de diseño Modelo-Vista-Controlador (MVC), en la práctica, el uso del modelo puede variar según la complejidad y los requisitos de la aplicación. Hay varias razones por las cuales algunas aplicaciones de Angular pueden no tener modelos explícitos:
+
+1. **Simplicidad de la Aplicación**:
+   - En aplicaciones pequeñas o simples, puede no ser necesario definir modelos explícitos. Los datos pueden manejarse directamente dentro de los componentes o servicios sin la necesidad de crear clases de modelo separadas.
+   - Ejemplo: Una aplicación que solo muestra datos estáticos o realiza operaciones muy básicas puede no requerir una capa de modelos.
+
+2. **Prototipos y MVPs**:
+   - Durante las etapas iniciales de desarrollo, como en la creación de prototipos o productos mínimos viables (MVP), los desarrolladores pueden optar por una estructura más simple para acelerar el proceso de desarrollo. En estas fases, los modelos pueden parecer innecesarios hasta que la aplicación se vuelva más compleja.
+
+3. **Uso de Interfaces en lugar de Clases de Modelo**:
+   - En muchos casos, los desarrolladores de Angular utilizan interfaces TypeScript para definir la forma de los datos en lugar de clases de modelo completas. Las interfaces proporcionan una estructura ligera y son suficientes para definir contratos de datos.
+   - Ejemplo:
+     ```typescript
+     export interface User {
+       id: number;
+       name: string;
+       email: string;
+     }
+     ```
+
+4. **Aplicaciones de Formulario o CRUD Simples**:
+   - Las aplicaciones que simplemente manejan formularios o realizan operaciones CRUD básicas pueden no necesitar una capa de modelo compleja. Los datos pueden manejarse directamente en los componentes, y los servicios pueden manejar la comunicación con la API sin necesidad de definir modelos separados.
+
+5. **Uso de Bibliotecas y Servicios Externos**:
+   - Algunas aplicaciones pueden depender de bibliotecas o servicios externos que proporcionan sus propias estructuras de datos. En estos casos, los desarrolladores pueden utilizar directamente las estructuras proporcionadas por esas bibliotecas en lugar de definir sus propios modelos.
+
+6. **Evolución del Proyecto**:
+   - A medida que un proyecto evoluciona, la necesidad de modelos puede surgir más adelante. Inicialmente, un proyecto puede comenzar sin modelos explícitos y, con el tiempo, a medida que la complejidad crece, los desarrolladores pueden refactorizar el código para incluir modelos.
+
+*Aunque Angular está diseñado para soportar el patrón MVC, la presencia de modelos explícitos depende del contexto y los requisitos específicos de la aplicación. No todas las aplicaciones necesitan una capa de modelos completa desde el principio, y algunas pueden nunca necesitarla si permanecen simples. La flexibilidad de Angular permite a los desarrolladores adaptar la arquitectura según las necesidades del proyecto, lo que puede resultar en aplicaciones sin modelos definidos explícitamente.*
 
 
 #### MVC Teoría
@@ -357,7 +402,7 @@ export class AppComponent implements OnInit {
 
 
 # 4. Binding o Enlace de datos
-Es el ida y vuelta de datos entre la vista y el controlador en un componente. 
+Es el ida y vuelta de datos entre la vista y el controlador (componente). 
 
 <p>
   <img src="img/binding-esquema.jpeg" alt="Esquema de binding">
@@ -682,28 +727,6 @@ La directiva no sólo sirve para poner estilos, se usa mucho para ocultar si no 
 Todo lo que se escribe al lado de los tags son directivas
 
 
-## Directivas estructurales y Directivas de atributo
-### Resumen
-Las directivas en Angular son una característica clave que permite agregar comportamiento dinámico y manipular la estructura del DOM (Document Object Model) en una aplicación Angular. Las directivas pueden ser personalizadas o predefinidas y se utilizan para extender el lenguaje HTML con funcionalidades adicionales.
-
-Hay dos tipos principales de directivas en Angular:
-
-1. **Directivas Estructurales**: Estas directivas modifican la estructura del DOM añadiendo, eliminando o reemplazando elementos HTML en función de ciertas condiciones.
-
-   - **ngIf**: La directiva `ngIf` muestra o elimina un elemento HTML basado en una expresión booleana.
-   - **ngFor**: La directiva `ngFor` repite un elemento HTML basado en una colección de datos.
-   - **ngSwitch**: La directiva `ngSwitch` muestra uno de varios elementos HTML basado en el valor de una expresión.
-
-2. **Directivas de Atributos**: Estas directivas modifican el comportamiento o la apariencia de los elementos HTML existentes agregando o eliminando atributos.
-
-   - **ngModel**: La directiva `ngModel` proporciona enlace bidireccional de datos para los elementos de formulario.
-   - **ngClass**: La directiva `ngClass` añade o elimina clases CSS de un elemento HTML basado en una expresión.
-   - **ngStyle**: La directiva `ngStyle` añade o elimina estilos CSS de un elemento HTML basado en una expresión.
-
-Además de las directivas integradas de Angular, también podes crear tus propias directivas personalizadas para encapsular comportamientos o manipulaciones específicas del DOM que necesites en tu aplicación.
-
-Las directivas en Angular son una poderosa herramienta para crear aplicaciones dinámicas y flexibles, permitiendo la manipulación del DOM de manera declarativa y manteniendo un código limpio y mantenible.
-
 
 
 
@@ -801,3 +824,135 @@ Se aplica de la siguiente manera
 <p>{ texto | miPipe }}</p>
 ```
 La inmutabilidad quiere decir que la variable mantiene su formato original. El pipe muestra la forma que queremos pero sin cambiar el valor original
+
+
+
+
+# 8. Routes / Enrutamiento
+El enrutamiento (routing) en Angular es un sistema que permite la navegación entre diferentes vistas o componentes dentro de una aplicación Angular sin recargar la página completa. Es una característica esencial para crear aplicaciones SPA donde la navegación entre secciones de la aplicación se maneja mediante la manipulación del estado de la URL y la actualización dinámica del contenido de la página.
+
+### Características principales del enrutamiento en Angular
+
+1. **Definición de Rutas**: Las rutas se definen en un archivo de configuración de rutas, generalmente llamado `app-routing.module.ts`, utilizando el módulo `RouterModule` de Angular. Cada ruta se asocia con un componente específico que se renderiza cuando la ruta está activa.
+
+2. **Enlace a Rutas**: Angular proporciona directivas como `routerLink` para enlazar a diferentes rutas dentro de las plantillas HTML.
+
+3. **Parámetros de Ruta**: Permite pasar parámetros a través de las rutas, que pueden ser utilizados por los componentes para mostrar contenido dinámico.
+
+4. **Protección de Rutas**: Utiliza `Guards` (guardias) para proteger rutas, asegurando que solo usuarios autorizados puedan acceder a ciertas partes de la aplicación.
+
+5. **Carga Diferida (Lazy Loading)**: Permite cargar módulos y componentes bajo demanda, mejorando el rendimiento de la aplicación.
+
+### Ejemplo de Configuración de Rutas
+
+1. **Instalación y Configuración Básica**
+
+Primero, asegúrate de que tienes instalado el módulo de enrutamiento en tu proyecto Angular. Luego, crea el archivo de enrutamiento, generalmente `app-routing.module.ts`:
+
+```typescript
+// app-routing.module.ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: '**', component: NotFoundComponent }  // Wildcard route for a 404 page
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }
+```
+
+2. **Importar el Módulo de Enrutamiento**
+
+A continuación, importa el `AppRoutingModule` en el módulo principal de la aplicación (`app.module.ts`):
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { HomeComponent } from './home/home.component';
+import { AboutComponent } from './about/about.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    AboutComponent,
+    NotFoundComponent
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+3. **Utilizar Enlaces de Ruta en Plantillas**
+
+En tus componentes, utiliza la directiva `routerLink` para enlazar a las diferentes rutas definidas:
+
+```html
+<!-- app.component.html -->
+<nav>
+  <a routerLink="/">Home</a>
+  <a routerLink="/about">About</a>
+</nav>
+<router-outlet></router-outlet>
+```
+
+El `<router-outlet>` es un marcador de posición donde Angular renderiza los componentes correspondientes a las rutas activas.
+
+### Parámetros de Ruta
+
+Para manejar rutas con parámetros, define la ruta con un parámetro en el archivo de configuración de rutas:
+
+```typescript
+// app-routing.module.ts
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'about', component: AboutComponent },
+  { path: 'user/:id', component: UserComponent }, // Route with parameter
+  { path: '**', component: NotFoundComponent }
+];
+```
+
+Luego, en el componente que recibe el parámetro, puedes acceder a él usando `ActivatedRoute`:
+
+```typescript
+// user.component.ts
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
+@Component({
+  selector: 'app-user',
+  templateUrl: './user.component.html',
+  styleUrls: ['./user.component.css']
+})
+export class UserComponent implements OnInit {
+  userId: string;
+
+  constructor(private route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this.userId = this.route.snapshot.paramMap.get('id');
+  }
+}
+```
+
+### Resumen
+
+El enrutamiento en Angular es una herramienta poderosa que facilita la creación de aplicaciones SPA. Permite definir rutas, manejar parámetros, proteger rutas y mejorar el rendimiento mediante la carga diferida, todo dentro del marco robusto de Angular.
