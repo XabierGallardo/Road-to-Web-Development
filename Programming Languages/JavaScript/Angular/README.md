@@ -829,9 +829,92 @@ La inmutabilidad quiere decir que la variable mantiene su formato original. El p
 
 
 # 8. Routes / Enrutamiento
-El enrutamiento (routing) en Angular es un sistema que permite la navegación entre diferentes vistas o componentes dentro de una aplicación Angular sin recargar la página completa. Es una característica esencial para crear aplicaciones SPA donde la navegación entre secciones de la aplicación se maneja mediante la manipulación del estado de la URL y la actualización dinámica del contenido de la página.
+El enrutamiento (routing) en Angular es un sistema que permite la navegación entre diferentes vistas o componentes dentro de una aplicación Angular sin recargar la página completa. Es una característica esencial delas SPA donde la navegación entre secciones de la aplicación se maneja mediante la manipulación del estado de la URL y la actualización dinámica del contenido de la página.
 
-### Características principales del enrutamiento en Angular
+
+#### Definicion de rutas en el módulo de la aplicación
+Las rutas definen la correspondencia entre las URL y los componentes que deben cargarse cuando esa URL está activa. Se configuran en un array dentro del módulo de la aplicación `app-routing.module.ts`
+```ts
+const routes: Routes = [
+  { path: 'inicio', component: InicioComponent },
+  { path: 'productos', component: ProductosComponent },
+  { path: 'contacto', component: ContactoComponent },
+];
+```
+
+
+#### Cargando nuestros componentes con Router Outlet
+La directiva `router-outlet` se utiliza en la plantilla para indicar el lugar donde Angular debe cargar dinámicamente los componentes asociados a las rutas
+```html
+<!-- Acá van a girar las pantallas, generalmente se ubica abajo del nav y arriba del footer -->
+<router-outlet></router-outlet>
+```
+
+
+#### Navegacion y Parámetros de Ruta
+La navegación entre rutas se puede realizar mediante `<a>`, botones o programáticamente utilizando el servicio Router de Angular
+
+Las rutas también pueden componer parámetros que permiten pasar datos específicos entre componentes
+```html
+<a routerLink="/inicio">Inicio</a>
+
+<!-- Usando parámetros para pasar datos entre componentes -->
+<a [routerLink]="['/producto', producto.id]">Ver Detalles</a>
+```
+```ts
+{ path: 'producto/:id', component: DetalleProductoComponent }
+```
+
+Para marcar una clase CSS como activa podemos usar tanto la directiva `ngClass` como con la vieja propiedad `routerLinkActive`
+
+
+#### Pasando parámetros por la URL
+1. Definimos una ruta con varios parámetros
+```ts
+consr routes: Routes = [
+  { path: 'producto/"categoria/:id', component: DetalleProductoComponent },
+];
+```
+2. Enlazamos a la ruta con múltiples parámetros
+```html
+<a [routerLink]="['/producto', producto.categoria, producto.id]">Ver Detalles</a>
+```
+3. Recuperamos los parámetros en el componente
+*Queremos capturar el producto de limpieza con id lavandina*
+```ts
+// micomponente.component.ts
+import { ActivatedRoute } from '@angular/router';
+
+constructor(private route: ActivatedRoute) { } // Inyectamos el ActivatedRoute en el constructor
+
+ngOnInit() { // Al iniciar el componente se subscribe lo que diga la URL, y separamos de la URL categoria y id
+  this.route.params.subscribe(params => {
+    const categoria = params['categoria'];
+    const productId = params['id'];
+
+    // Hacer algo con los valores de los parámetros
+  });
+}
+```
+De esta manera, cuando hacemos el componente de vista del detalle del producto, podemos capturar esa info para hacer la vista del componente específico que queremos mostrar
+
+
+#### También podemos navegar desde el controlador
+Para navegar programáticamente desde TypeScript en Angular, podemos usar el servicio Router.
+Este servicio proporciona métodos para realizar la navegación entre rutas.
+```ts
+import { Router } from '@angular/router';
+
+constructor(private router: Router) { }
+
+navegarAProducto(productoId: number) {
+  // Podemos navegar a una ruta específica programáticamente
+  this.router.navigate(['/producto', productoId]);
+}
+```
+
+## Routing explicación en detalle
+### 8.1 Características principales del enrutamiento en Angular
 
 1. **Definición de Rutas**: Las rutas se definen en un archivo de configuración de rutas, generalmente llamado `app-routing.module.ts`, utilizando el módulo `RouterModule` de Angular. Cada ruta se asocia con un componente específico que se renderiza cuando la ruta está activa.
 
@@ -843,7 +926,7 @@ El enrutamiento (routing) en Angular es un sistema que permite la navegación en
 
 5. **Carga Diferida (Lazy Loading)**: Permite cargar módulos y componentes bajo demanda, mejorando el rendimiento de la aplicación.
 
-### Ejemplo de Configuración de Rutas
+### 8.3 Ejemplo de Configuración de Rutas
 
 1. **Instalación y Configuración Básica**
 
@@ -916,7 +999,7 @@ En tus componentes, utiliza la directiva `routerLink` para enlazar a las diferen
 
 El `<router-outlet>` es un marcador de posición donde Angular renderiza los componentes correspondientes a las rutas activas.
 
-### Parámetros de Ruta
+### 8.4 Parámetros de Ruta
 
 Para manejar rutas con parámetros, define la ruta con un parámetro en el archivo de configuración de rutas:
 
@@ -953,6 +1036,795 @@ export class UserComponent implements OnInit {
 }
 ```
 
+### 8.5 Trayendo por parametros los datos de un mock
+#### products.mock.ts
+```ts
+export const productList: Product[] = [
+  { id: 1, name: 'Lavandina', prize: 10, description: 'Botella de 1 Litro' },
+  { id: 1, name: 'Detergente', prize: 5, description: 'Dura 120 lavados' },
+  { id: 1, name: 'Limpia vidrios', prize: 10, description: 'Vidrios transparentes' },
+]
+
+export interface Product {
+  id: number | string;
+  name: string;
+  price: number;
+  description: string;
+}
+```
+#### product-detail.component.ts
+```ts
+// ...
+import { Product, productsList } from '../products/products.mock';
+// ...
+export class ProductDetailComponent implements OnInit {
+
+  product?: Product;
+  productList: Product[] = productsList; // Traemos el productList
+
+  constructor(private _route: ActivatedRoute) { }
+
+  ngOnInit(): void {
+    this._route.params.subscribe(params => { // Traemos toda la informacion del objeto
+
+      // Seteamos el productp entero
+      this.product = this.productList.find(product => product.id == params['productId']);
+    })
+  }
+}
+```
+#### product-detail.component.html usando `ngContainer`
+ngContainer es una estructura de control que no afecta al DOM, se utiliza para agrupar elementos sin agregar nodos adicionales al arbol DOM:
+```html
+<ng-container *ngIf="!loading">
+  <h1> Producto: {{ product?.name }} </h1>
+  <h1> Precio: {{ product?.prize | currency }} </h1>
+  <h3 *ngIf="product?.decription"> Descripcion: {{ product?.description }} </h3>
+</ng-container>
+
+<ng-container *ngIf="loading">
+  <i style="color: blue">Cargando informacion...</i>
+</ng-container>
+```
+
+
+
+
+
+# 9. Estructuras de control 
+### `*ngIf`, `*ngFor`, `*ngSwitch`, `ngClass`, `ngStyle` y `ngModel`
+En Angular, las estructuras de control son fundamentales para gestionar la lógica de flujo en las plantillas. Estas estructuras permiten condicionar la visualización de elementos, iterar sobre listas y gestionar eventos.
+
+### 1. `*ngIf`
+La directiva `*ngIf` se utiliza para mostrar o esconder un elemento del DOM basado en una condición booleana.
+
+**Ejemplo:**
+
+```html
+<div *ngIf="isLoggedIn; else loggedOutTemplate">
+  <p>Welcome, user!</p>
+</div>
+<ng-template #loggedOutTemplate>
+  <p>Please log in.</p>
+</ng-template>
+```
+
+**Componente:**
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  isLoggedIn = true; // Cambiar a false para ver el template alternativo
+}
+```
+
+### 2. `*ngFor`
+
+La directiva `*ngFor` se utiliza para iterar sobre una lista y renderizar un elemento del DOM para cada ítem de la lista.
+
+**Ejemplo:**
+
+```html
+<ul>
+  <li *ngFor="let item of items">{{ item }}</li>
+</ul>
+```
+
+**Componente:**
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  items = ['Item 1', 'Item 2', 'Item 3'];
+}
+```
+
+### 3. `*ngSwitch`
+
+La directiva `*ngSwitch` se utiliza para mostrar uno de varios elementos alternativos basado en una expresión.
+
+**Ejemplo:**
+
+```html
+<div [ngSwitch]="selectedOption">
+  <div *ngSwitchCase="'option1'">Option 1 selected</div>
+  <div *ngSwitchCase="'option2'">Option 2 selected</div>
+  <div *ngSwitchCase="'option3'">Option 3 selected</div>
+  <div *ngSwitchDefault>No option selected</div>
+</div>
+```
+
+**Componente:**
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  selectedOption = 'option1'; // Cambiar el valor para ver diferentes resultados
+}
+```
+
+### 4. `ngClass`
+
+La directiva `ngClass` se utiliza para añadir o eliminar clases CSS basadas en una condición.
+
+**Ejemplo:**
+
+```html
+<div [ngClass]="{ 'active': isActive, 'disabled': !isActive }">
+  This div is active or disabled.
+</div>
+```
+
+**Componente:**
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styles: [`
+    .active { color: green; }
+    .disabled { color: red; }
+  `]
+})
+export class AppComponent {
+  isActive = true; // Cambiar a false para ver el efecto de la clase disabled
+}
+```
+
+### 5. `ngStyle`
+
+La directiva `ngStyle` se utiliza para aplicar estilos CSS en línea basados en una expresión.
+
+**Ejemplo:**
+
+```html
+<div [ngStyle]="{ 'font-size.px': fontSize, 'color': fontColor }">
+  This div has dynamic styles.
+</div>
+```
+
+**Componente:**
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  fontSize = 20; // Cambiar para modificar el tamaño de fuente
+  fontColor = 'blue'; // Cambiar para modificar el color del texto
+}
+```
+
+### 6. `ngModel`
+
+La directiva `ngModel` se utiliza para enlazar datos bidireccionalmente entre el modelo y la vista.
+
+**Ejemplo:**
+
+```html
+<input [(ngModel)]="name" placeholder="Enter your name">
+<p>Hello, {{ name }}!</p>
+```
+
+**Componente:**
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  name = ''; // Inicialmente vacío, se actualizará con el valor del input
+}
+```
+
+### Resumen
+Las estructuras de control en Angular proporcionan una forma eficiente y dinámica de gestionar la lógica de la vista directamente en las plantillas. Utilizando directivas como `*ngIf`, `*ngFor`, `*ngSwitch`, `ngClass`, `ngStyle` y `ngModel`, los desarrolladores pueden crear aplicaciones dinámicas y reactivas de manera sencilla y eficiente.
+
+
+
+
+# 10. Formularios
+Los formularios en Angular son una parte crucial del desarrollo de aplicaciones web, ya que permiten la captura, validación y manejo de datos del usuario. Angular proporciona dos enfoques principales para trabajar con formularios:
+
+1. **Formularios reactivos (Reactive Forms)**
+2. **Formularios dirigidos por plantillas (Template-driven Forms)**
+
+
+### Formularios Reactivos (Reactive Forms)
+
+Los formularios reactivos son gestionados y validados en el componente en lugar de en la plantilla. Este enfoque proporciona un control más detallado sobre la estructura y la lógica del formulario.
+
+#### Paso 1: Configuración del Módulo
+
+Primero, debes importar `ReactiveFormsModule` en tu módulo de aplicación:
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, ReactiveFormsModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+#### Paso 2: Creación del Formulario en el Componente
+
+En el componente, defines el formulario y sus controles utilizando `FormGroup` y `FormControl`.
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  userForm = new FormGroup({
+    name: new FormControl('', [Validators.required, Validators.minLength(3)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    age: new FormControl('', [Validators.required, Validators.min(18)])
+  });
+
+  onSubmit() {
+    console.log(this.userForm.value);
+  }
+}
+```
+
+#### Paso 3: Plantilla del Formulario
+
+En la plantilla, utilizas directivas como `[formGroup]` y `formControlName` para vincular los controles del formulario.
+
+```html
+<!-- app.component.html -->
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" formControlName="name">
+    <div *ngIf="userForm.get('name').invalid && userForm.get('name').touched">
+      Name is required and must be at least 3 characters long.
+    </div>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" formControlName="email">
+    <div *ngIf="userForm.get('email').invalid && userForm.get('email').touched">
+      Please enter a valid email address.
+    </div>
+  </div>
+  <div>
+    <label for="age">Age:</label>
+    <input id="age" formControlName="age" type="number">
+    <div *ngIf="userForm.get('age').invalid && userForm.get('age').touched">
+      Age is required and must be at least 18.
+    </div>
+  </div>
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+</form>
+```
+
+### Formularios Dirigidos por Plantillas (Template-driven Forms)
+
+Los formularios dirigidos por plantillas son gestionados principalmente en la plantilla HTML, utilizando directivas específicas de Angular.
+
+#### Paso 1: Configuración del Módulo
+
+Primero, debes importar `FormsModule` en tu módulo de aplicación:
+
+```typescript
+// app.module.ts
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [AppComponent],
+  imports: [BrowserModule, FormsModule],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+#### Paso 2: Modelo de Datos en el Componente
+
+En el componente, defines un modelo de datos que será enlazado bidireccionalmente con el formulario en la plantilla.
+
+```typescript
+// app.component.ts
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html'
+})
+export class AppComponent {
+  user = {
+    name: '',
+    email: '',
+    age: null
+  };
+
+  onSubmit(form) {
+    console.log(form.value);
+  }
+}
+```
+
+#### Paso 3: Plantilla del Formulario
+
+En la plantilla, utilizas directivas como `ngModel` para enlazar los controles del formulario al modelo de datos.
+
+```html
+<!-- app.component.html -->
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+  <div>
+    <label for="name">Name:</label>
+    <input id="name" name="name" [(ngModel)]="user.name" required minlength="3">
+    <div *ngIf="userForm.controls.name?.invalid && userForm.controls.name?.touched">
+      Name is required and must be at least 3 characters long.
+    </div>
+  </div>
+  <div>
+    <label for="email">Email:</label>
+    <input id="email" name="email" [(ngModel)]="user.email" required email>
+    <div *ngIf="userForm.controls.email?.invalid && userForm.controls.email?.touched">
+      Please enter a valid email address.
+    </div>
+  </div>
+  <div>
+    <label for="age">Age:</label>
+    <input id="age" name="age" [(ngModel)]="user.age" required type="number" min="18">
+    <div *ngIf="userForm.controls.age?.invalid && userForm.controls.age?.touched">
+      Age is required and must be at least 18.
+    </div>
+  </div>
+  <button type="submit" [disabled]="userForm.invalid">Submit</button>
+</form>
+```
+
+### Comparación entre Formularios Reactivos y Formularios Dirigidos por Plantillas
+
+1. **Control y Escalabilidad:**
+   - **Formularios Reactivos:** Ofrecen un control más detallado y son más adecuados para formularios complejos y aplicaciones a gran escala.
+   - **Formularios Dirigidos por Plantillas:** Son más fáciles de implementar y son adecuados para formularios simples.
+
+2. **Validación:**
+   - **Formularios Reactivos:** La validación se define en el componente, lo que permite una validación más robusta y reutilizable.
+   - **Formularios Dirigidos por Plantillas:** La validación se maneja principalmente en la plantilla usando atributos de validación estándar de HTML5 y directivas de Angular.
+
+3. **Sincronización de Datos:**
+   - **Formularios Reactivos:** Los datos del formulario se mantienen en el componente, lo que permite una sincronización más precisa y eficiente.
+   - **Formularios Dirigidos por Plantillas:** La sincronización de datos se realiza automáticamente mediante el enlace bidireccional (`ngModel`).
+
+
+
+
+# 11. Ciclos de vida de un componente
+Los ciclos de vida de los componentes en Angular son un conjunto de eventos o etapas que un componente atraviesa desde su creación hasta su destrucción. Angular proporciona varios métodos de ciclo de vida que permiten a los desarrolladores ejecutar código en diferentes etapas del ciclo de vida del componente. Estos métodos se definen como interfaces que los componentes pueden implementar para responder a estos eventos.
+
+### 1. ngOnChanges
+Este método se llama cuando uno o más valores de las propiedades de entrada vinculadas a un componente cambian.
+
+
+### 2. ngOnInit
+Este método se llama una vez después de que se inicializan las propiedades vinculadas. Es un buen lugar para inicializar la lógica del componente.
+
+
+### 3. ngDoCheck
+Este método se llama durante cada ciclo de verificación de cambios. Es útil para detectar y actuar sobre cambios que Angular no puede detectar por sí mismo.
+
+
+### 4. ngAfterContentInit
+Este método se llama una vez después de que Angular ha proyectado contenido externo en la vista del componente.
+
+
+### 5. ngAfterContentChecked
+Este método se llama después de que Angular verifica el contenido proyectado en el componente.
+
+
+### 6. ngAfterViewInit
+Este método se llama una vez después de que Angular ha inicializado las vistas del componente y sus hijos.
+
+
+### 7. ngAfterViewChecked
+Este método se llama después de que Angular verifica las vistas del componente y sus hijos.
+
+
+### 8. ngOnDestroy
+Este método se llama justo antes de que Angular destruya el componente. Es un buen lugar para limpiar y liberar recursos, como suscripciones o temporizadores.
+
+
+
+
+# 12. 
+
+
+
+
+# EXTRAS
+## Angular Elements
+Angular Elements es una funcionalidad de Angular que permite empaquetar componentes de Angular como elementos personalizados (custom elements) o Web Components. Estos elementos personalizados pueden ser utilizados en aplicaciones no construidas con Angular, lo que facilita la integración de componentes Angular en diferentes contextos de aplicaciones web. 
+
+Los Web Components son un estándar web que permite crear componentes reutilizables y encapsulados. Con Angular Elements, los componentes de Angular se pueden convertir en estos Web Components, lo que ofrece varias ventajas:
+
+1. **Reutilización**: Permite reutilizar componentes de Angular en diferentes proyectos, incluso si estos no utilizan Angular como framework principal.
+2. **Encapsulamiento**: Los Web Components están encapsulados, lo que significa que su estilo y funcionalidad no afectan al resto de la aplicación y viceversa.
+3. **Compatibilidad**: Los Web Components son compatibles con todos los navegadores modernos, por lo que los componentes creados con Angular Elements pueden ser usados de manera consistente en diferentes entornos.
+
+### ¿Cómo funcionan los Angular Elements?
+
+1. **Creación del componente**: Se crea un componente de Angular como de costumbre.
+2. **Conversión a elemento personalizado**: Se utiliza la funcionalidad de Angular Elements para convertir este componente en un Web Component.
+3. **Registro del elemento personalizado**: El elemento se registra en el navegador, lo que permite que pueda ser utilizado en cualquier aplicación web.
+
+### Ejemplo básico
+
+1. **Instalación de Angular Elements**:
+   ```bash
+   ng add @angular/elements
+   npm install @webcomponents/custom-elements
+   ```
+
+2. **Creación de un componente**:
+   ```typescript
+   import { Component } from '@angular/core';
+
+   @Component({
+     selector: 'app-hello-world',
+     template: `<h1>Hello, World!</h1>`
+   })
+   export class HelloWorldComponent {}
+   ```
+
+3. **Conversión a elemento personalizado**:
+   ```typescript
+   import { Injector } from '@angular/core';
+   import { createCustomElement } from '@angular/elements';
+   import { HelloWorldComponent } from './hello-world/hello-world.component';
+   import { NgModule, DoBootstrap } from '@angular/core';
+
+   @NgModule({
+     declarations: [HelloWorldComponent],
+     entryComponents: [HelloWorldComponent]
+   })
+   export class AppModule implements DoBootstrap {
+     constructor(private injector: Injector) {}
+
+     ngDoBootstrap() {
+       const el = createCustomElement(HelloWorldComponent, { injector: this.injector });
+       customElements.define('hello-world', el);
+     }
+   }
+   ```
+
+4. **Uso del elemento personalizado en una aplicación no Angular**:
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Angular Elements Example</title>
+   </head>
+   <body>
+     <hello-world></hello-world>
+     <script src="path/to/your/angular-elements-bundle.js"></script>
+   </body>
+   </html>
+   ```
+
+Con Angular Elements, puedes crear componentes que sean flexibles y reutilizables, aprovechando las capacidades avanzadas de Angular y la interoperabilidad que ofrecen los Web Components.
+
+
+
+
+## JSON Web Tokens / JWT
+JSON Web Token (JWT) es un estándar abierto (RFC 7519) que define una forma compacta y autocontenida de transmitir información entre dos partes como un objeto JSON. Esta información puede ser verificada y confiable porque está firmada digitalmente. Los JWT son comúnmente usados para autenticación y autorización en aplicaciones web, incluyendo aquellas construidas con Angular.
+
+### ¿Cómo se utiliza JWT en Angular?
+
+En una aplicación Angular, JWT se usa principalmente para manejar la autenticación y la autorización. A continuación se explica en detalle cómo se integra JWT en una aplicación Angular:
+
+### Proceso de Autenticación con JWT
+
+1. **Login del Usuario:**
+   - El usuario ingresa sus credenciales (por ejemplo, nombre de usuario y contraseña) en el formulario de login de la aplicación Angular.
+   
+2. **Envío de Credenciales al Servidor:**
+   - Las credenciales se envían al servidor mediante una solicitud HTTP (normalmente POST).
+
+3. **Verificación de Credenciales:**
+   - El servidor verifica las credenciales recibidas. Si son válidas, el servidor genera un JWT que incluye información relevante (por ejemplo, el ID del usuario, roles, permisos, etc.).
+
+4. **Envío del JWT al Cliente:**
+   - El servidor envía el JWT al cliente Angular como respuesta a la solicitud de autenticación.
+
+5. **Almacenamiento del JWT en el Cliente:**
+   - El cliente almacena el JWT recibido, comúnmente en el `localStorage` o `sessionStorage`.
+
+6. **Uso del JWT para Solicitudes Autenticadas:**
+   - Para todas las solicitudes HTTP subsecuentes que requieren autenticación, el cliente Angular incluye el JWT en el encabezado de autorización (`Authorization: Bearer <JWT>`).
+
+7. **Verificación del JWT en el Servidor:**
+   - El servidor verifica el JWT en cada solicitud autenticada para asegurarse de que es válido y no ha sido alterado.
+
+### Implementación de JWT en Angular
+
+#### 1. Instalación de Librerías
+
+Para trabajar con JWT en Angular, puedes usar librerías como `@auth0/angular-jwt` para gestionar automáticamente la inclusión del token en las solicitudes HTTP.
+
+```sh
+npm install @auth0/angular-jwt
+```
+
+#### 2. Configuración del Interceptor
+
+Crea un interceptor para añadir el JWT a las solicitudes HTTP.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { AuthService } from './auth.service';
+
+@Injectable()
+export class JwtInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService) {}
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    const currentUser = this.authService.currentUserValue;
+    if (currentUser && currentUser.token) {
+      request = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${currentUser.token}`
+        }
+      });
+    }
+
+    return next.handle(request);
+  }
+}
+```
+
+#### 3. Proveedor del Interceptor
+
+Añade el interceptor en el módulo principal de la aplicación (`app.module.ts`).
+
+```typescript
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtInterceptor } from './jwt.interceptor';
+
+@NgModule({
+  // ...
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
+  ]
+})
+export class AppModule { }
+```
+
+#### 4. Servicio de Autenticación
+
+Crea un servicio de autenticación para manejar el login y almacenamiento del token.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  private currentUserSubject: BehaviorSubject<any>;
+  public currentUser: Observable<any>;
+
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
+
+  public get currentUserValue(): any {
+    return this.currentUserSubject.value;
+  }
+
+  login(username: string, password: string) {
+    return this.http.post<any>(`/api/authenticate`, { username, password })
+      .pipe(map(user => {
+        if (user && user.token) {
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          this.currentUserSubject.next(user);
+        }
+        return user;
+      }));
+  }
+
+  logout() {
+    localStorage.removeItem('currentUser');
+    this.currentUserSubject.next(null);
+  }
+}
+```
+
+### Resumen
+El uso de JSON Web Tokens (JWT) en Angular permite la implementación de un sistema de autenticación y autorización robusto y seguro. A través de la integración con interceptores HTTP y servicios de autenticación, los desarrolladores pueden asegurar que las solicitudes autenticadas incluyan el token necesario para validar al usuario en el servidor. Esto asegura que los recursos y operaciones sensibles estén protegidos y accesibles solo para usuarios autorizados.
+
+
+
+
+## Interceptores en Angular
+Un interceptor en Angular es una clase especial que implementa la interfaz `HttpInterceptor` y permite interceptar y manipular las solicitudes HTTP salientes y las respuestas HTTP entrantes en una aplicación Angular. Los interceptores son una herramienta poderosa para agregar lógica de procesamiento transversal, como el manejo de errores, la autenticación y el registro, sin tener que modificar cada solicitud individualmente.
+
+### ¿Cómo funcionan los interceptores?
+
+Un interceptor se registra en el proveedor de Angular y se ejecuta en el contexto del flujo de solicitudes y respuestas HTTP. Cuando una solicitud HTTP se realiza, el interceptor puede modificar la solicitud antes de que se envíe al servidor. De manera similar, cuando se recibe una respuesta HTTP, el interceptor puede modificar la respuesta antes de que llegue al componente que la solicitó.
+
+### Ejemplos de uso común de interceptores
+
+1. **Agregar tokens de autenticación a las solicitudes**
+2. **Manejo centralizado de errores**
+3. **Registro de solicitudes y respuestas**
+4. **Modificar encabezados HTTP**
+
+### Creación y uso de un interceptor en Angular
+
+#### Paso 1: Crear un interceptor
+
+Primero, crea una nueva clase que implemente la interfaz `HttpInterceptor`.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable()
+export class AuthInterceptor implements HttpInterceptor {
+
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    // Clona la solicitud para añadir el nuevo header.
+    const clonedRequest = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${this.getToken()}`
+      }
+    });
+
+    // Pasa la solicitud clonada en lugar de la original.
+    return next.handle(clonedRequest);
+  }
+
+  // Método para obtener el token de autenticación (por ejemplo, de localStorage)
+  private getToken(): string {
+    return localStorage.getItem('token');
+  }
+}
+```
+
+#### Paso 2: Registrar el interceptor
+
+En el archivo del módulo principal de la aplicación (`app.module.ts`), registra el interceptor en la sección de proveedores.
+
+```typescript
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './auth.interceptor';
+
+@NgModule({
+  // ...
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
+  // ...
+})
+export class AppModule { }
+```
+
+#### Ejemplo completo: Interceptor para manejo de errores
+
+A continuación, se muestra un ejemplo de cómo se podría crear un interceptor para manejar errores HTTP de forma centralizada.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+
+@Injectable()
+export class ErrorInterceptor implements HttpInterceptor {
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => {
+        let errorMessage = '';
+        if (error.error instanceof ErrorEvent) {
+          // Error del lado del cliente
+          errorMessage = `Error: ${error.error.message}`;
+        } else {
+          // Error del lado del servidor
+          errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+        }
+        // Muestra el error en la consola o muestra una notificación al usuario
+        console.error(errorMessage);
+        return throwError(errorMessage);
+      })
+    );
+  }
+}
+```
+
+Luego, registras este interceptor en tu módulo principal:
+
+```typescript
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ErrorInterceptor } from './error.interceptor';
+
+@NgModule({
+  // ...
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+  ],
+  // ...
+})
+export class AppModule { }
+```
+
 ### Resumen
 
-El enrutamiento en Angular es una herramienta poderosa que facilita la creación de aplicaciones SPA. Permite definir rutas, manejar parámetros, proteger rutas y mejorar el rendimiento mediante la carga diferida, todo dentro del marco robusto de Angular.
+Los interceptores en Angular son herramientas poderosas que permiten manipular todas las solicitudes y respuestas HTTP de manera centralizada. Al implementar la interfaz `HttpInterceptor`, puedes agregar lógica transversal como la autenticación, el manejo de errores y el registro de actividades sin modificar el código específico de cada solicitud HTTP en tu aplicación. Esto no solo mejora la eficiencia, sino que también mantiene el código más limpio y mantenible.
