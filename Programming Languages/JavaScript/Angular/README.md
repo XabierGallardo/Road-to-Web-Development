@@ -1496,12 +1496,355 @@ Este método se llama justo antes de que Angular destruya el componente. Es un b
 
 
 
-# 12. 
+# 12. Conexion Backend o APIs
+### ¿Qué es una API?
+Una API (Interfaz de Programación de Aplicaciones) es un conjunto de reglas y protocolos que permiten a diferentes software comunicarse entre sí. Las APIs definen la forma en que los desarrolladores pueden interactuar con una aplicación, servicio o sistema. Existen varios tipos de APIs, siendo las más comunes las APIs web, que permiten la comunicación entre aplicaciones web y servidores a través de la red utilizando protocolos como HTTP/HTTPS. Las API nos permiten:
+
+- **Integracion de servicios**: Permiten que diferentes servicios web se integren entre si, como usar la API de google maps para mostrar mapas o la API de twitter para mostrar tweets
+- **Acceso a datos externos**: Facilitan el acceso a datos y recursos que residen en servidores externos. Podemos usar APIs para obtener info de bbdd, servicios en la nube u otros recursos online
+- **Interaccion con plataformas sociales**: Muchas RRSS como fb, twitter, ig proporcionan APIs que permiten a los desarrolladores acceder a funciones especificas de esas plataformas, como publicar contenido o recuperar datos de perfiles de usuario
+- **Desarrollo de aplicaciones mobiles**: Las apps mobiles a menudo usan APIs para conectarse bien a servicios en la nube como a funcionalidades especificas del dispositivo
+- **Automatizacion de procesos**: Una empresa puede tener un sistema de gestion de inventario que se conecta a una API de proveedores para realizar pedidos automaticamente cuando se agota el stock
+- **Desarrollo de aplicaciones web**: Las webs modernas a menudo usan APIs para cargar datos de forma asincrona, lo que mejora la velocidad y eficiencia
+- **Microservicios**: En arquitecturas de microservicios, los diferentes componentes del sistema se comunican a traves de APIs, lo que permite la escalabilidad y flexibilidad en el desarrollo y mantenimiento de aplicaciones
+
+
+En Angular, la forma más común de hacer conexiones a una API es utilizando el servicio `HttpClient` proporcionado por el módulo `HttpClientModule`.
+
+#### 1. Configurar el Módulo HttpClientModule
+
+Primero, debes asegurarte de que el módulo `HttpClientModule` esté importado en tu aplicación Angular. Normalmente, esto se hace en el módulo principal `AppModule`.
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';  // Importa HttpClientModule
+
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule  // Agrega HttpClientModule a las importaciones
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+#### 2. Crear un Servicio para la Conexión HTTP
+
+Luego, crea un servicio que se encargue de realizar las llamadas HTTP a la API. Aquí hay un ejemplo de un servicio que obtiene datos de una API:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  constructor(private http: HttpClient) { }
+
+  getPosts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+}
+```
+
+#### 3. Usar el Servicio en un Componente
+
+Ahora, puedes usar el servicio en un componente para obtener datos de la API y mostrarlos en la vista.
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from './api.service';
+
+@Component({
+  selector: 'app-posts',
+  template: `
+    <div *ngFor="let post of posts">
+      <h2>{{ post.title }}</h2>
+      <p>{{ post.body }}</p>
+    </div>
+  `
+})
+export class PostsComponent implements OnInit {
+  posts: any[] = [];
+
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit(): void {
+    this.apiService.getPosts().subscribe(
+      data => {
+        this.posts = data;
+      },
+      error => {
+        console.error('Error: ', error);
+      }
+    );
+  }
+}
+```
+
+#### Explicación del Código
+
+1. **Importar HttpClientModule**: Es necesario importar y agregar `HttpClientModule` en el módulo principal para habilitar el uso de `HttpClient` en toda la aplicación.
+
+2. **Crear el Servicio ApiService**: Este servicio utiliza `HttpClient` para realizar una solicitud GET a la API y devuelve un observable de tipo `any[]`.
+
+3. **Inyectar el Servicio en el Componente**: En el componente `PostsComponent`, el servicio `ApiService` se inyecta en el constructor. Luego, se suscribe al observable `getPosts` en el método `ngOnInit` para obtener los datos y almacenarlos en una variable `posts` para su uso en la plantilla.
+
+### Conclusión
+
+En Angular, realizar una conexión a una API es sencillo utilizando `HttpClient`. Siguiendo estos pasos, puedes configurar tu aplicación para realizar solicitudes HTTP y manejar datos asincrónicos de manera eficiente. Esta capacidad es crucial para crear aplicaciones web modernas y dinámicas que interactúan con servidores y servicios externos.
+
+
+
+
 
 
 
 
 # EXTRAS
+## Conexion HTTP Angular
+En Angular, se realiza una conexión HTTP utilizando el módulo `HttpClient` del paquete `@angular/common/http`. `HttpClient` proporciona métodos para realizar solicitudes HTTP de manera fácil y segura, como `get()`, `post()`, `put()`, `delete()`, entre otros.
+
+### Paso a Paso para realizar una conexión HTTP en Angular
+
+#### 1. Importar `HttpClientModule`
+Primero, necesitas importar `HttpClientModule` en tu módulo principal (`AppModule`) para que Angular sepa que vas a usar funcionalidades HTTP.
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+#### 2. Crear un servicio para manejar las solicitudes HTTP
+
+Es una buena práctica encapsular las solicitudes HTTP dentro de servicios. Crea un servicio con Angular CLI:
+
+```sh
+ng generate service data
+```
+
+Esto generará un archivo `data.service.ts` donde implementarás las solicitudes HTTP.
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  constructor(private http: HttpClient) { }
+
+  // Método para obtener datos
+  getPosts(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
+
+  // Método para obtener un post por ID
+  getPostById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  // Método para crear un nuevo post
+  createPost(post: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, post);
+  }
+
+  // Método para actualizar un post existente
+  updatePost(id: number, post: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, post);
+  }
+
+  // Método para eliminar un post
+  deletePost(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+}
+```
+
+#### 3. Consumir el servicio en un componente
+
+Ahora puedes usar el servicio en cualquier componente. Por ejemplo, en `app.component.ts`:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  posts: any[];
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit() {
+    this.loadPosts();
+  }
+
+  loadPosts() {
+    this.dataService.getPosts().subscribe(
+      data => {
+        this.posts = data;
+      },
+      error => {
+        console.error('Error fetching posts', error);
+      }
+    );
+  }
+}
+```
+
+### Resumen
+
+1. **Importar `HttpClientModule`**: Asegúrate de que `HttpClientModule` esté importado en tu módulo principal.
+2. **Crear un servicio**: Encapsula las solicitudes HTTP dentro de un servicio para mantener tu código organizado y reutilizable.
+3. **Consumir el servicio**: Inyecta el servicio en tus componentes y utiliza sus métodos para realizar las solicitudes HTTP.
+
+### Ejemplo Completo
+
+#### app.module.ts
+
+```typescript
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { DataService } from './data.service';
+
+@NgModule({
+  declarations: [
+    AppComponent
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule
+  ],
+  providers: [DataService],
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+```
+
+#### data.service.ts
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DataService {
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  constructor(private http: HttpClient) { }
+
+  getPosts(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
+  }
+
+  getPostById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  createPost(post: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, post);
+  }
+
+  updatePost(id: number, post: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, post);
+  }
+
+  deletePost(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiUrl}/${id}`);
+  }
+}
+```
+
+#### app.component.ts
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { DataService } from './data.service';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  posts: any[];
+
+  constructor(private dataService: DataService) { }
+
+  ngOnInit() {
+    this.loadPosts();
+  }
+
+  loadPosts() {
+    this.dataService.getPosts().subscribe(
+      data => {
+        this.posts = data;
+      },
+      error => {
+        console.error('Error fetching posts', error);
+      }
+    );
+  }
+}
+```
+
+#### app.component.html
+
+```html
+<div>
+  <h1>Posts</h1>
+  <ul>
+    <li *ngFor="let post of posts">{{ post.title }}</li>
+  </ul>
+</div>
+```
+
+Con esta estructura, puedes realizar fácilmente conexiones HTTP en tu aplicación Angular utilizando `HttpClient`.
+
+
+
+
 ## Angular Elements
 Angular Elements es una funcionalidad de Angular que permite empaquetar componentes de Angular como elementos personalizados (custom elements) o Web Components. Estos elementos personalizados pueden ser utilizados en aplicaciones no construidas con Angular, lo que facilita la integración de componentes Angular en diferentes contextos de aplicaciones web. 
 
@@ -1828,3 +2171,207 @@ export class AppModule { }
 ### Resumen
 
 Los interceptores en Angular son herramientas poderosas que permiten manipular todas las solicitudes y respuestas HTTP de manera centralizada. Al implementar la interfaz `HttpInterceptor`, puedes agregar lógica transversal como la autenticación, el manejo de errores y el registro de actividades sin modificar el código específico de cada solicitud HTTP en tu aplicación. Esto no solo mejora la eficiencia, sino que también mantiene el código más limpio y mantenible.
+
+
+
+
+## Operaciones CRUD en Angular
+Para realizar operaciones CRUD (Crear, Leer, Actualizar y Eliminar) en Angular hacia una API, se deben seguir varios pasos. A continuación, te proporciono una explicación completa con ejemplos para cada operación.
+
+### Pasos Previos
+
+1. **Instalar Angular CLI y Crear un Proyecto Angular**:
+   Asegúrate de tener Angular CLI instalado y crea un nuevo proyecto Angular:
+   ```sh
+   npm install -g @angular/cli
+   ng new crud-angular
+   cd crud-angular
+   ```
+
+2. **Configurar HttpClientModule**:
+   Importa `HttpClientModule` en tu módulo principal (`app.module.ts`):
+   ```typescript
+   import { BrowserModule } from '@angular/platform-browser';
+   import { NgModule } from '@angular/core';
+   import { HttpClientModule } from '@angular/common/http';
+   import { AppComponent } from './app.component';
+
+   @NgModule({
+     declarations: [
+       AppComponent
+     ],
+     imports: [
+       BrowserModule,
+       HttpClientModule
+     ],
+     providers: [],
+     bootstrap: [AppComponent]
+   })
+   export class AppModule { }
+   ```
+
+### Servicio HTTP para CRUD
+
+Crea un servicio Angular que manejará todas las operaciones CRUD.
+
+#### 1. Crear el Servicio
+
+Ejecuta el siguiente comando para generar un servicio:
+```sh
+ng generate service api
+```
+
+#### 2. Definir el Servicio
+
+Edita el archivo `api.service.ts` para definir los métodos CRUD:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApiService {
+  private apiUrl = 'https://jsonplaceholder.typicode.com/posts';
+
+  constructor(private http: HttpClient) { }
+
+  // Create
+  createPost(post: any): Observable<any> {
+    return this.http.post(this.apiUrl, post, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  // Read
+  getPosts(): Observable<any[]> {
+    return this.http.get<any[]>(this.apiUrl);
+  }
+
+  // Update
+  updatePost(id: number, post: any): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${id}`, post, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    });
+  }
+
+  // Delete
+  deletePost(id: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
+}
+```
+
+### Componente para Interactuar con el Servicio
+
+Crea un componente para realizar operaciones CRUD.
+
+#### 1. Crear el Componente
+
+Ejecuta el siguiente comando para generar un componente:
+```sh
+ng generate component posts
+```
+
+#### 2. Definir el Componente
+
+Edita el archivo `posts.component.ts` para usar el servicio API:
+
+```typescript
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../api.service';
+
+@Component({
+  selector: 'app-posts',
+  templateUrl: './posts.component.html',
+  styleUrls: ['./posts.component.css']
+})
+export class PostsComponent implements OnInit {
+  posts: any[] = [];
+  newPost: any = { title: '', body: '' };
+  updatePostData: any = { id: null, title: '', body: '' };
+
+  constructor(private apiService: ApiService) { }
+
+  ngOnInit(): void {
+    this.getPosts();
+  }
+
+  getPosts(): void {
+    this.apiService.getPosts().subscribe(data => {
+      this.posts = data;
+    });
+  }
+
+  createPost(): void {
+    this.apiService.createPost(this.newPost).subscribe(post => {
+      this.posts.push(post);
+      this.newPost = { title: '', body: '' };
+    });
+  }
+
+  updatePost(): void {
+    this.apiService.updatePost(this.updatePostData.id, this.updatePostData).subscribe(post => {
+      const index = this.posts.findIndex(p => p.id === post.id);
+      if (index !== -1) {
+        this.posts[index] = post;
+      }
+      this.updatePostData = { id: null, title: '', body: '' };
+    });
+  }
+
+  deletePost(id: number): void {
+    this.apiService.deletePost(id).subscribe(() => {
+      this.posts = this.posts.filter(post => post.id !== id);
+    });
+  }
+
+  selectPostForUpdate(post: any): void {
+    this.updatePostData = { ...post };
+  }
+}
+```
+
+### Plantilla del Componente
+
+Edita el archivo `posts.component.html` para crear la interfaz de usuario:
+
+```html
+<div>
+  <h1>Posts</h1>
+
+  <h2>Create Post</h2>
+  <form (ngSubmit)="createPost()">
+    <input [(ngModel)]="newPost.title" name="title" placeholder="Title" required>
+    <input [(ngModel)]="newPost.body" name="body" placeholder="Body" required>
+    <button type="submit">Create</button>
+  </form>
+
+  <h2>Update Post</h2>
+  <form (ngSubmit)="updatePost()">
+    <input [(ngModel)]="updatePostData.id" name="id" placeholder="ID" readonly>
+    <input [(ngModel)]="updatePostData.title" name="title" placeholder="Title" required>
+    <input [(ngModel)]="updatePostData.body" name="body" placeholder="Body" required>
+    <button type="submit">Update</button>
+  </form>
+
+  <h2>Posts List</h2>
+  <ul>
+    <li *ngFor="let post of posts">
+      <strong>{{ post.title }}</strong>: {{ post.body }}
+      <button (click)="selectPostForUpdate(post)">Edit</button>
+      <button (click)="deletePost(post.id)">Delete</button>
+    </li>
+  </ul>
+</div>
+```
+
+### Conclusión
+
+Este ejemplo cubre todas las operaciones CRUD básicas utilizando Angular y una API REST. Asegúrate de tener un servidor backend configurado para manejar las solicitudes y devolver respuestas adecuadas. Las operaciones CRUD son fundamentales en el desarrollo de aplicaciones web y comprender cómo implementarlas en Angular es crucial para construir aplicaciones modernas y dinámicas.
