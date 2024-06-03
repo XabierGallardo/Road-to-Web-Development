@@ -1,9 +1,507 @@
-# JavaScript Index
-## JavaScript complex data structures
-- **Objects** are used for storing key collections
-- **Arrays** are used for storing ordered collections
-- **Maps** are similar to objects but you can use anything as a key
-- **Sets** are a great choice to store data without duplicates
+# Callbacks en JavaScript
+Una **callback** en JavaScript es una función que se pasa como argumento a otra función y se ejecuta después de que se haya completado una operación. Este concepto es fundamental en JavaScript, especialmente en la programación asíncrona, como las operaciones de red (fetch), temporizadores (setTimeout), y eventos.
+
+```js
+// Example 1
+const greet = (name) => { console.log('Hi ' + name)};
+
+// function
+const callMe = (callback) => {
+  // take input and save it in name
+  let name = prompt('Enter your name');
+  callback(name);
+}
+
+// passing function as a parameter
+callMe(greet);
+```
+
+
+### Ejemplo de Callback
+
+Supongamos que quieres hacer una llamada a una API y, una vez que recibas los datos, quieres mostrarlos en la consola. Puedes usar una callback para definir qué hacer con los datos después de que se reciban.
+
+```javascript
+// Función que simula una operación asincrónica como una llamada a una API
+function fetchData(callback) {
+    setTimeout(() => {
+        const data = "Datos de la API";
+        callback(data); // Llama a la función callback con los datos
+    }, 2000); // Simula un retraso de 2 segundos
+}
+
+// Función callback que se pasa como argumento
+function handleData(data) {
+    console.log(data); // Muestra los datos en la consola
+}
+
+// Llamada a la función con la callback como argumento
+fetchData(handleData);
+```
+
+En este ejemplo:
+
+1. `fetchData` es una función que simula una operación asincrónica usando `setTimeout`.
+2. `handleData` es la función callback que se pasa a `fetchData`.
+3. Cuando la operación en `fetchData` termina (después de 2 segundos), se ejecuta `handleData`, mostrando los datos en la consola.
+
+### Beneficios de las Callbacks
+
+- **Asincronía**: Permiten que el código continúe ejecutándose mientras se espera una operación asincrónica, como una llamada a una API, evitando que la aplicación se bloquee.
+- **Modularidad**: Separan la lógica principal de la lógica que debe ejecutarse después, haciendo el código más limpio y modular.
+- **Reutilización**: Las funciones callback pueden ser reutilizadas en diferentes contextos y con diferentes funciones.
+
+### Otro Ejemplo: Temporizadores
+
+Usando `setTimeout`, que es una función nativa de JavaScript para ejecutar código después de un cierto período.
+
+```javascript
+function sayHello() {
+    console.log("Hello!");
+}
+
+// Ejecuta la función `sayHello` después de 3 segundos
+setTimeout(sayHello, 3000);
+```
+
+En este ejemplo, `sayHello` es la función callback que `setTimeout` ejecuta después de 3 segundos.
+
+### Conclusión
+
+*Las callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan después de que la operación principal haya terminado. Son esenciales para manejar la asincronía en JavaScript, permitiendo que el código se ejecute de manera no bloqueante y proporcionando una forma limpia y modular de estructurar el código.*
+
+
+
+# Promesas en JavaScript
+Las **promesas** en JavaScript son una forma de manejar operaciones asincrónicas, como llamadas a APIs, temporizadores, o tareas que llevan tiempo, de manera más legible y manejable que las callbacks tradicionales. Una promesa representa un valor que puede estar disponible ahora, en el futuro o nunca.
+
+### Explicación Sencilla de Promesas
+
+Imagina que una promesa es como un "futuro" o una "promesa" de obtener un resultado. Tiene tres estados posibles:
+
+1. **Pendiente (Pending)**: La operación asincrónica aún no ha terminado.
+2. **Cumplida (Fulfilled)**: La operación asincrónica se ha completado con éxito y tiene un resultado.
+3. **Rechazada (Rejected)**: La operación asincrónica ha fallado y tiene un motivo de fallo.
+
+### Crear una Promesa
+
+Para crear una promesa, se usa el constructor `Promise` y se le pasa una función con dos parámetros: `resolve` y `reject`. `resolve` se llama cuando la operación se completa con éxito, y `reject` se llama cuando hay un error.
+
+```javascript
+let myPromise = new Promise((resolve, reject) => {
+    // Simula una operación asincrónica, como una llamada a una API
+    setTimeout(() => {
+        let success = true; // Cambia esto a false para simular un error
+        if (success) {
+            resolve("¡Operación exitosa!"); // Llama a resolve si la operación tiene éxito
+        } else {
+            reject("Algo salió mal"); // Llama a reject si hay un error
+        }
+    }, 2000); // Simula un retraso de 2 segundos
+});
+```
+
+### Usar una Promesa
+
+Para manejar el resultado de una promesa, se usan los métodos `then` y `catch`. `then` se usa para manejar un resultado exitoso, y `catch` se usa para manejar errores.
+
+```javascript
+myPromise
+    .then((message) => {
+        console.log(message); // Esto se ejecuta si la promesa se cumple
+    })
+    .catch((error) => {
+        console.error(error); // Esto se ejecuta si la promesa es rechazada
+    });
+```
+
+### Beneficios de las Promesas
+
+- **Legibilidad**: Hacen que el código asincrónico sea más legible y fácil de seguir que las callbacks anidadas.
+- **Manejo de errores**: Proporcionan una forma clara de manejar errores usando `catch`.
+- **Encadenamiento**: Permiten encadenar múltiples operaciones asincrónicas de una manera ordenada.
+
+### Ejemplo Completo
+
+Supongamos que queremos obtener datos de una API y luego procesar esos datos.
+
+```javascript
+function fetchData() {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let data = "Datos de la API";
+            resolve(data); // Simula una operación exitosa
+        }, 2000);
+    });
+}
+
+function processData(data) {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let processedData = data + " procesados";
+            resolve(processedData);
+        }, 1000);
+    });
+}
+
+// Usar las promesas
+fetchData()
+    .then((data) => {
+        console.log("Datos recibidos:", data);
+        return processData(data); // Encadena otra promesa
+    })
+    .then((processedData) => {
+        console.log("Datos procesados:", processedData);
+    })
+    .catch((error) => {
+        console.error("Error:", error);
+    });
+```
+
+En este ejemplo:
+
+1. `fetchData` simula obtener datos de una API.
+2. `processData` simula el procesamiento de esos datos.
+3. Usamos `then` para manejar cada etapa del proceso y `catch` para manejar cualquier error que ocurra.
+
+### Resumen promesas
+*Las promesas son clave para manejar operaciones asincrónicas de manera más legible y manejable que las callbacks tradicionales. Nos permiten escribir código asincrónico que se parece más al código síncrono, mejorando la claridad y la facilidad de manejo de errores.*
+
+- Introducidas en ES6 para resolver los problemas asociados a los callbacks
+- Una promesa representa una operacion que aun no se ha completado pero se espera que lo haga en el futuro
+- Una promesa puede tener tres estados: pendiente, resuelta o rechazada
+- Las promesas tienen los metodos `then()`, `catch()` y `finally()`. Que podemos utilizar para adjuntar **callbacks** que se ejecutaran cuando la promesa se resuelva o se rechace
+- Algunos metodos como `fetch()` directamente devuelven una promesa y se puede usar `then()` o `catch()` 
+```js
+// Promise creation
+let promise = new Promise(function(resolve, reject) {
+  let condition = true;
+  if(condition){
+    resolve("Your result here");
+  } else {
+    reject(new Error("Something happened"));
+  }
+})
+
+// Using .then, .catch & .finally
+promise.then(function(result) {
+  console.log(result);
+}).catch(function(error) {
+  console.log(error);
+}).finally(function() {
+  console.log("After all...");
+})
+```
+
+
+# `Callbacks` vs `Promesas`
+
+### Comparación
+- **Manejo de Errores**:
+  - Callbacks: Los errores se manejan dentro de cada función de callback.
+  - Promesas: Los errores se manejan de manera centralizada usando `catch`.
+
+- **Legibilidad**:
+  - Callbacks: Pueden llevar al "callback hell" con múltiples niveles de anidación.
+  - Promesas: Son más lineales y fáciles de leer gracias al encadenamiento de `then`.
+
+- **Encadenamiento**:
+  - Callbacks: Difícil de seguir cuando se tienen muchas operaciones asincrónicas.
+  - Promesas: Encadenamiento sencillo y legible.
+
+- La principal diferencia es que al usar callbacks, normalmente pasamos el callback en una funcion
+- En las promesas, el callbacks que se ejecuta cuando la promesa se resuelve o se rechaza
+
+### Promesas
+Las sintaxis de las `promesas` es mas amigable y el manejo de errores es más fácil de manejar
+```js
+api()
+  .then(function (result) {
+    return api2();
+  })
+  .then(function (result2) {
+    return api3();
+  })
+  .then(function (result3) {
+    // ...
+  })
+  .catch(function (error) {
+    // maneja el error
+  });
+```
+
+### Callbacks
+Las `callbacks` tienen una sintaxis más difícil de comprender y el manejo de errores puede ser complicado de manejar
+
+```js
+api(function(result) {
+  api2(function(result2) {
+    api3(function(result3) {
+      // ...
+
+      if(error) {
+        // haz algo
+      } else {
+        // haz otra cosa
+      }
+    })
+  })
+})
+```
+
+### Callback hell
+Cuando se necesitan múltiples operaciones asincrónicas anidadas, el código puede volverse difícil de leer y mantener.
+```js
+doSomething(function(result1) {
+    doSomethingElse(result1, function(result2) {
+        doAnotherThing(result2, function(result3) {
+            doFinalThing(result3, function(result4) {
+                console.log('Hecho!');
+            });
+        });
+    });
+});
+```
+
+
+# Fetch API
+- La API fetch es una interfaz moderna que permite realizar peticiones HTTP a servidores desde los navegadores web.
+- La API fetch realiza todas las tareas del objeto `XMLHttpRequest` pero de una manera mucho más limpia y sencilla.
+- Se basa en `Promesas`, lo que permite que el código sea más claro y conciso 
+- Permite configurar las solicitudes HTTP con opciones como métodos (`GET`, `POST`, `PUT`, `DELETE`), `headers`, `body`, etc
+- Proporciona métodos para manejar diferentes tipos de respuesta, como JSON, texto, etc
+
+
+### Enviando una request
+El método `fetch()` sólo necesita un parámetro, la `URL` del recurso que quiere solicitar. Cuando se completa la request, la promesa retorna como un objeto `Response`
+```js
+let response = fetch(url)
+```
+
+El método `text()` retorna una promesa que devuelve el contenido completo del recurso solitado
+```js
+fetch('/readme.txt')
+  .then(res => res.text())
+  .then(data => console.log(data));
+```
+Además de este método, el objeto Response incluye otros métodos como `json()`, `blob()`, `formatData()` y `arrayBuffer()` para manejar los distintos tipos de datos
+
+
+### Leyendo la response
+El método `fetch()` devuelve una promesa, de manera que podemos usar `then()` y `catch()` para manejarla.
+```js
+fetch(url)
+  .then((res) => {
+    // manejo de la response
+  })
+  .catch((err) =? {
+    // manejo del error
+  })
+```
+Los contenidos de la response estan en texto plano, de manera que podemos usar el metodo text(). 
+Generalmente se usa el `async`/`await` con fetch de la siguiente manera
+```js
+async function fetchText() {
+  let response = await fetch('/readme.txt');
+  let data = await response.text();
+  console.log(data);
+}
+```
+
+### Manejando los status codes
+El objeto Response provee el status code y el status text a traves de las propiedades `status` y `statusText`.
+```js
+async function fetchText() {
+  let response = await fetch('/readme.txt');
+
+  console.log(response.status);     // 200
+  console.log(response.statusText); // OK
+
+  if(response.status == 200) {
+    let data = await response.text();
+    // Manejo de los datos
+  }
+}
+```
+
+### Async/Await
+- ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas
+- **async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
+- `await`*operator makes your program behave as if it were waiting for the asynchronous computation to complete (but it does this without actually blocking, and it does not prevent other asynchronous operations from proceeding at the same time). The value of the await operator is the fulfillment value of the Promise object. Importantly, await is only legal within functions that have been declared asynchronous with the async keyword*
+```js
+// asnyc/await example
+async function fetchUserData() {
+  try {
+    let response = await
+    fetch('https://api.example.com/user');
+    let data = await response.json();
+    console.log(data);
+  } catch(error) {
+    console.error("Error:", error)
+  }
+}
+```
+
+
+# 5 tipos de funciones JavaScript
+### 1. Funcion declarada / Basic function
+Es la declaración básica de JavaScript, usa la keyword `function`.
+
+Se recomienda para funciones con nombre o cuando se necesite `hoisting`.
+Las funciones declaradas con la keyword `function`, se pueden elevar a la parte superior de su ámbito, es decir, del scope que las contiene. Esto permite llamar a la función antes de ser declarada 
+```js
+saludar(); // Hola mundo!
+
+function saludar() {
+  console.log('Hola mundo!')
+}
+```
+
+### 2. Funcion expresada / Function expressions
+Es la función que está dentro de una variable.
+Útil para funciones anónimas o cuando se quiere controlar dónde va a estar disponible la función.
+Especialmente útiles si la función va a ser usada como argumento para otra función o si va a ser específica de un scope más pequeño.
+```js
+const saludar = function() {
+  console.log('Hola mundo!')
+}
+```
+
+### 3. Arrow function o funcion de flecha
+Especialmente útil para escribir funciones de una línea
+```js
+const saludar = () => console.log('Hola mundo!');
+
+const saludar2 = () => {
+  console.log('Hola mundo!');
+}
+```
+
+
+### 4. Funcion anonima
+No tiene nombre y se usan como callbacks generalmente
+```js
+setTimeout(function() {
+  console.log('Hola mundo!');
+}, 1000);
+```
+
+
+### 5. Metodos
+Son las funciones dentro de un objeto o clase
+```js
+const obj = {
+  saludar: function() {
+    console.log('Hola mundo!');
+  }
+}
+```
+
+### 6. Funcion de constructor / Function constructor
+Se pude usar el constructor `Function`para crear una nueva función.
+Poco común y no es recomendado por ser inseguro.
+```js
+var constructorFunction = new Function('console.log("Function Constructor")');
+```
+
+## Que es el `hoisting` en JavaScript?
+**Hoisting** es un comportamiento en JavaScript que se refiere al proceso en el que las declaraciones de variables y funciones son "elevadas" al comienzo del contexto de ejecución. Esto significa que puedes usar variables y funciones antes de declararlas en el código. Sin embargo, este comportamiento tiene matices importantes que debes comprender para evitar errores.
+
+### Hoisting de Variables
+
+Cuando se declaran variables con `var`, `let` o `const`, el JavaScript Engine eleva sus declaraciones al inicio de su contexto (función o bloque). Sin embargo, solo `var` inicializa la variable con `undefined` en el hoisting, mientras que `let` y `const` no lo hacen, lo que puede llevar a errores de referencia si se accede a ellas antes de su declaración.
+
+**Ejemplo con `var`**:
+
+```javascript
+console.log(x); // undefined
+var x = 5;
+console.log(x); // 5
+```
+
+El código anterior se comporta como si fuera reescrito de la siguiente manera debido al hoisting:
+
+```javascript
+var x;
+console.log(x); // undefined
+x = 5;
+console.log(x); // 5
+```
+
+**Ejemplo con `let` y `const`**:
+
+```javascript
+console.log(y); // ReferenceError: Cannot access 'y' before initialization
+let y = 5;
+
+console.log(z); // ReferenceError: Cannot access 'z' before initialization
+const z = 10;
+```
+
+En estos casos, la declaración es elevada, pero no la inicialización. Por lo tanto, intentar acceder a `y` o `z` antes de la declaración resulta en un error de referencia.
+
+### Hoisting de Funciones
+
+Las funciones declaradas con el keyword `function` también son elevadas completamente, incluidas sus definiciones, permitiéndoles ser llamadas antes de su declaración en el código.
+
+**Ejemplo**:
+
+```javascript
+greet(); // "Hello, world!"
+
+function greet() {
+    console.log("Hello, world!");
+}
+```
+
+El código anterior se comporta como si fuera reescrito de la siguiente manera:
+
+```javascript
+function greet() {
+    console.log("Hello, world!");
+}
+
+greet(); // "Hello, world!"
+```
+
+### Hoisting de Function Expressions y Arrow Functions
+
+Las expresiones de funciones y las funciones flecha no son completamente elevadas. Solo la declaración de la variable se eleva, no la asignación.
+
+**Ejemplo**:
+
+```javascript
+console.log(foo); // undefined
+var foo = function() {
+    console.log("Hello, world!");
+};
+
+console.log(bar); // ReferenceError: Cannot access 'bar' before initialization
+let bar = () => {
+    console.log("Hello, world!");
+};
+```
+
+En este caso, `foo` se eleva, pero su valor es `undefined` hasta que la asignación se realiza, mientras que `bar` no puede ser accedida antes de su declaración debido a la naturaleza de `let`.
+
+### Resumen
+
+- **Declaraciones de variables con `var`**: Se elevan y se inicializan con `undefined`.
+- **Declaraciones de variables con `let` y `const`**: Se elevan, pero no se inicializan, resultando en un error de referencia si se accede a ellas antes de su declaración.
+- **Declaraciones de funciones**: Se elevan completamente, incluyendo su cuerpo, permitiendo su uso antes de la declaración.
+- **Expresiones de funciones y funciones flecha**: Solo la variable se eleva, pero no la asignación, lo que resulta en `undefined` o un error de referencia si se accede a ellas antes de su declaración.
+
+Entender el hoisting es fundamental para escribir código JavaScript más claro y evitar errores inesperados.
+
+Entre los beneficios del hoisting se encuentran
+- Mayor flexibilidad en la legibilidad y el orden del código
+- Evitar errores de referencia, el hoisting de var inicializa las variables como undefined
+- El hoisting no es una característica que se usa explícitamente sino un comportamiento interno del motor de JavaScript y de cómo se procesa su código.
+
+
+
+<hr>
+
 
 # AJAX y SPA
 ## Que es AJAX?
@@ -46,6 +544,14 @@ Algunas características y ventajas clave de las SPAs son:
 
 Las SPAs se utilizan ampliamente en aplicaciones web modernas, incluyendo aplicaciones de productividad, redes sociales, tiendas en línea, paneles de administración y muchas otras, debido a su capacidad para proporcionar una experiencia de usuario interactiva y fluida.
 
+
+
+## JavaScript complex data structures
+- **Objects** are used for storing key collections
+- **Arrays** are used for storing ordered collections
+- **Maps** are similar to objects but you can use anything as a key
+- **Sets** are a great choice to store data without duplicates
+
 ## Object destructuring
 ```js
 // Object destructuring is a way to extract properties from an object and assign them to variables. It makes working with objects simpler and easier to read
@@ -62,125 +568,8 @@ const { name, email } = userProfile;
 console.log(name + ", " + email); // Alex, alex@example.com
 ```
 
-## Callbacks, Promesas y Async/Await
-### Callbacks
-```js
-// A callback function is a function that is passed as an argument to another function and it's executed after some operation/event is executed
 
-function sendMessage(message) {
-	console.log("Message: ", message);
-}
-
-function getMessage(sendMessage) {
-	const message = "This is the secret message";
-
-	sendMessage(message); // calling function to send message
-}
-
-getMessage(sendMessage); // Message: This is the secret message
-```
-
-- Un **callback** es una funcion que se pasa a otra funcion como argumento para ser llamada mas tarde
-- *Los callbacks son tradicionales en el manejo de eventos en JavaScript, y también se usan en métodos de array y operaciones asícronas*
-- Los callbacks también son usados en métodos de array. Por ejemplo al `map()` le pasamos un callback que se llamara para transformar cada elemento
-- Uno de sus problemas es el callback hell, que consiste en anidar callbacks haciendo el codigo poco legible
-```js
-// Event callback example
-document.getElementById("myBtn")
-  .addEventListener("click", function() {
-    console.log("clicked");
-  });
-
-// Array callback example
-let numbers = [1,2,3,4];
-let squares = numbers.map(function(num) {
-  return num * num;
-});
-
-// Callback example in Node.js
-fs.readFile('archivo.txt', 'utf-8', (err, file) => {
-  console.log(file);
-});
-```
-
-### Promesas
-- Introducidas en ES6 para resolver los problemas asociados a los callbacks
-- Una promesa representa una operacion que aun no se ha completado pero se espera que lo haga en el futuro
-- Una promesa puede tener tres estados: pendiente, resuelta o rechazada
-- Las promesas tienen los metodos `then()`, `catch()` y `finally()`. Que podemos utilizar para adjuntar **callbacks** que se ejecutaran cuando la promesa se resuelva o se rechace
-- Algunos metodos como `fetch()` directamente devuelven una promesa y se puede usar `then()` o `catch()` 
-```js
-// Promise creation
-let promise = new Promise(function(resolve, reject) {
-  let condition = true;
-  if(condition){
-    resolve("Your result here");
-  } else {
-    reject(new Error("Something happened"));
-  }
-})
-
-// Using .then, .catch & .finally
-promise.then(function(result) {
-  console.log(result);
-}).catch(function(error) {
-  console.log(error);
-}).finally(function() {
-  console.log("After all...");
-})
-```
-
-### Async/Await
-- ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas
-- **async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
-- `await`*operator makes your program behave as if it were waiting for the asynchronous computation to complete (but it does this without actually blocking, and it does not prevent other asynchronous operations from proceeding at the same time). The value of the await operator is the fulfillment value of the Promise object. Importantly, await is only legal within functions that have been declared asynchronous with the async keyword*
-```js
-// asnyc/await example
-async function fetchUserData() {
-  try {
-    let response = await
-    fetch('https://api.example.com/user');
-    let data = await response.json();
-    console.log(data);
-  } catch(error) {
-    console.error("Error:", error)
-  }
-}
-```
-
-## Function declaration in JavaScript
-In JavaScript, you can define functions using either the `function` keyword or by assigning them to a variable using `let` or `const` declarations. The choice between these methods often depends on the specific use case and coding style preferences.
-
-1. **Function Declaration with `function` keyword**:
-   ```javascript
-   function myFunction() {
-       // Function logic here
-   }
-   ```
-   Function declarations are hoisted, which means they are processed before the execution of the code. This allows you to call the function before it's declared in the code.
-
-2. **Function Expression with `let` or `const`**:
-   ```javascript
-   const myFunction = function() {
-       // Function logic here
-   };
-   ```
-   or
-   ```javascript
-   let myFunction = function() {
-       // Function logic here
-   };
-   ```
-   Function expressions assign the function to a variable. They are not hoisted like function declarations, so you must define them before calling them in the code.
-
-Both methods are valid and have their own use cases:
-
-- Use the `function` keyword for function declarations when you want the function to be hoisted or when you're defining named functions that will be reused in multiple places.
-  
-- Use function expressions with `let` or `const` when you want to assign a function to a variable, especially if the function will be used as an argument to another function or if it's specific to a smaller scope.
-
-In modern JavaScript, function expressions are more commonly used due to their flexibility and compatibility with other language features like arrow functions and closures. However, the choice ultimately depends on your coding style and the requirements of your project.
-
+<hr>
 
 
 ## Efficiency in JavaScript loops, which one is faster?
@@ -396,3 +785,61 @@ Comprender cómo `this` funciona en JavaScript es fundamental para escribir cód
 20. `Object.getOwnPropertyDescriptors()`
 21. `Object.fromEntries()`
 
+## JavaScript Cheatsheet
+```js
+// Variables
+let variableName = value; // Mutable
+let constantName = value; // Immutable
+
+
+// Data Types
+let myString = "hello";
+let myNumber = 50;
+let myBoolean = true;
+let myArray = [1,2,3];
+let myObject = {key: 'value'};
+
+
+// Arrays
+myArray.push(4);  // Add to end
+myArray.pop()     // Remove from end
+myArray.unshift(0);//Add to beginning
+myArray.shift();  // Remove from beginning
+
+
+// Objects
+let person = {
+  name: 'John',
+  age: 20,
+  isStudent: true
+};
+
+
+// AJAX & Fetch
+fetch('https://api.example.com/data')
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => console.error('Error: ', error));
+
+
+// ES6+ Features
+// Destructuring
+const { key } = object;
+
+// Spread Opeartor
+const newArray = [...oldArray];
+
+// Template literals
+`Hello, ${name}!`
+
+// Promise
+new Promise((resolve, reject) => {
+
+});
+
+
+// Async / Await
+async function fetchData() {
+
+}
+```
