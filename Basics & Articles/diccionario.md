@@ -1,5 +1,245 @@
 # Diccionario IT
 
+## Principios SOLID
+Los principios SOLID son un conjunto de cinco principios de diseño orientados a objetos que ayudan a crear software más comprensible, flexible y mantenible.
+
+1. **S - Single Responsibility Principle (Principio de Responsabilidad Única)**:
+   - **Resumen**: Una clase debe tener una sola responsabilidad o motivo para cambiar.
+   - **Explicación sencilla**: Cada clase debe encargarse de hacer una sola cosa, para que sea más fácil de entender y modificar sin afectar otras partes del código.
+```ts
+// Mal diseño: la clase UserManager maneja tanto usuarios como la gestión de notificaciones.
+class UserManager {
+    addUser(user: string) {
+        console.log(`Adding user: ${user}`);
+        this.sendWelcomeEmail(user);
+    }
+
+    sendWelcomeEmail(user: string) {
+        console.log(`Sending welcome email to ${user}`);
+    }
+}
+
+// Buen diseño: separación de responsabilidades en dos clases.
+class UserManager {
+    addUser(user: string) {
+        console.log(`Adding user: ${user}`);
+    }
+}
+
+class EmailService {
+    sendWelcomeEmail(user: string) {
+        console.log(`Sending welcome email to ${user}`);
+    }
+}
+```
+
+2. **O - Open/Closed Principle (Principio de Abierto/Cerrado)**:
+   - **Resumen**: Las entidades de software deben estar abiertas para la extensión, pero cerradas para la modificación.
+   - **Explicación sencilla**: Puedes añadir nuevas funcionalidades a una clase sin cambiar el código existente, lo cual ayuda a evitar errores al modificar código ya probado.
+```ts
+// Mal diseño: hay que modificar la clase para añadir un nuevo tipo de descuento.
+class Discount {
+  calculate(price: number, type: string): number {
+    if (type === "summer") {
+      return price * 0.9;
+    } else if (type === "winter") {
+      return price * 0.8;
+    }
+    return price;
+  }
+}
+
+// Buen diseño: uso de polimorfismo para extender la funcionalidad sin modificar el código existente.
+abstract class Discount {
+  abstract calculate(price: number): number;
+}
+
+class SummerDiscount extends Discount {
+  calculate(price: number): number {
+    return price * 0.9;
+  }
+}
+
+class WinterDiscount extends Discount {
+  calculate(price: number): number {
+    return price * 0.8;
+  }
+}
+
+```
+
+3. **L - Liskov Substitution Principle (Principio de Sustitución de Liskov)**:
+   - **Resumen**: Los objetos de una clase derivada deben ser reemplazables por objetos de la clase base sin alterar el comportamiento del programa.
+   - **Explicación sencilla**: Si tienes una clase base y una clase derivada, deberías poder usar objetos de la clase derivada en lugar de la clase base sin que el programa falle o se comporte incorrectamente.
+```ts
+// Mal diseño: Square no puede reemplazar Rectangle sin causar problemas.
+class Rectangle {
+  constructor(public width: number, public height: number) {}
+
+  setWidth(width: number) {
+    this.width = width;
+  }
+
+  setHeight(height: number) {
+    this.height = height;
+  }
+
+  area(): number {
+    return this.width * this.height;
+  }
+}
+
+class Square extends Rectangle {
+  constructor(size: number) {
+    super(size, size);
+  }
+
+  setWidth(width: number) {
+    this.width = width;
+    this.height = width;
+  }
+
+  setHeight(height: number) {
+    this.width = height;
+    this.height = height;
+  }
+}
+
+// Buen diseño: evitar la herencia problemática.
+class Rectangle {
+  constructor(public width: number, public height: number) {}
+
+  area(): number {
+    return this.width * this.height;
+  }
+}
+
+class Square {
+  constructor(public size: number) {}
+
+  area(): number {
+    return this.size * this.size;
+  }
+}
+
+```
+
+4. **I - Interface Segregation Principle (Principio de Segregación de Interfaces)**:
+   - **Resumen**: Los clientes no deben estar obligados a depender de interfaces que no utilizan.
+   - **Explicación sencilla**: En lugar de tener una gran interfaz que haga muchas cosas, divide las interfaces en partes más pequeñas y específicas. Así, las clases solo implementan lo que realmente necesitan.
+```ts
+// Mal diseño: una interfaz grande obliga a implementar métodos innecesarios.
+interface Worker {
+  work(): void;
+  eat(): void;
+  sleep(): void;
+}
+
+class Robot implements Worker {
+  work() {
+    console.log("Robot working");
+  }
+
+  eat() {
+    // No aplica para robots
+  }
+
+  sleep() {
+    // No aplica para robots
+  }
+}
+
+// Buen diseño: interfaces más pequeñas y específicas.
+interface Workable {
+  work(): void;
+}
+
+interface Eatable {
+  eat(): void;
+}
+
+interface Sleepable {
+  sleep(): void;
+}
+
+class Human implements Workable, Eatable, Sleepable {
+  work() {
+    console.log("Human working");
+  }
+
+  eat() {
+    console.log("Human eating");
+  }
+
+  sleep() {
+    console.log("Human sleeping");
+  }
+}
+
+class Robot implements Workable {
+  work() {
+    console.log("Robot working");
+  }
+}
+```
+
+5. **D - Dependency Inversion Principle (Principio de Inversión de Dependencias)**:
+   - **Resumen**: Los módulos de alto nivel no deben depender de los módulos de bajo nivel. Ambos deben depender de abstracciones.
+   - **Explicación sencilla**: En lugar de que una clase dependa directamente de otra clase concreta, debería depender de una interfaz o una clase abstracta. Esto facilita cambiar implementaciones sin afectar otras partes del código.
+```ts
+// Mal diseño: la clase Frontend depende directamente de la clase Backend.
+class Backend {
+  getData() {
+    return "Backend data";
+  }
+}
+
+class Frontend {
+  private backend: Backend;
+
+  constructor() {
+    this.backend = new Backend();
+  }
+
+  render() {
+    const data = this.backend.getData();
+    console.log(`Rendering data: ${data}`);
+  }
+}
+
+// Buen diseño: la clase Frontend depende de una abstracción.
+interface DataService {
+  getData(): string;
+}
+
+class Backend implements DataService {
+  getData() {
+    return "Backend data";
+  }
+}
+
+class Frontend {
+  private dataService: DataService;
+
+  constructor(dataService: DataService) {
+    this.dataService = dataService;
+  }
+
+  render() {
+    const data = this.dataService.getData();
+    console.log(`Rendering data: ${data}`);
+  }
+}
+
+const backend = new Backend();
+const frontend = new Frontend(backend);
+frontend.render();
+```
+
+Los principios SOLID promueven la escritura de código que es fácil de entender, probar y mantener, ayudando a construir sistemas más robustos y escalables.
+
+
+
 # Algorithms
 An algorithm is a set of instructions independent of the hardware or programming language, designed to solve a particular problem.
 It's like a recipe of how to build a program. A lot of work is put into developing algorithms to get the best out of computers.

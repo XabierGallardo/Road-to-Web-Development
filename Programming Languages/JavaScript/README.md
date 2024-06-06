@@ -1,3 +1,74 @@
+# Closures
+A closure in JavaScript is a feature where an inner function has access to variables from its outer (enclosing) function's scope, even after the outer function has finished executing. This allows the inner function to remember and access its lexical scope, which includes any variables declared in the outer function.
+
+#### Example outer variable
+```javascript
+function outerFunction() {
+  let outerVariable = 'I am outside!';
+  
+  function innerFunction() {
+    console.log(outerVariable);
+  }
+  
+  return innerFunction;
+}
+
+const myInnerFunction = outerFunction();
+myInnerFunction(); // Logs 'I am outside!'
+```
+
+Closures are powerful because they allow functions to have private variables. This is particularly useful in scenarios such as:
+
+- **Data Encapsulation**: Closures can create private variables that can only be accessed by specific functions.
+- **Maintaining State**: Functions can maintain state between calls.
+- **Functional Programming Patterns**: Closures enable more complex functional programming patterns and callback structures.
+
+#### Example using a counter
+
+```javascript
+function createCounter() {
+  let count = 0;
+  
+  return function() {
+    count++;
+    return count;
+  };
+}
+
+const counter1 = createCounter();
+console.log(counter1()); // 1
+console.log(counter1()); // 2
+
+const counter2 = createCounter();
+console.log(counter2()); // 1
+console.log(counter2()); // 2
+```
+
+#### Example with iterators
+Closures can be used to create iterators that maintain their state between calls, facilitating efficient and memory-friendly iteration over data structures.
+```js
+function createIterator(items) {
+  let index = 0;
+  return function() {
+    return items[index++];
+  }
+}
+
+let fruitList = ['apple', 'banana', 'orange'];
+const fruitsIterator = createIterator(fruitList);
+
+console.log(fruitsIterator()); // apple
+console.log(fruitsIterator()); // banana
+console.log(fruitsIterator()); // orange
+```
+
+## Summary
+Imagine you have a function within another function, and **the inner function can access variables from the outer function even after the outer function has finished executing**, that's closure
+
+**Closures enable the creation of private variables in JS encapsulating data within functions and preventing direct access from outside**.
+
+
+
 # Callbacks en JavaScript
 Una **callback** en JavaScript es una función que se pasa como argumento a otra función y se ejecuta después de que se haya completado una operación. Este concepto es fundamental en JavaScript, especialmente en la programación asíncrona, como las operaciones de red (fetch), temporizadores (setTimeout), y eventos.
 
@@ -342,6 +413,53 @@ async function fetchUserData() {
 }
 ```
 
+<hr>
+
+# 6 types of arrow functions
+## 1. No parameters
+If the functions takes no parameters, you use empty parentheses
+```js
+const greet = () => console.log("Hello!");
+greet(); // Hello!
+```
+
+## 2. Single parameter
+if there's only one paremeter, parentheses are optional
+```js
+const square = x => x * x;
+console.log(square(4)); // 16
+```
+
+## 3. Multiple parameters
+```js
+const add = (a, b) => a + b;
+console.log(add(2, 3)); // 5
+```
+
+## 4. Function body with multiple statements
+If the function body has more than 1 statement, you need to use `{}` and specify the `return` keyword
+```js
+const greetPerson = name => {
+  const greeting = `Hello, ${name}!`;
+  return greeting;
+}
+console.log(greetPerson("Alice")); // Hello, Alice!
+```
+
+## 5. Returning object literals
+To return an object literal, wrap the literal in parentheses to differentiate it from the function block
+```js
+const makePerson = (firstName, lastName) => ({first: firstName, last: lastName});
+console.log(makePerson("Johnny", "Melavo")); // Object { first: "Johnny", last: "Melavo" }
+```
+
+## 6. Higher order functions and callbacks
+Arrow functions are particularly popular when used as short callbacks
+```js
+const numbers = [1, 2, 3, 4];
+const doubled = numbers.map(num => num * 2);
+console.log(doubled); // Array(4) [ 2, 4, 6, 8 ]
+```
 
 # 5 tipos de funciones JavaScript
 ### 1. Funcion declarada / Basic function
