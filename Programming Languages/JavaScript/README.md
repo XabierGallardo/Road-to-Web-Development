@@ -1,3 +1,582 @@
+# JavaScript Roadmap
+0. Basic Syntax & Concepts
+1. Function types, arrow functions, "this" keyword
+2. Scope, Hoisting & Closures
+3. DOM & Global Objects
+4. Event listeners, event bubbling y event handling
+5. Callback functions
+6. Async Await, Promises
+7. Fetch API, RESTFUL APIS, JSON parse & JSON.stringify
+8. Array Methods & String Methods
+9. ES6 + JS Models (template literals, destructuring, spread operator, classes, modules import export)
+10. Object Oriented Programming, prototype
+11. Error Handling, try/catch, Custom errors
+
+
+
+
+# 0. Basic Syntax & Concepts
+## 0.1 Por qué se dice que en JavaScript todo son objetos?
+En JavaScript, se dice que "todo es un objeto" porque la mayoría de las entidades y valores se comportan como objetos o pueden ser tratados como objetos, lo que proporciona una gran flexibilidad y poder al lenguaje. Aquí hay algunas razones y explicaciones más detalladas:
+
+1. **Primitivos y objetos envolventes**:
+   - JavaScript tiene tipos de datos primitivos (números, cadenas, booleanos, null, undefined, y símbolos). Sin embargo, estos primitivos pueden ser tratados temporalmente como objetos porque JavaScript proporciona objetos envolventes (wrappers) que permiten acceder a métodos y propiedades.
+   - Por ejemplo, una cadena puede usar métodos de la clase `String`:
+     ```javascript
+     let str = "Hola";
+     console.log(str.length); // 4
+     console.log(str.toUpperCase()); // "HOLA"
+     ```
+   - Internamente, `str` es un valor primitivo, pero JavaScript lo convierte temporalmente en un objeto `String` para que se puedan usar sus métodos.
+
+2. **Objetos y arrays**:
+   - Los objetos son fundamentales en JavaScript y se utilizan para almacenar colecciones de datos y entidades más complejas.
+   - Los arrays son un tipo especial de objeto con propiedades y métodos diseñados para gestionar listas de elementos:
+     ```javascript
+     let arr = [1, 2, 3];
+     console.log(arr.length); // 3
+     arr.push(4);
+     console.log(arr); // [1, 2, 3, 4]
+     ```
+
+3. **Funciones como objetos**:
+   - En JavaScript, las funciones son objetos de primera clase, lo que significa que pueden ser tratadas como cualquier otro objeto. Pueden tener propiedades y métodos, ser asignadas a variables, pasadas como argumentos, y devueltas por otras funciones:
+     ```javascript
+     function saludo() {
+         console.log("Hola");
+     }
+     saludo.propiedad = "Soy una propiedad de la función";
+     console.log(saludo.propiedad); // "Soy una propiedad de la función"
+     ```
+
+4. **Prototipos y herencia**:
+   - JavaScript utiliza un sistema de herencia basado en prototipos, lo que significa que los objetos pueden heredar propiedades y métodos de otros objetos. Cada objeto tiene una propiedad interna `[[Prototype]]` (accesible a través de `__proto__` en algunos entornos) que apunta a otro objeto, formando una cadena de prototipos.
+     ```javascript
+     let obj = {};
+     console.log(obj.toString()); // [object Object]
+     ```
+
+5. **El DOM y otros APIs**:
+   - En el contexto del navegador, los elementos del DOM (Document Object Model) también son objetos, lo que permite manipular y gestionar el contenido de la página web de manera dinámica.
+     ```javascript
+     let elemento = document.getElementById('miElemento');
+     console.log(elemento.innerHTML);
+     ```
+
+6. **Flexibilidad del lenguaje**:
+   - La capacidad de tratar casi cualquier cosa como un objeto hace que JavaScript sea muy flexible y potente. Esta característica permite a los desarrolladores escribir código más dinámico y reutilizable.
+
+La naturaleza orientada a objetos de JavaScript proporciona una base sólida para construir estructuras de datos complejas y funcionalidades avanzadas, lo que hace que el lenguaje sea extremadamente versátil y adecuado para una amplia variedad de tareas de programación.
+
+
+
+
+# 1. Function types, arrow functions, "this" keyword
+## 1.1 / 10 tipos de funciones JavaScript
+### 1. Función declarada / Named function o Basic function
+Es la declaración básica de JavaScript, usa la keyword `function`.
+
+Se recomienda para funciones con nombre o cuando se necesite `hoisting`.
+Las funciones declaradas con la keyword `function`, se pueden elevar a la parte superior de su ámbito, es decir, del scope que las contiene. Esto permite llamar a la función antes de ser declarada.
+```js
+saludar(); // Hola mundo!
+
+function saludar() {
+  console.log('Hola mundo!')
+}
+```
+
+### 2. Función expresada / Function expression
+Es la función que está dentro de una variable.
+
+Son útiles para funciones anónimas, para cuando se quiere controlar dónde va a estar disponible la función o para cuando va a ser usada como argumento para otra función.
+```js
+const saludar = function() {
+  console.log('Hola mundo!')
+} 
+saludar(); // Hola mundo!
+```
+
+### 3. Función anónima / Anonymous function
+No tiene nombre y se usan como callbacks generalmente.
+```js
+setTimeout(function() {
+  console.log('Hola mundo!');
+}, 1000);
+```
+
+### 4. Función de flecha / Arrow function
+Especialmente útil para escribir funciones de una línea. No tienen su propio `this` y siempre son anónimas.
+```js
+const sumar = (a, b) => a + b;
+
+console.log(sumar(2, 3)); // 5
+```
+
+### 5. Función de métodos / Method function
+Son las funciones definidas dentro de un objeto o clase.
+```js
+const persona = {
+  nombre: "Valeria",
+  saludar() {
+    console.log(`Hola! me llamo ${this.nombre}`);
+  }
+}
+persona.saludar(); // Hola! me llamo Valeria
+```
+
+### 6. Función de constructor / Constructor function
+Se usan para crear objetos, se invocan usando el keyword `new`.
+```js
+function Usuario(nombre, id) {
+  this.nombre = nombre;
+  this.id = id;
+}
+
+const marcos = new Usuario('Marcos', 12345);
+console.log(marcos.id); //12345
+```
+
+### 7. Expresión de función ejecutada inmediatamente / IIFE - Immediately Invoked Function Expressions
+Las IIFE son funciones que se ejecuten inmediatamente después de haberse definido.
+```js
+(function() {
+  console.log('Esta es una IIFE!');
+})();
+
+// Esta es una IIFE!
+```
+
+### 8. Función generadora o Generadores / Generator function
+Son un tipo especial de funciones que sirven como una fábrica de iteradores. Es decir, pausan su ejecución y continúan más tarde.
+
+Se definen usando la expresión `function*`.
+```js
+function* crearId() {
+  let index = 0;
+  while(true) {
+    yield index++;
+  }
+}
+
+const generador = crearId();
+
+console.log(generador.next().value); // 0
+console.log(generador.next().value); // 1
+console.log(generador.next().value); // 2
+console.log(generador.next().value); // 3
+```
+
+### 9. Función de orden superior / High order function
+Las high order functions nos permiten usar otras funciones como parámetros o devolver funciones como resultado.
+
+Ejemplos de estas funciones son `map()`, `filter()`, `reduce()`, `forEach()`, `every()` y `some()`.
+```js
+// Ej 1: Array.prototype.map() Devuelve un nuevo array con los resultados de aplicar esa función a cada uno de los elementos del array original
+let lista = [1,2,3,4,5];
+const duplicar = lista.map(num => num * 2); 
+console.log(duplicar); // [2,4,6,8,10]
+
+// Ej 2:
+function ordenSuperior(func) {
+  return function()  {
+    console.log('Antes de llamar la función');
+    func();
+    console.log('Despues de llamar la función');
+  }
+}
+
+function saludar() {
+  console.log('Hola!');
+}
+
+const funcionAgrupada = ordenSuperior(saludar);
+funcionAgrupada();
+/*"Antes de llamar la función"
+  "Hola!"
+  "Despues de llamar la función"*/
+```
+
+### 10. Función asincrónica / Async function
+Las funciones asincrónicas se declaran con la keyword `async` y devuelven un objeto `Promise` que representa la terminación o el fracaso de una operación asíncrona.
+
+Se usa el operador `await` para esperar a la operación asincrónica.
+```js
+async function fetchData() {
+  let response = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+  let data = await response.json();
+  return data;
+}
+
+fetchData().then(data => console.log(data));
+/*{
+  "userId": 1,
+  "id": 1,
+  "title": "delectus aut autem",
+  "completed": false
+}/*
+```
+
+## 1.2 / 6 types of arrow functions
+## 1. Sin parámetros
+Si la función no lleva parámetros, se pueden usar paréntesis vacías
+```js
+const saludar = () => console.log("Hola!");
+saludar(); // Hola!
+```
+
+## 2. Un solo parámetro
+Si sólo hay un parámetro, los paréntesis son opcionales
+```js
+const cuadrado = x => x * x;
+console.log(cuadrado(4)); // 16
+```
+
+## 3. Más de un parámetro
+```js
+const sumar = (a, b) => a + b;
+console.log(sumar(2, 3)); // 5
+```
+
+## 4. Más de una instrucción en la función
+Si el cuerpo de la función tiene más de una instrución, necesitas usar `{}` y usar la palabra clave `return` para devolver un valor.
+```js
+const saludarPersona = nombre => {
+  const saludo = `Hola, ${nombre}!`;
+  return saludo;
+}
+console.log(saludarPersona("Nahuel")); // Hola, Nahuel!
+```
+
+## 5. Devolviendo un objeto
+Para devolver un objeto literal, debe estar envuelto en paréntesis para que no se confunda con el cuerpo de la función
+```js
+const creaPersona = (nombre, edad) => ({nombre: nombre, edad: edad});
+console.log(creaPersona("Antxon", 30)); 
+// Objecto { "nombre": "Antxon", "edad": 30 }
+```
+
+## 6. Funciones de orden superior y callbacks
+Las funciones de flecha son especialmente populares cuando se usan como callbacks
+```js
+const numeros = [1, 2, 3, 4];
+const duplicar = numeros.map(num => num * 2);
+console.log(duplicar); // Array(4) [ 2, 4, 6, 8 ]
+```
+
+## 1.3 This keyword
+El keyword `this` en JavaScript es un contexto especial dentro de una función que se refiere al objeto al que pertenece esa función. El valor de `this` depende de cómo se llama a la función y del contexto en el que se encuentra.
+
+### Contextos y Uso de `this`
+1. **En el Contexto Global**
+   En el contexto global (fuera de cualquier función), `this` se refiere al objeto global. En un navegador web, este objeto global es `window`.
+   ```javascript
+   console.log(this); // En un navegador, esto será el objeto window
+   ```
+
+2. **Dentro de un Objeto (Métodos de Objeto)**
+   Cuando `this` se usa dentro de un método de un objeto, se refiere al propio objeto.
+   ```javascript
+   let person = {
+       name: "Alice",
+       greet: function() {
+           console.log(this.name); // "Alice"
+       }
+   };
+
+   person.greet();
+   ```
+
+3. **En una Función Sola**
+   En una función, si se llama en el contexto global, `this` se refiere al objeto global (`window` en navegadores).
+   ```javascript
+   function show() {
+       console.log(this);
+   }
+
+   show(); // En un navegador, esto será el objeto window
+   ```
+
+4. **En una Función en Modo Estricto**
+   En modo estricto, `this` es `undefined` dentro de una función que se llama en el contexto global.
+   ```javascript
+   "use strict";
+
+   function show() {
+       console.log(this); // undefined
+   }
+
+   show();
+   ```
+
+5. **En una Función Constructor**
+   Cuando se usa una función como constructor (con la palabra clave `new`), `this` se refiere al nuevo objeto que se está creando.
+   ```javascript
+   function Person(name) {
+       this.name = name;
+   }
+
+   let person1 = new Person("Bob");
+   console.log(person1.name); // "Bob"
+   ```
+
+6. **En una Función Flecha**
+   Las funciones flecha no tienen su propio `this`. 
+   En su lugar, `this` se hereda del contexto léxico en el que se definieron (contexto circundante).
+   ```javascript
+   let person = {
+       name: "Charlie",
+       greet: function() {
+           let innerGreet = () => {
+               console.log(this.name); // "Charlie"
+           };
+           innerGreet();
+       }
+   };
+
+   person.greet();
+   ```
+
+### Ejemplos Adicionales
+1. **Uso de `call`, `apply` y `bind`**
+   Puedes cambiar explícitamente el valor de `this` usando los métodos `call`, `apply` y `bind`.
+   ```javascript
+   function greet() {
+       console.log(this.name);
+   }
+
+   let person1 = { name: "David" };
+   let person2 = { name: "Emma" };
+
+   greet.call(person1);  // "David"
+   greet.apply(person2); // "Emma"
+
+   let boundGreet = greet.bind(person1);
+   boundGreet(); // "David"
+   ```
+
+2. **Dentro de un Evento**
+   En un controlador de eventos en HTML, `this` se refiere al elemento que recibió el evento.
+   ```html
+   <button id="myButton">Click me</button>
+   <script>
+       document.getElementById('myButton').addEventListener('click', function() {
+           console.log(this); // <button id="myButton">Click me</button>
+       });
+   </script>
+   ```
+
+### Resumen
+El valor de `this` en JavaScript puede ser confuso al principio debido a su naturaleza dinámica, pero entender cómo cambia según el contexto y las diferentes formas de manipularlo te ayudará a escribir código más predecible y manejable.
+
+| Contexto                       | Valor de `this`                           |
+|--------------------------------|-------------------------------------------|
+| Contexto global                | Objeto global (`window` en navegadores)   |
+| Método de objeto               | El propio objeto                          |
+| Función simple                 | Objeto global (`window` en navegadores)   |
+| Función en modo estricto       | `undefined`                               |
+| Función constructor            | Nuevo objeto instanciado                  |
+| Función flecha                 | `this` del contexto léxico circundante    |
+| Método `call`, `apply`, `bind` | Valor especificado en la llamada          |
+| Manejador de eventos           | Elemento que recibió el evento            |
+
+Comprender `this` es crucial para trabajar eficazmente con JavaScript, especialmente en programación orientada a objetos y en el manejo de eventos.
+
+
+
+
+# 2. Scope, Hoisting & Closures
+## 2.1 Que es el scope en JavaScript?
+El scope (o ámbito) en JavaScript se refiere al contexto en el cual las variables y las funciones son accesibles y pueden ser referenciadas. Entender el scope es crucial para escribir código claro y sin errores. En JavaScript, existen diferentes tipos de scope:
+
+### Tipos de Scope en JavaScript
+1. **Global Scope (Ámbito Global)**:
+   - Las variables declaradas fuera de cualquier función o bloque tienen alcance global y son accesibles desde cualquier parte del código.
+   - En un navegador, las variables globales se adjuntan al objeto `window`.
+   ```javascript
+   var globalVar = "Soy global";
+
+   function mostrarGlobal() {
+       console.log(globalVar);  // "Soy global"
+   }
+
+   mostrarGlobal();
+   console.log(globalVar);  // "Soy global"
+   ```
+
+2. **Local Scope (Ámbito Local)**:
+   - Las variables declaradas dentro de una función solo son accesibles dentro de esa función. Estas variables tienen un ámbito local.
+   ```javascript
+   function mostrarLocal() {
+       var localVar = "Soy local";
+       console.log(localVar);  // "Soy local"
+   }
+
+   mostrarLocal();
+   console.log(localVar);  // Error: localVar no está definida
+   ```
+
+3. **Block Scope (Ámbito de Bloque)**:
+   - Las variables declaradas con `let` y `const` tienen alcance de bloque, lo que significa que solo son accesibles dentro del bloque en el que se declararon (por ejemplo, dentro de llaves `{}` de un `if`, `for`, etc.).
+   ```javascript
+   if (true) {
+       let bloqueVar = "Soy de bloque";
+       console.log(bloqueVar);  // "Soy de bloque"
+   }
+
+   console.log(bloqueVar);  // Error: bloqueVar no está definida
+   ```
+
+### Scope Chain (Cadena de Ámbito)
+Cuando se intenta acceder a una variable, JavaScript busca en la cadena de ámbito, comenzando por el ámbito más interno y moviéndose hacia los ámbitos externos hasta encontrar la variable o llegar al ámbito global.
+```javascript
+var globalVar = "Soy global";
+
+function externa() {
+    var externaVar = "Soy de externa";
+
+    function interna() {
+        var internaVar = "Soy de interna";
+        console.log(globalVar);    // "Soy global"
+        console.log(externaVar);   // "Soy de externa"
+        console.log(internaVar);   // "Soy de interna"
+    }
+
+    interna();
+    console.log(internaVar);  // Error: internaVar no está definida
+}
+
+externa();
+```
+
+### Function Scope (Ámbito de Función) vs Block Scope (Ámbito de Bloque)
+- **Function Scope**: Las variables declaradas con `var` tienen ámbito de función. Esto significa que si se declaran dentro de una función, no son accesibles fuera de esa función, pero no están limitadas por bloques.
+  ```javascript
+  function scopeFuncion() {
+      if (true) {
+          var funcionVar = "Soy de función";
+      }
+      console.log(funcionVar);  // "Soy de función"
+  }
+
+  scopeFuncion();
+  ```
+
+- **Block Scope**: Las variables declaradas con `let` y `const` están limitadas por el bloque en el que se declaran.
+  ```javascript
+  function scopeBloque() {
+      if (true) {
+          let bloqueLet = "Soy de bloque";
+          const bloqueConst = "Soy de bloque también";
+      }
+      console.log(bloqueLet);  // Error: bloqueLet no está definida
+      console.log(bloqueConst);  // Error: bloqueConst no está definida
+  }
+
+  scopeBloque();
+  ```
+
+### Hoisting (Elevación)
+Las declaraciones de variables y funciones en JavaScript se mueven "hacia arriba" de su contexto de ejecución (scope). Solo las declaraciones son elevadas, no las inicializaciones.
+
+- **Variables con `var`**: Se elevan y se inicializan con `undefined`.
+  ```javascript
+  console.log(elevadaVar);  // undefined
+  var elevadaVar = "Soy elevada";
+  console.log(elevadaVar);  // "Soy elevada"
+  ```
+
+- **Variables con `let` y `const`**: Se elevan pero no se inicializan, lo que lleva a un error si se accede antes de la declaración.
+  ```javascript
+  console.log(elevadaLet);  // Error: no se puede acceder antes de la inicialización
+  let elevadaLet = "Soy elevada";
+  console.log(elevadaLet);  // "Soy elevada"
+  ```
+
+En resumen, el scope en JavaScript determina dónde y cómo se pueden acceder a las variables y funciones. Comprender el scope es fundamental para escribir código organizado, evitar errores y gestionar adecuadamente el alcance de las variables.
+
+
+## 2.2 Que es el `hoisting` en JavaScript?
+**Hoisting** es un comportamiento en JavaScript que se refiere al proceso en el que las declaraciones de variables y funciones son "elevadas" al comienzo del contexto de ejecución. Esto significa que puedes usar variables y funciones antes de declararlas en el código. Sin embargo, este comportamiento tiene matices importantes que debes comprender para evitar errores.
+
+### Hoisting de Variables
+Cuando se declaran variables con `var`, `let` o `const`, el JavaScript Engine eleva sus declaraciones al inicio de su contexto (función o bloque). Sin embargo, solo `var` inicializa la variable con `undefined` en el hoisting, mientras que `let` y `const` no lo hacen, lo que puede llevar a errores de referencia si se accede a ellas antes de su declaración.
+
+**Ejemplo con `var`**:
+```javascript
+console.log(x); // undefined
+var x = 5;
+console.log(x); // 5
+```
+El código anterior se comporta como si fuera reescrito de la siguiente manera debido al hoisting:
+```javascript
+var x;
+console.log(x); // undefined
+x = 5;
+console.log(x); // 5
+```
+
+**Ejemplo con `let` y `const`**:
+```javascript
+console.log(y); // ReferenceError: Cannot access 'y' before initialization
+let y = 5;
+
+console.log(z); // ReferenceError: Cannot access 'z' before initialization
+const z = 10;
+```
+En estos casos, la declaración es elevada, pero no la inicialización. Por lo tanto, intentar acceder a `y` o `z` antes de la declaración resulta en un error de referencia.
+
+### Hoisting de Funciones
+Las funciones declaradas con el keyword `function` también son elevadas completamente, incluidas sus definiciones, permitiéndoles ser llamadas antes de su declaración en el código.
+
+```javascript
+greet(); // "Hello, world!"
+
+function greet() {
+    console.log("Hello, world!");
+}
+```
+
+El código anterior se comporta como si fuera reescrito de la siguiente manera:
+```javascript
+function greet() {
+    console.log("Hello, world!");
+}
+
+greet(); // "Hello, world!"
+```
+
+### Hoisting de Function Expressions y Arrow Functions
+Las funciones expresadas y las funciones flecha no son completamente elevadas. Solo la declaración de la variable se eleva, no la asignación.
+```javascript
+console.log(foo); // undefined
+var foo = function() {
+    console.log("Hello, world!");
+};
+
+console.log(bar); // ReferenceError: Cannot access 'bar' before initialization
+let bar = () => {
+    console.log("Hello, world!");
+};
+```
+
+En este caso, `foo` se eleva, pero su valor es `undefined` hasta que la asignación se realiza, mientras que `bar` no puede ser accedida antes de su declaración debido a la naturaleza de `let`.
+
+### Resumen
+- **Declaraciones de variables con `var`**: Se elevan y se inicializan con `undefined`.
+- **Declaraciones de variables con `let` y `const`**: Se elevan, pero no se inicializan, resultando en un error de referencia si se accede a ellas antes de su declaración.
+- **Declaraciones de funciones**: Se elevan completamente, incluyendo su cuerpo, permitiendo su uso antes de la declaración.
+- **Expresiones de funciones y funciones flecha**: Solo la variable se eleva, pero no la asignación, lo que resulta en `undefined` o un error de referencia si se accede a ellas antes de su declaración.
+
+Entender el hoisting es fundamental para escribir código JavaScript más claro y evitar errores inesperados.
+
+Entre los *beneficios del hoisting* se encuentran
+- Mayor flexibilidad en la legibilidad y el orden del código
+- Evitar errores de referencia, el hoisting de var inicializa las variables como undefined
+- El hoisting no es una característica que se usa explícitamente sino un comportamiento interno del motor de JavaScript y de cómo se procesa su código.
+
+
+## 2.3 Closures
 # Closures
 A closure in JavaScript is a feature where an inner function has access to variables from its outer (enclosing) function's scope, even after the outer function has finished executing. This allows the inner function to remember and access its lexical scope, which includes any variables declared in the outer function.
 
@@ -17,14 +596,13 @@ const myInnerFunction = outerFunction();
 myInnerFunction(); // Logs 'I am outside!'
 ```
 
-Closures are powerful because they allow functions to have private variables. This is particularly useful in scenarios such as:
+Closures allow functions to have private variables. This is particularly useful in scenarios such as:
 
 - **Data Encapsulation**: Closures can create private variables that can only be accessed by specific functions.
 - **Maintaining State**: Functions can maintain state between calls.
 - **Functional Programming Patterns**: Closures enable more complex functional programming patterns and callback structures.
 
 #### Example using a counter
-
 ```javascript
 function createCounter() {
   let count = 0;
@@ -69,92 +647,318 @@ Imagine you have a function within another function, and **the inner function ca
 
 
 
-# Callbacks en JavaScript
+
+# 3. DOM & Global Objects
+## 3.1 Shadow DOM
+### Shadow DOM
+El Shadow DOM es una tecnología de encapsulación de JavaScript que permite crear un árbol de DOM separado e independiente del árbol de DOM principal del documento. Este árbol separado es conocido como "Shadow Tree" y permite la encapsulación de estilos y lógica de componentes, evitando conflictos con otros elementos de la página.
+
+#### Beneficios del Shadow DOM
+1. **Encapsulación**:
+   - Los estilos y scripts definidos dentro del Shadow DOM no afectan al resto del documento, y viceversa. Esto evita problemas de estilo y comportamiento no deseados.
+
+2. **Composición de Componentes**:
+   - Permite la creación de componentes web reutilizables que pueden ser utilizados en diferentes partes de una aplicación sin que sus estilos o scripts interfieran con otros componentes.
+
+#### Uso del Shadow DOM
+1. **Crear un Shadow Root**:
+   - Asociar un Shadow Root a un elemento del DOM.
+   ```javascript
+   let host = document.getElementById('miComponente');
+   let shadowRoot = host.attachShadow({ mode: 'open' });
+   ```
+
+2. **Añadir Contenido al Shadow DOM**:
+   - Agregar elementos y estilos dentro del Shadow Root.
+   ```javascript
+   shadowRoot.innerHTML = `
+       <style>
+           p {
+               color: red;
+           }
+       </style>
+       <p>Texto encapsulado</p>
+   `;
+   ```
+
+3. **Modos de Encapsulación**:
+   - `mode: 'open'`: El Shadow DOM es accesible desde JavaScript.
+   - `mode: 'closed'`: El Shadow DOM no es accesible desde JavaScript.
+   ```javascript
+   let shadowRootCerrado = host.attachShadow({ mode: 'closed' });
+   ```
+
+#### Ejemplo Completo
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadow DOM Ejemplo</title>
+</head>
+<body>
+    <div id="miComponente"></div>
+
+    <script>
+        // Seleccionar el host
+        let host = document.getElementById('miComponente');
+
+        // Crear un Shadow Root
+        let shadowRoot = host.attachShadow({ mode: 'open' });
+
+        // Añadir contenido al Shadow DOM
+        shadowRoot.innerHTML = `
+            <style>
+                p {
+                    color: red;
+                }
+            </style>
+            <p>Texto encapsulado</p>
+        `;
+
+        // Verificar el Shadow Root
+        console.log(host.shadowRoot);  // Mostrará el contenido del Shadow Root
+    </script>
+</body>
+</html>
+```
+
+## 3.2 Global Objects
+Los objetos globales en JavaScript son objetos que están disponibles en todo el entorno de ejecución, independientemente de dónde se encuentre el código. Estos objetos se pueden usar en cualquier parte de tu programa sin necesidad de ser importados o definidos explícitamente.
+
+### Objetos Globales Comunes en JavaScript
+1. **`window` (en navegadores web)**:
+   - El objeto `window` es el objeto global en los navegadores web. Todas las variables globales y funciones globales son propiedades de `window`.
+   ```javascript
+   window.alert('Hola, mundo!');  // Muestra una alerta
+   console.log(window.innerWidth);  // Ancho de la ventana del navegador
+   ```
+
+2. **`global` (en Node.js)**:
+   - En Node.js, el objeto global es `global`, que tiene una función similar a `window` en los navegadores.
+   ```javascript
+   global.console.log('Hola desde Node.js');
+   ```
+
+3. **`globalThis`**:
+   - `globalThis` es un objeto global estándar que proporciona una manera uniforme de acceder al objeto global en cualquier entorno (navegador, Node.js, etc.).
+   ```javascript
+   globalThis.console.log('Esto funciona en cualquier entorno');
+   ```
+
+### Otros Objetos Globales Importantes
+1. **`Math`**:
+   - Proporciona propiedades y métodos matemáticos.
+   ```javascript
+   Math.PI;  // 3.141592653589793
+   Math.sqrt(16);  // 4
+   ```
+
+2. **`Date`**:
+   - Proporciona métodos para manejar fechas y horas.
+   ```javascript
+   let ahora = new Date();
+   console.log(ahora.toString());
+   ```
+
+3. **`JSON`**:
+   - Proporciona métodos para analizar y convertir datos JSON.
+   ```javascript
+   let obj = { nombre: 'Juan', edad: 30 };
+   let jsonString = JSON.stringify(obj);
+   let jsonObj = JSON.parse(jsonString);
+   ```
+
+4. **`console`**:
+   - Proporciona métodos para la salida de depuración.
+   ```javascript
+   console.log('Mensaje de depuración');
+   ```
+
+5. **`Array`**, **`String`**, **`Object`**, **`Number`**, **`Boolean`**:
+   - Constructores para los tipos de datos fundamentales de JavaScript.
+   ```javascript
+   let arr = new Array(1, 2, 3);
+   let str = new String('Hola');
+   let obj = new Object();
+   let num = new Number(100);
+   let bool = new Boolean(true);
+   ```
+
+### Funciones Globales
+1. **`parseInt`**, **`parseFloat`**:
+   - Convertir cadenas a números enteros o de punto flotante.
+   ```javascript
+   parseInt('10');  // 10
+   parseFloat('3.14');  // 3.14
+   ```
+
+2. **`isNaN`**:
+   - Verificar si un valor es `NaN` (Not-a-Number).
+   ```javascript
+   isNaN('hola');  // true
+   ```
+
+3. **`setTimeout`**, **`setInterval`**:
+   - Temporizadores para ejecutar código después de un cierto tiempo o a intervalos regulares.
+   ```javascript
+   setTimeout(() => console.log('Esto se ejecuta después de 1 segundo'), 1000);
+   setInterval(() => console.log('Esto se ejecuta cada 2 segundos'), 2000);
+   ```
+
+4. **`alert`**, **`prompt`**, **`confirm`** (en navegadores):
+   - Mostrar diálogos modales.
+   ```javascript
+   alert('Hola!');
+   let nombre = prompt('¿Cuál es tu nombre?');
+   let confirmacion = confirm('¿Estás seguro?');
+   ```
+
+### Variables Globales
+- Las variables declaradas sin `var`, `let` o `const` se convierten automáticamente en propiedades del objeto global (aunque esto es considerado una mala práctica).
+```javascript
+miVariableGlobal = 'Esto es global';
+console.log(window.miVariableGlobal);  // "Esto es global" (en el navegador)
+console.log(global.miVariableGlobal);  // "Esto es global" (en Node.js)
+```
+
+### Evitar el Uso Excesivo de Variables Globales
+El uso excesivo de variables y funciones globales puede llevar a problemas de mantenimiento y errores difíciles de depurar debido a conflictos de nombres y efectos secundarios no deseados. Es una buena práctica minimizar el uso de variables globales y encapsular el código en funciones o módulos.
+
+### Resumen
+Los objetos globales en JavaScript son accesibles desde cualquier parte del código y proporcionan funcionalidades esenciales como manejo de fechas, operaciones matemáticas, manipulación de cadenas, y más. Si bien estos objetos son extremadamente útiles, es importante usarlos con cuidado para evitar problemas de conflicto y mantener el código limpio y manejable.
+
+
+
+
+# 4. Event listeners y event bubbling
+### Event Handlers (Manejadores de Eventos)
+Son las funciones específicas que se ejecutan cuando un evento se dispara.
+
+### Event Bubbling en JavaScript
+**Event Bubbling** es un mecanismo en JavaScript donde un evento desencadenado en un elemento se propaga hacia arriba a través de sus ancestros en el DOM.
+
+#### Fases del Evento:
+1. **Captura**: El evento se mueve desde el `document` hasta el elemento objetivo.
+2. **Objetivo**: El evento llega al elemento objetivo.
+3. **Burbuja**: El evento se propaga hacia arriba desde el elemento objetivo hasta el `document`.
+
+#### Prevenir el Bubbling:
+```javascript
+innerButton.addEventListener('click', function(event) {
+    console.log('Button clicked');
+    event.stopPropagation();
+});
+```
+
+#### Event Capturing:
+Para manejar eventos durante la fase de captura:
+```javascript
+outerDiv.addEventListener('click', function() {
+    console.log('Outer DIV clicked');
+}, true);
+```
+
+#### Delegación de Eventos:
+Usa event bubbling para manejar eventos en elementos hijos a través de un ancestro común.
+```javascript
+outerDiv.addEventListener('click', function(event) {
+    if (event.target.tagName === 'BUTTON') {
+        console.log('Button clicked via delegation');
+    }
+});
+```
+
+### Resumen:
+- **Event Bubbling**: Propagación de eventos hacia arriba en el DOM.
+- **Fases del Evento**: Captura, Objetivo, Burbuja.
+- **Prevenir Bubbling**: `event.stopPropagation()`.
+- **Event Capturing**: Manejo de eventos durante la fase de captura.
+- **Delegación de Eventos**: Manejo de eventos en elementos hijos a través de un ancestro común.
+
+Además, el método `addEventListener` se utiliza para añadir event listeners a elementos del DOM. Este método puede aceptar tres argumentos:
+1. **El tipo de evento** (como `'click'`, `'mouseover'`, etc.).
+2. **La función manejadora** (la función que se ejecutará cuando ocurra el evento).
+3. **Un objeto opcional de opciones** o un booleano (opcional).
+
+El tercer argumento puede ser un objeto con varias propiedades o un valor booleano (`true` o `false`). Este booleano especifica si el evento debe ser capturado durante la fase de captura o la fase de burbuja del flujo del evento.
+
+### Capturing vs. Bubbling
+- **Fase de Burbuja (`false`)**: El evento se propaga desde el elemento objetivo hacia arriba.
+- **Fase de Captura (`true`)**: El evento se propaga desde el `document` raíz hacia el elemento objetivo.
+
+### Tercer Argumento en `addEventListener`
+- **`true`**: Indica que el evento debe ser capturado durante la fase de captura.
+- **`false`** (o omitir el argumento): Indica que el evento debe ser capturado durante la fase de burbuja.
+
+
+
+
+# 5. Callback functions
+### Callbacks en JavaScript
 Una **callback** en JavaScript es una función que se pasa como argumento a otra función y se ejecuta después de que se haya completado una operación. Este concepto es fundamental en JavaScript, especialmente en la programación asíncrona, como las operaciones de red (fetch), temporizadores (setTimeout), y eventos.
 
-```js
-// Example 1
-const greet = (name) => { console.log('Hi ' + name)};
-
-// function
-const callMe = (callback) => {
-  // take input and save it in name
-  let name = prompt('Enter your name');
-  callback(name);
-}
-
-// passing function as a parameter
-callMe(greet);
-```
-
-
-### Ejemplo de Callback
-
-Supongamos que quieres hacer una llamada a una API y, una vez que recibas los datos, quieres mostrarlos en la consola. Puedes usar una callback para definir qué hacer con los datos después de que se reciban.
-
+### Uso Común de Callbacks
+Las callbacks se usan frecuentemente para manejar operaciones asíncronas, como:
+1. **Temporizadores**:
 ```javascript
-// Función que simula una operación asincrónica como una llamada a una API
-function fetchData(callback) {
-    setTimeout(() => {
-        const data = "Datos de la API";
-        callback(data); // Llama a la función callback con los datos
-    }, 2000); // Simula un retraso de 2 segundos
-}
-
-// Función callback que se pasa como argumento
-function handleData(data) {
-    console.log(data); // Muestra los datos en la consola
-}
-
-// Llamada a la función con la callback como argumento
-fetchData(handleData);
+setTimeout(function() {
+    console.log('Esto se muestra después de 2 segundos');
+}, 2000);
 ```
 
-En este ejemplo:
+2. **Eventos del Usuario**:
+```javascript
+document.getElementById('myButton').addEventListener('click', function() {
+    alert('Botón clickeado!');
+});
+```
 
-1. `fetchData` es una función que simula una operación asincrónica usando `setTimeout`.
-2. `handleData` es la función callback que se pasa a `fetchData`.
-3. Cuando la operación en `fetchData` termina (después de 2 segundos), se ejecuta `handleData`, mostrando los datos en la consola.
+3. **Llamadas AJAX (usando `fetch`)**:
+```javascript
+fetch('https://api.example.com/data')
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        console.log(data);
+    });
+```
 
 ### Beneficios de las Callbacks
-
 - **Asincronía**: Permiten que el código continúe ejecutándose mientras se espera una operación asincrónica, como una llamada a una API, evitando que la aplicación se bloquee.
 - **Modularidad**: Separan la lógica principal de la lógica que debe ejecutarse después, haciendo el código más limpio y modular.
 - **Reutilización**: Las funciones callback pueden ser reutilizadas en diferentes contextos y con diferentes funciones.
 
-### Otro Ejemplo: Temporizadores
-
-Usando `setTimeout`, que es una función nativa de JavaScript para ejecutar código después de un cierto período.
-
+### Ejemplo Básico de Callback
 ```javascript
-function sayHello() {
-    console.log("Hello!");
+function greeting(name) {
+    console.log('Hello ' + name);
 }
 
-// Ejecuta la función `sayHello` después de 3 segundos
-setTimeout(sayHello, 3000);
+function processUserInput(callback) {
+    const name = prompt('Please enter your name.');
+    callback(name);
+}
+processUserInput(greeting);
 ```
+En este ejemplo:
 
-En este ejemplo, `sayHello` es la función callback que `setTimeout` ejecuta después de 3 segundos.
-
-### Conclusión
-
-*Las callbacks son funciones que se pasan como argumentos a otras funciones y se ejecutan después de que la operación principal haya terminado. Son esenciales para manejar la asincronía en JavaScript, permitiendo que el código se ejecute de manera no bloqueante y proporcionando una forma limpia y modular de estructurar el código.*
-
+- `greeting` es una función que toma un argumento `name` y muestra un saludo en la consola.
+- `processUserInput` es una función que pide al usuario que ingrese su nombre y luego llama a `callback` con el nombre ingresado.
+- `processUserInput(greeting)` pasa la función `greeting` como una callback a `processUserInput`, que luego la ejecuta con el nombre proporcionado por el usuario.
 
 
+<hr>
+
+# 6. Async Await, Promises
 # Promesas en JavaScript
 Las **promesas** en JavaScript son una forma de manejar operaciones asincrónicas, como llamadas a APIs, temporizadores, o tareas que llevan tiempo, de manera más legible y manejable que las callbacks tradicionales. Una promesa representa un valor que puede estar disponible ahora, en el futuro o nunca.
-
-### Explicación Sencilla de Promesas
-
-Imagina que una promesa es como un "futuro" o una "promesa" de obtener un resultado. Tiene tres estados posibles:
 
 1. **Pendiente (Pending)**: La operación asincrónica aún no ha terminado.
 2. **Cumplida (Fulfilled)**: La operación asincrónica se ha completado con éxito y tiene un resultado.
 3. **Rechazada (Rejected)**: La operación asincrónica ha fallado y tiene un motivo de fallo.
-
-### Crear una Promesa
 
 Para crear una promesa, se usa el constructor `Promise` y se le pasa una función con dos parámetros: `resolve` y `reject`. `resolve` se llama cuando la operación se completa con éxito, y `reject` se llama cuando hay un error.
 
@@ -173,7 +977,6 @@ let myPromise = new Promise((resolve, reject) => {
 ```
 
 ### Usar una Promesa
-
 Para manejar el resultado de una promesa, se usan los métodos `then` y `catch`. `then` se usa para manejar un resultado exitoso, y `catch` se usa para manejar errores.
 
 ```javascript
@@ -187,15 +990,12 @@ myPromise
 ```
 
 ### Beneficios de las Promesas
-
 - **Legibilidad**: Hacen que el código asincrónico sea más legible y fácil de seguir que las callbacks anidadas.
 - **Manejo de errores**: Proporcionan una forma clara de manejar errores usando `catch`.
 - **Encadenamiento**: Permiten encadenar múltiples operaciones asincrónicas de una manera ordenada.
 
-### Ejemplo Completo
 
 Supongamos que queremos obtener datos de una API y luego procesar esos datos.
-
 ```javascript
 function fetchData() {
     return new Promise((resolve, reject) => {
@@ -334,6 +1134,34 @@ doSomething(function(result1) {
 });
 ```
 
+### Async/Await
+- ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas
+- **async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
+- `await`*operator makes your program behave as if it were waiting for the asynchronous computation to complete (but it does this without actually blocking, and it does not prevent other asynchronous operations from proceeding at the same time). The value of the await operator is the fulfillment value of the Promise object. Importantly, await is only legal within functions that have been declared asynchronous with the async keyword*
+```js
+// asnyc/await example
+async function fetchUserData() {
+  try {
+    let response = await
+    fetch('https://api.example.com/user');
+    let data = await response.json();
+    console.log(data);
+  } catch(error) {
+    console.error("Error:", error)
+  }
+}
+```
+
+
+
+
+
+
+
+
+
+
+
 
 # Fetch API
 - La API fetch es una interfaz moderna que permite realizar peticiones HTTP a servidores desde los navegadores web.
@@ -395,226 +1223,10 @@ async function fetchText() {
 }
 ```
 
-### Async/Await
-- ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas
-- **async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
-- `await`*operator makes your program behave as if it were waiting for the asynchronous computation to complete (but it does this without actually blocking, and it does not prevent other asynchronous operations from proceeding at the same time). The value of the await operator is the fulfillment value of the Promise object. Importantly, await is only legal within functions that have been declared asynchronous with the async keyword*
-```js
-// asnyc/await example
-async function fetchUserData() {
-  try {
-    let response = await
-    fetch('https://api.example.com/user');
-    let data = await response.json();
-    console.log(data);
-  } catch(error) {
-    console.error("Error:", error)
-  }
-}
-```
+
 
 <hr>
 
-# 6 types of arrow functions
-## 1. No parameters
-If the functions takes no parameters, you use empty parentheses
-```js
-const greet = () => console.log("Hello!");
-greet(); // Hello!
-```
-
-## 2. Single parameter
-if there's only one paremeter, parentheses are optional
-```js
-const square = x => x * x;
-console.log(square(4)); // 16
-```
-
-## 3. Multiple parameters
-```js
-const add = (a, b) => a + b;
-console.log(add(2, 3)); // 5
-```
-
-## 4. Function body with multiple statements
-If the function body has more than 1 statement, you need to use `{}` and specify the `return` keyword
-```js
-const greetPerson = name => {
-  const greeting = `Hello, ${name}!`;
-  return greeting;
-}
-console.log(greetPerson("Alice")); // Hello, Alice!
-```
-
-## 5. Returning object literals
-To return an object literal, wrap the literal in parentheses to differentiate it from the function block
-```js
-const makePerson = (firstName, lastName) => ({first: firstName, last: lastName});
-console.log(makePerson("Johnny", "Melavo")); // Object { first: "Johnny", last: "Melavo" }
-```
-
-## 6. Higher order functions and callbacks
-Arrow functions are particularly popular when used as short callbacks
-```js
-const numbers = [1, 2, 3, 4];
-const doubled = numbers.map(num => num * 2);
-console.log(doubled); // Array(4) [ 2, 4, 6, 8 ]
-```
-
-# 5 tipos de funciones JavaScript
-### 1. Funcion declarada / Basic function
-Es la declaración básica de JavaScript, usa la keyword `function`.
-
-Se recomienda para funciones con nombre o cuando se necesite `hoisting`.
-Las funciones declaradas con la keyword `function`, se pueden elevar a la parte superior de su ámbito, es decir, del scope que las contiene. Esto permite llamar a la función antes de ser declarada 
-```js
-saludar(); // Hola mundo!
-
-function saludar() {
-  console.log('Hola mundo!')
-}
-```
-
-### 2. Funcion expresada / Function expressions
-Es la función que está dentro de una variable.
-Útil para funciones anónimas o cuando se quiere controlar dónde va a estar disponible la función.
-Especialmente útiles si la función va a ser usada como argumento para otra función o si va a ser específica de un scope más pequeño.
-```js
-const saludar = function() {
-  console.log('Hola mundo!')
-}
-```
-
-### 3. Arrow function o funcion de flecha
-Especialmente útil para escribir funciones de una línea
-```js
-const saludar = () => console.log('Hola mundo!');
-
-const saludar2 = () => {
-  console.log('Hola mundo!');
-}
-```
-
-
-### 4. Funcion anonima
-No tiene nombre y se usan como callbacks generalmente
-```js
-setTimeout(function() {
-  console.log('Hola mundo!');
-}, 1000);
-```
-
-
-### 5. Metodos
-Son las funciones dentro de un objeto o clase
-```js
-const obj = {
-  saludar: function() {
-    console.log('Hola mundo!');
-  }
-}
-```
-
-### 6. Funcion de constructor / Function constructor
-Se pude usar el constructor `Function`para crear una nueva función.
-Poco común y no es recomendado por ser inseguro.
-```js
-var constructorFunction = new Function('console.log("Function Constructor")');
-```
-
-## Que es el `hoisting` en JavaScript?
-**Hoisting** es un comportamiento en JavaScript que se refiere al proceso en el que las declaraciones de variables y funciones son "elevadas" al comienzo del contexto de ejecución. Esto significa que puedes usar variables y funciones antes de declararlas en el código. Sin embargo, este comportamiento tiene matices importantes que debes comprender para evitar errores.
-
-### Hoisting de Variables
-
-Cuando se declaran variables con `var`, `let` o `const`, el JavaScript Engine eleva sus declaraciones al inicio de su contexto (función o bloque). Sin embargo, solo `var` inicializa la variable con `undefined` en el hoisting, mientras que `let` y `const` no lo hacen, lo que puede llevar a errores de referencia si se accede a ellas antes de su declaración.
-
-**Ejemplo con `var`**:
-
-```javascript
-console.log(x); // undefined
-var x = 5;
-console.log(x); // 5
-```
-
-El código anterior se comporta como si fuera reescrito de la siguiente manera debido al hoisting:
-
-```javascript
-var x;
-console.log(x); // undefined
-x = 5;
-console.log(x); // 5
-```
-
-**Ejemplo con `let` y `const`**:
-
-```javascript
-console.log(y); // ReferenceError: Cannot access 'y' before initialization
-let y = 5;
-
-console.log(z); // ReferenceError: Cannot access 'z' before initialization
-const z = 10;
-```
-
-En estos casos, la declaración es elevada, pero no la inicialización. Por lo tanto, intentar acceder a `y` o `z` antes de la declaración resulta en un error de referencia.
-
-### Hoisting de Funciones
-
-Las funciones declaradas con el keyword `function` también son elevadas completamente, incluidas sus definiciones, permitiéndoles ser llamadas antes de su declaración en el código.
-
-**Ejemplo**:
-
-```javascript
-greet(); // "Hello, world!"
-
-function greet() {
-    console.log("Hello, world!");
-}
-```
-
-El código anterior se comporta como si fuera reescrito de la siguiente manera:
-
-```javascript
-function greet() {
-    console.log("Hello, world!");
-}
-
-greet(); // "Hello, world!"
-```
-
-### Hoisting de Function Expressions y Arrow Functions
-
-Las expresiones de funciones y las funciones flecha no son completamente elevadas. Solo la declaración de la variable se eleva, no la asignación.
-
-**Ejemplo**:
-
-```javascript
-console.log(foo); // undefined
-var foo = function() {
-    console.log("Hello, world!");
-};
-
-console.log(bar); // ReferenceError: Cannot access 'bar' before initialization
-let bar = () => {
-    console.log("Hello, world!");
-};
-```
-
-En este caso, `foo` se eleva, pero su valor es `undefined` hasta que la asignación se realiza, mientras que `bar` no puede ser accedida antes de su declaración debido a la naturaleza de `let`.
-
-### Resumen
-
-- **Declaraciones de variables con `var`**: Se elevan y se inicializan con `undefined`.
-- **Declaraciones de variables con `let` y `const`**: Se elevan, pero no se inicializan, resultando en un error de referencia si se accede a ellas antes de su declaración.
-- **Declaraciones de funciones**: Se elevan completamente, incluyendo su cuerpo, permitiendo su uso antes de la declaración.
-- **Expresiones de funciones y funciones flecha**: Solo la variable se eleva, pero no la asignación, lo que resulta en `undefined` o un error de referencia si se accede a ellas antes de su declaración.
-
-Entender el hoisting es fundamental para escribir código JavaScript más claro y evitar errores inesperados.
-
-Entre los beneficios del hoisting se encuentran
-- Mayor flexibilidad en la legibilidad y el orden del código
-- Evitar errores de referencia, el hoisting de var inicializa las variables como undefined
-- El hoisting no es una característica que se usa explícitamente sino un comportamiento interno del motor de JavaScript y de cómo se procesa su código.
 
 
 
@@ -961,3 +1573,5 @@ async function fetchData() {
 
 }
 ```
+
+
