@@ -5,12 +5,13 @@
 3. DOM & Global Objects
 4. Event listeners, event bubbling y event handling
 5. Callback functions
-6. Async Await, Promises
-7. Fetch API, RESTFUL APIS, JSON parse & JSON.stringify
+6. Promises, Callbacks vs Promises, Async Await & Promise.all
+7. Fetch API, JSON parse & JSON.stringify
 8. Array Methods & String Methods
 9. ES6 + JS Models (template literals, destructuring, spread operator, classes, modules import export)
 10. Object Oriented Programming, prototype
 11. Error Handling, try/catch, Custom errors
+12. AJAX & SPA
 
 
 
@@ -264,7 +265,10 @@ const duplicar = numeros.map(num => num * 2);
 console.log(duplicar); // Array(4) [ 2, 4, 6, 8 ]
 ```
 
+
 ## 1.3 This keyword
+En JavaScript, `this` es una palabra clave especial que se refiere al contexto de ejecución actual. El valor de `this` depende de cómo se llama la función en la que se encuentra y puede variar según el contexto de ejecución en el que se utiliza.
+
 El keyword `this` en JavaScript es un contexto especial dentro de una función que se refiere al objeto al que pertenece esa función. El valor de `this` depende de cómo se llama a la función y del contexto en el que se encuentra.
 
 ### Contextos y Uso de `this`
@@ -367,7 +371,6 @@ El keyword `this` en JavaScript es un contexto especial dentro de una función q
    ```
 
 ### Resumen
-El valor de `this` en JavaScript puede ser confuso al principio debido a su naturaleza dinámica, pero entender cómo cambia según el contexto y las diferentes formas de manipularlo te ayudará a escribir código más predecible y manejable.
 
 | Contexto                       | Valor de `this`                           |
 |--------------------------------|-------------------------------------------|
@@ -380,7 +383,7 @@ El valor de `this` en JavaScript puede ser confuso al principio debido a su natu
 | Método `call`, `apply`, `bind` | Valor especificado en la llamada          |
 | Manejador de eventos           | Elemento que recibió el evento            |
 
-Comprender `this` es crucial para trabajar eficazmente con JavaScript, especialmente en programación orientada a objetos y en el manejo de eventos.
+Comprender `this` es clave para trabajar eficazmente con JavaScript, especialmente en programación orientada a objetos y en el manejo de eventos.
 
 
 
@@ -577,73 +580,43 @@ Entre los *beneficios del hoisting* se encuentran
 
 
 ## 2.3 Closures
-# Closures
-A closure in JavaScript is a feature where an inner function has access to variables from its outer (enclosing) function's scope, even after the outer function has finished executing. This allows the inner function to remember and access its lexical scope, which includes any variables declared in the outer function.
-
-#### Example outer variable
-```javascript
-function outerFunction() {
-  let outerVariable = 'I am outside!';
-  
-  function innerFunction() {
-    console.log(outerVariable);
-  }
-  
-  return innerFunction;
-}
-
-const myInnerFunction = outerFunction();
-myInnerFunction(); // Logs 'I am outside!'
-```
-
-Closures allow functions to have private variables. This is particularly useful in scenarios such as:
-
-- **Data Encapsulation**: Closures can create private variables that can only be accessed by specific functions.
-- **Maintaining State**: Functions can maintain state between calls.
-- **Functional Programming Patterns**: Closures enable more complex functional programming patterns and callback structures.
-
-#### Example using a counter
+Un **closure** en JavaScript es una función que recuerda y accede a su ámbito, incluso cuando esa función se ejecuta fuera de su ámbito original. En otras palabras, un closure es la combinación de una función y el entorno en el cual fue declarada. Esto permite que una función interna acceda a las variables de una función externa incluso después de que la función externa haya terminado de ejecutarse.
 ```javascript
 function createCounter() {
-  let count = 0;
-  
-  return function() {
-    count++;
-    return count;
-  };
+    let count = 0;
+
+    return function() {
+        count++;
+        return count;
+    };
 }
 
-const counter1 = createCounter();
-console.log(counter1()); // 1
-console.log(counter1()); // 2
-
-const counter2 = createCounter();
-console.log(counter2()); // 1
-console.log(counter2()); // 2
+const counter = createCounter();
+console.log(counter()); // 1
+console.log(counter()); // 2
+console.log(counter()); // 3
 ```
+1. `createCounter` es una función que declara una variable `count` y devuelve una función anónima.
+2. La función anónima tiene acceso a la variable `count` debido al closure.
+3. Cada vez que se llama a `counter`, incrementa y devuelve el valor de `count`.
 
-#### Example with iterators
-Closures can be used to create iterators that maintain their state between calls, facilitating efficient and memory-friendly iteration over data structures.
-```js
-function createIterator(items) {
-  let index = 0;
-  return function() {
-    return items[index++];
-  }
-}
+### Características de los Closures
+1. **Encapsulación**:
+   Los closures permiten encapsular datos de manera privada. Las variables dentro de una función no pueden ser accedidas directamente desde el exterior, pero pueden ser manipuladas a través de funciones internas.
 
-let fruitList = ['apple', 'banana', 'orange'];
-const fruitsIterator = createIterator(fruitList);
+2. **Preservación del Estado**:
+   Los closures permiten que una función "recuerde" el estado de las variables en su ámbito léxico original, incluso después de que la función externa haya finalizado.
 
-console.log(fruitsIterator()); // apple
-console.log(fruitsIterator()); // banana
-console.log(fruitsIterator()); // orange
-```
+3. **Uso de Variables Locales**:
+   Las variables dentro de una función que forma un closure no se destruyen después de la ejecución de la función externa. Esto permite la persistencia del estado entre llamadas sucesivas a la función interna.
 
-## Summary
-Imagine you have a function within another function, and **the inner function can access variables from the outer function even after the outer function has finished executing**, that's closure
+### Beneficios y Aplicaciones
 
-**Closures enable the creation of private variables in JS encapsulating data within functions and preventing direct access from outside**.
+- **Módulos**: Crear módulos que encapsulan datos y exponen una API pública.
+- **Callbacks y Asincronía**: Manejar datos en callbacks o funciones asíncronas.
+- **Event Handlers**: Acceder al estado de las variables en manejadores de eventos.
+
+*Los closures son una característica de JavaScript que permite a las funciones acceder a variables en su ámbito léxico incluso después de que la función externa haya terminado. Proporcionan una manera de crear funciones con un estado persistente y son esenciales para muchas técnicas avanzadas en programación JavaScript.*
 
 
 
@@ -950,10 +923,10 @@ En este ejemplo:
 - `processUserInput(greeting)` pasa la función `greeting` como una callback a `processUserInput`, que luego la ejecuta con el nombre proporcionado por el usuario.
 
 
-<hr>
 
-# 6. Async Await, Promises
-# Promesas en JavaScript
+
+# 6. Promises, Callbacks vs Promises, Async Await & Promise.all
+## 6.1 Promesas en JavaScript
 Las **promesas** en JavaScript son una forma de manejar operaciones asincrónicas, como llamadas a APIs, temporizadores, o tareas que llevan tiempo, de manera más legible y manejable que las callbacks tradicionales. Una promesa representa un valor que puede estar disponible ahora, en el futuro o nunca.
 
 1. **Pendiente (Pending)**: La operación asincrónica aún no ha terminado.
@@ -961,7 +934,6 @@ Las **promesas** en JavaScript son una forma de manejar operaciones asincrónica
 3. **Rechazada (Rejected)**: La operación asincrónica ha fallado y tiene un motivo de fallo.
 
 Para crear una promesa, se usa el constructor `Promise` y se le pasa una función con dos parámetros: `resolve` y `reject`. `resolve` se llama cuando la operación se completa con éxito, y `reject` se llama cuando hay un error.
-
 ```javascript
 let myPromise = new Promise((resolve, reject) => {
     // Simula una operación asincrónica, como una llamada a una API
@@ -978,7 +950,6 @@ let myPromise = new Promise((resolve, reject) => {
 
 ### Usar una Promesa
 Para manejar el resultado de una promesa, se usan los métodos `then` y `catch`. `then` se usa para manejar un resultado exitoso, y `catch` se usa para manejar errores.
-
 ```javascript
 myPromise
     .then((message) => {
@@ -994,7 +965,7 @@ myPromise
 - **Manejo de errores**: Proporcionan una forma clara de manejar errores usando `catch`.
 - **Encadenamiento**: Permiten encadenar múltiples operaciones asincrónicas de una manera ordenada.
 
-
+### Ejemplo llamada API
 Supongamos que queremos obtener datos de una API y luego procesar esos datos.
 ```javascript
 function fetchData() {
@@ -1030,43 +1001,15 @@ fetchData()
 ```
 
 En este ejemplo:
-
 1. `fetchData` simula obtener datos de una API.
 2. `processData` simula el procesamiento de esos datos.
 3. Usamos `then` para manejar cada etapa del proceso y `catch` para manejar cualquier error que ocurra.
 
-### Resumen promesas
+
 *Las promesas son clave para manejar operaciones asincrónicas de manera más legible y manejable que las callbacks tradicionales. Nos permiten escribir código asincrónico que se parece más al código síncrono, mejorando la claridad y la facilidad de manejo de errores.*
 
-- Introducidas en ES6 para resolver los problemas asociados a los callbacks
-- Una promesa representa una operacion que aun no se ha completado pero se espera que lo haga en el futuro
-- Una promesa puede tener tres estados: pendiente, resuelta o rechazada
-- Las promesas tienen los metodos `then()`, `catch()` y `finally()`. Que podemos utilizar para adjuntar **callbacks** que se ejecutaran cuando la promesa se resuelva o se rechace
-- Algunos metodos como `fetch()` directamente devuelven una promesa y se puede usar `then()` o `catch()` 
-```js
-// Promise creation
-let promise = new Promise(function(resolve, reject) {
-  let condition = true;
-  if(condition){
-    resolve("Your result here");
-  } else {
-    reject(new Error("Something happened"));
-  }
-})
 
-// Using .then, .catch & .finally
-promise.then(function(result) {
-  console.log(result);
-}).catch(function(error) {
-  console.log(error);
-}).finally(function() {
-  console.log("After all...");
-})
-```
-
-
-# `Callbacks` vs `Promesas`
-
+## 6.2 `Callbacks` vs `Promesas`
 ### Comparación
 - **Manejo de Errores**:
   - Callbacks: Los errores se manejan dentro de cada función de callback.
@@ -1134,45 +1077,159 @@ doSomething(function(result1) {
 });
 ```
 
-### Async/Await
-- ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas
-- **async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
+
+## 6.3 Async/Await
+Async/Await es una sintaxis más reciente y sencilla para trabajar con promesas en JavaScript. `async` se utiliza para declarar una función asíncrona, y `await` se utiliza para esperar la resolución de una promesa dentro de una función asíncrona.
+
+ES7 introdujo **async/await** para simplificar aun mas el manejo de operaciones asincronas construyendo sobre las promesas.
+
+**async/await** son especialmente utiles cuando necesitamos sincronia en las llamadas http, en el caso de que tengamos que encadenar varias llamadas y necesitemos el resultado de una para llamar a la otra
+
 - `await`*operator makes your program behave as if it were waiting for the asynchronous computation to complete (but it does this without actually blocking, and it does not prevent other asynchronous operations from proceeding at the same time). The value of the await operator is the fulfillment value of the Promise object. Importantly, await is only legal within functions that have been declared asynchronous with the async keyword*
-```js
-// asnyc/await example
-async function fetchUserData() {
-  try {
-    let response = await
-    fetch('https://api.example.com/user');
-    let data = await response.json();
-    console.log(data);
-  } catch(error) {
-    console.error("Error:", error)
-  }
+
+#### Ejemplo de Async/Await
+```javascript
+async function fetchData() {
+    try {
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
 }
+
+fetchData();
 ```
 
+## 6.4 `async/await` y `Promises`
+**Puntos en común**:
+- Ambos se utilizan para manejar operaciones asíncronas.
+- Ambos permiten evitar el "callback hell", que es una serie de callbacks anidados que dificultan la legibilidad del código.
+
+**Diferencias y Usos**:
+- **Promesas**:
+  - Son el fundamento sobre el cual `async/await` está construido.
+  - Se usan cuando se necesita manejar múltiples operaciones asíncronas que pueden depender una de otra.
+  - Son útiles para encadenar operaciones asíncronas.
+
+```javascript
+doSomething()
+    .then(result => doSomethingElse(result))
+    .then(newResult => doAnotherThing(newResult))
+    .then(finalResult => {
+        console.log('Final result:', finalResult);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+```
+
+- **Async/Await**:
+  - Proporciona una sintaxis más clara y legible para manejar promesas.
+  - Ideal para evitar la complejidad y mejorar la legibilidad cuando se trabaja con múltiples operaciones asíncronas.
+  - Permite escribir código asíncrono de forma más similar al código síncrono.
+
+```javascript
+async function performTasks() {
+    try {
+        const result = await doSomething();
+        const newResult = await doSomethingElse(result);
+        const finalResult = await doAnotherThing(newResult);
+        console.log('Final result:', finalResult);
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+performTasks();
+```
+
+### Conclusión
+- **Promesas** proporcionan una forma manejable de trabajar con operaciones asíncronas y son la base para `async/await`.
+- **Async/await** ofrece una sintaxis más sencilla y estructurada para trabajar con promesas, mejorando la legibilidad y manteniendo el código más limpio.
+- Ambos se usan para evitar problemas de manejabilidad y legibilidad que surgen con los callbacks anidados.
+
+
+## 6.5 `Promise.all` en JavaScript
+`Promise.all` es un método estático del objeto `Promise` que permite ejecutar múltiples promesas en paralelo y esperar a que todas se resuelvan (o una falle) antes de continuar. Este método recibe un iterable (como un array) de promesas y devuelve una sola promesa que se resuelve cuando todas las promesas del iterable se han resuelto o se rechaza cuando alguna de las promesas se rechaza.
+```javascript
+Promise.all(iterable);
+```
+
+#### Ejemplo de `Promise.all`
+```javascript
+const promise1 = new Promise((resolve) => setTimeout(resolve, 100, 'First'));
+const promise2 = new Promise((resolve) => setTimeout(resolve, 200, 'Second'));
+const promise3 = new Promise((resolve) => setTimeout(resolve, 300, 'Third'));
+
+Promise.all([promise1, promise2, promise3])
+    .then((results) => {
+        console.log(results); // ["First", "Second", "Third"]
+    })
+    .catch((error) => {
+        console.error('One of the promises failed:', error);
+    });
+```
+
+En este ejemplo, `Promise.all` espera a que `promise1`, `promise2` y `promise3` se resuelvan antes de ejecutar el `then`. Si alguna de las promesas se rechaza, el `catch` manejará el error.
+
+### Beneficios de `Promise.all`
+1. **Ejecución en Paralelo**:
+   - Permite ejecutar múltiples promesas en paralelo, lo cual puede mejorar la eficiencia en comparación con ejecutar cada promesa de manera secuencial.
+
+2. **Sincronización de Múltiples Promesas**:
+   - Facilita la sincronización de múltiples operaciones asíncronas y continuar el flujo del programa solo cuando todas se han completado.
+
+3. **Manejo de Resultados**:
+   - Devuelve un array con los resultados de todas las promesas resueltas en el mismo orden en que fueron pasadas, independientemente del orden en que se resuelvan.
+
+### Uso de `Promise.all` con Async/Await
+`Promise.all` también se puede usar con `async/await` para escribir código asíncrono más claro y estructurado.
+```javascript
+async function fetchData() {
+    const promise1 = fetch('https://api.example.com/data1');
+    const promise2 = fetch('https://api.example.com/data2');
+    const promise3 = fetch('https://api.example.com/data3');
+
+    try {
+        const [response1, response2, response3] = await Promise.all([promise1, promise2, promise3]);
+        const data1 = await response1.json();
+        const data2 = await response2.json();
+        const data3 = await response3.json();
+
+        console.log('Data1:', data1);
+        console.log('Data2:', data2);
+        console.log('Data3:', data3);
+    } catch (error) {
+        console.error('Error fetching data:', error);
+    }
+}
+
+fetchData();
+```
+
+En este ejemplo:
+- `Promise.all` espera a que las tres operaciones de `fetch` se completen.
+- `await` se usa para esperar a que `Promise.all` se resuelva y obtener las respuestas.
+- Si alguna de las promesas de `fetch` falla, el bloque `catch` manejará el error.
+
+### Conclusión
+`Promise.all` permite realizar múltiples promesas en paralelo y esperar a que todas se resuelvan antes de continuar. Aporta beneficios significativos al trabajar con operaciones asíncronas, ya que mejora la eficiencia y facilita la sincronización de tareas. Cuando se combina con `async/await`, permite escribir código asíncrono de manera más clara y manejable, manteniendo un flujo de control coherente y fácil de entender.
 
 
 
 
-
-
-
-
-
-
-
-# Fetch API
+# 7. Fetch API, JSON parse & JSON.stringify
+## 7.1 Fetch API
 - La API fetch es una interfaz moderna que permite realizar peticiones HTTP a servidores desde los navegadores web.
 - La API fetch realiza todas las tareas del objeto `XMLHttpRequest` pero de una manera mucho más limpia y sencilla.
-- Se basa en `Promesas`, lo que permite que el código sea más claro y conciso 
+- **Se basa en `Promesas`, lo que permite que el código sea más claro y conciso**
 - Permite configurar las solicitudes HTTP con opciones como métodos (`GET`, `POST`, `PUT`, `DELETE`), `headers`, `body`, etc
 - Proporciona métodos para manejar diferentes tipos de respuesta, como JSON, texto, etc
 
-
 ### Enviando una request
-El método `fetch()` sólo necesita un parámetro, la `URL` del recurso que quiere solicitar. Cuando se completa la request, la promesa retorna como un objeto `Response`
+**El método `fetch()` sólo necesita un parámetro, la `URL` del recurso que quiere solicitar. Cuando se completa la request, la promesa retorna como un objeto `Response`.**
 ```js
 let response = fetch(url)
 ```
@@ -1184,7 +1241,6 @@ fetch('/readme.txt')
   .then(data => console.log(data));
 ```
 Además de este método, el objeto Response incluye otros métodos como `json()`, `blob()`, `formatData()` y `arrayBuffer()` para manejar los distintos tipos de datos
-
 
 ### Leyendo la response
 El método `fetch()` devuelve una promesa, de manera que podemos usar `then()` y `catch()` para manejarla.
@@ -1223,18 +1279,115 @@ async function fetchText() {
 }
 ```
 
+## 7.2 Ejemplo de `fetch`, `JSON.stringify`, y `JSON.parse` en JavaScript
+
+Estos son conceptos fundamentales en JavaScript utilizados principalmente para trabajar con datos, especialmente en el contexto de la comunicación con APIs web.
+
+### `fetch`
+El método `fetch` permite realizar solicitudes HTTP en JavaScript. `fetch` devuelve una promesa que resuelve la respuesta de la solicitud.
+
+```javascript
+fetch(url, [options])
+```
+- **url**: La URL a la que se desea hacer la solicitud.
+- **options** (opcional): Un objeto que contiene opciones personalizadas para la solicitud (como método, encabezados, cuerpo, etc.).
+
+```javascript
+fetch('https://api.example.com/data')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+```
+
+En este ejemplo, `fetch` realiza una solicitud GET a la URL proporcionada. La respuesta se convierte en JSON utilizando `response.json()`, y luego se maneja el resultado.
+
+### `JSON.stringify`
+`JSON.stringify` convierte un objeto de JavaScript en una cadena JSON. Es útil cuando se necesita enviar datos a un servidor en formato JSON.
+
+```javascript
+JSON.stringify(value, [replacer, [space]])
+```
+- **value**: El valor que se quiere convertir en una cadena JSON.
+- **replacer** (opcional): Una función que altera el comportamiento del proceso de conversión.
+- **space** (opcional): Un número o cadena que se usa para insertar espacios en blanco en la salida JSON para mejorar la legibilidad.
+
+```javascript
+const obj = { name: "Alice", age: 25 };
+const jsonString = JSON.stringify(obj);
+console.log(jsonString); // '{"name":"Alice","age":25}'
+```
+
+### `JSON.parse`
+`JSON.parse` convierte una cadena JSON en un objeto de JavaScript. Es útil cuando se recibe datos JSON de un servidor y se necesita manipular esos datos en JavaScript.
+
+```javascript
+JSON.parse(text, [reviver])
+```
+- **text**: La cadena JSON que se quiere convertir en un objeto.
+- **reviver** (opcional): Una función que puede transformar el resultado.
+
+```javascript
+const jsonString = '{"name": "Alice", "age": 25}';
+const obj = JSON.parse(jsonString);
+console.log(obj.name); // 'Alice'
+console.log(obj.age); // 25
+```
+
+### Integración de `fetch` con `JSON.stringify` y `JSON.parse`
+Al usar `fetch`, a menudo necesitamos enviar datos al servidor y recibir datos del servidor en formato JSON. Aquí es donde `JSON.stringify` y `JSON.parse` son útiles.
+
+#### Ejemplo de envío de datos a un servidor y respuesta
+
+```javascript
+const dataToSend = {
+    name: "Alice",
+    age: 25
+};
+
+fetch('https://api.example.com/data', {
+    method: 'POST', // Método de la solicitud
+    headers: {
+        'Content-Type': 'application/json' // Tipo de contenido
+    },
+    body: JSON.stringify(dataToSend) // Convertir el objeto a JSON
+})
+.then(response => {
+    if (!response.ok) {
+        throw new Error('Network response was not ok');
+    }
+    return response.json(); // Convertir la respuesta JSON a objeto
+})
+.then(data => {
+    console.log('Success:', data);
+})
+.catch(error => {
+    console.error('Error:', error);
+});
+```
+
+En este ejemplo:
+- `JSON.stringify(dataToSend)` convierte el objeto `dataToSend` en una cadena JSON para ser enviado en el cuerpo de la solicitud POST.
+- La respuesta del servidor se convierte nuevamente en un objeto de JavaScript usando `response.json()`.
+
+### Conclusión
+
+- **`fetch`**: Utilizado para realizar solicitudes HTTP y manejar respuestas de forma asíncrona.
+- **`JSON.stringify`**: Convierte objetos de JavaScript en cadenas JSON, útil para enviar datos en solicitudes HTTP.
+- **`JSON.parse`**: Convierte cadenas JSON en objetos de JavaScript, útil para procesar datos recibidos de respuestas HTTP.
 
 
-<hr>
 
-
-
-
-<hr>
-
-
-# AJAX y SPA
-## Que es AJAX?
+# 12. AJAX & SPA
+## 12.1 Que es AJAX?
 Ajax (Asynchronous JavaScript and XML) es una técnica de desarrollo web que permite actualizar partes específicas de una página web sin necesidad de recargar toda la página. Se basa en el intercambio de datos asíncrono entre el navegador y el servidor, lo que permite a las aplicaciones web realizar solicitudes y recibir respuestas en segundo plano, sin interrumpir la experiencia del usuario.
 
 Los principales componentes de Ajax son:
@@ -1257,7 +1410,8 @@ Los principales componentes de Ajax son:
 
 Ajax se utiliza ampliamente en el desarrollo web para crear aplicaciones más interactivas y dinámicas, como interfaces de usuario de una sola página (Single Page Applications), chats en tiempo real, actualizaciones automáticas de contenido, formularios dinámicos y mucho más. Permite a los desarrolladores crear aplicaciones web más rápidas, eficientes y atractivas para los usuarios finales.
 
-## Que son las SPA?
+
+## 12.2 Que son las SPA?
 Una SPA (Single Page Application) es un tipo de aplicación web que carga una sola página HTML y dinámicamente actualiza el contenido de esa página a medida que el usuario interactúa con la aplicación, sin necesidad de recargar la página completa desde el servidor. En una SPA, la interactividad se logra principalmente a través de Ajax, JavaScript y manipulación dinámica del DOM (Document Object Model).
 
 Algunas características y ventajas clave de las SPAs son:
@@ -1275,144 +1429,13 @@ Algunas características y ventajas clave de las SPAs son:
 Las SPAs se utilizan ampliamente en aplicaciones web modernas, incluyendo aplicaciones de productividad, redes sociales, tiendas en línea, paneles de administración y muchas otras, debido a su capacidad para proporcionar una experiencia de usuario interactiva y fluida.
 
 
-
-## JavaScript complex data structures
-- **Objects** are used for storing key collections
-- **Arrays** are used for storing ordered collections
-- **Maps** are similar to objects but you can use anything as a key
-- **Sets** are a great choice to store data without duplicates
-
-## Object destructuring
-```js
-// Object destructuring is a way to extract properties from an object and assign them to variables. It makes working with objects simpler and easier to read
-
-const userProfile = {
-	name: 'Alex',
-	email: 'alex@example.com',
-	phone: '555-123-4567'
-}
-
-// Extracting name & email only and assigning them to new variables
-const { name, email } = userProfile;
-
-console.log(name + ", " + email); // Alex, alex@example.com
-```
-
-
 <hr>
-
-
-## Efficiency in JavaScript loops, which one is faster?
-In JavaScript, when working with arrays and objects, the choice of loop can impact performance depending on the size of the data and the specific operations you're performing within the loop. Let's discuss the most performant options for both arrays and objects:
-
-### Arrays:
-
-1. **`for` loop**:
-   ```javascript
-   for (let i = 0; i < array.length; i++) {
-       // Access array[i]
-   }
-   ```
-   This traditional `for` loop tends to be the fastest for iterating over arrays. It directly accesses elements by index and is very efficient.
-
-2. **`forEach` method**:
-   ```javascript
-   array.forEach(function(item) {
-       // Access item
-   });
-   ```
-   The `forEach` method is convenient and easy to read, but it can be slightly slower compared to a `for` loop, especially in older JavaScript engines. However, modern JavaScript engines have optimized it to be quite performant.
-
-### Objects:
-
-1. **`for...in` loop**:
-   ```javascript
-   for (let key in object) {
-       if (object.hasOwnProperty(key)) {
-           // Access object[key]
-       }
-   }
-   ```
-   The `for...in` loop iterates over the enumerable properties of an object, including those inherited from its prototype chain. It's generally slower than `for` loops for arrays and has some caveats, like the need to check `hasOwnProperty` to avoid iterating over inherited properties.
-
-2. **`Object.keys()` method**:
-   ```javascript
-   Object.keys(object).forEach(function(key) {
-       // Access object[key]
-   });
-   ```
-   This method creates an array of an object's own enumerable property names and then iterates over them using `forEach`. It's generally faster and safer than `for...in` because it only iterates over own properties.
-
-For modern JavaScript and performance-critical applications, using `for` loops for arrays and `Object.keys()` for objects is often recommended. However, it's essential to consider readability, maintainability, and specific use cases when choosing a loop construct. Additionally, always remember to profile your code to identify performance bottlenecks accurately.
-
-
-
-## Placing our js `<script>` before the `</body>` tag
-Placing the `<script>` tag before the `</body>` tag in an HTML document is considered a best practice for several reasons:
-
-1. **Page Loading Performance**: Placing `<script>` tags at the end of the `<body>` allows the HTML content to load first. JavaScript execution can block rendering, which means if scripts are placed in the `<head>` section, the browser will pause rendering until the script is fetched and executed. Moving scripts to the end of the body ensures that the page content is displayed to users more quickly.
-
-2. **Progressive Rendering**: By loading and displaying the HTML content first, users can see and interact with the page while JavaScript is still being downloaded and executed. This provides a better user experience, especially on slower connections or devices.
-
-3. **Avoiding Render Blocking**: Placing `<script>` tags at the end of the body minimizes render-blocking behavior. Browsers typically download and execute JavaScript files sequentially, which can delay the rendering of subsequent HTML content if scripts are placed in the `<head>`. By placing scripts at the end of the body, HTML content can be parsed and displayed without waiting for scripts to download and execute.
-
-4. **Content Accessibility**: Ensuring that HTML content is rendered and accessible before JavaScript execution enhances accessibility. Screen readers and other assistive technologies can start reading and interpreting the content while scripts are still loading and executing.
-
-5. **Reducing Flash of Unstyled Content (FOUC)**: Placing scripts at the end of the body helps reduce the likelihood of FOUC, where content is briefly displayed without styles due to delayed script execution. By the time scripts are executed, the HTML content is already rendered, and stylesheets have been applied, minimizing the chance of FOUC.
-
-Overall, placing `<script>` tags before the `</body>` tag improves page loading performance, enhances user experience, and ensures content accessibility by prioritizing the rendering of HTML content before JavaScript execution.
-
-
-
-## This en JavaScript
-En JavaScript, `this` es una palabra clave especial que se refiere al contexto de ejecución actual. El valor de `this` depende de cómo se llama la función en la que se encuentra y puede variar según el contexto de ejecución en el que se utiliza.
-
-La referencia `this` generalmente se utiliza dentro de métodos de objetos para hacer referencia al objeto en el que se está llamando el método. Por ejemplo:
-
-```javascript
-const persona = {
-  nombre: 'Juan',
-  saludar: function() {
-    console.log('Hola, soy ' + this.nombre);
-  }
-};
-
-persona.saludar(); // Imprime: Hola, soy Juan
-```
-
-En este ejemplo, `this` dentro del método `saludar` hace referencia al objeto `persona`, ya que `saludar` fue llamado en el contexto de `persona`.
-
-Sin embargo, el valor de `this` puede cambiar según el contexto de ejecución. Por ejemplo:
-
-```javascript
-function mostrarNombre() {
-  console.log('Mi nombre es ' + this.nombre);
-}
-
-const persona1 = {
-  nombre: 'Juan',
-  mostrarNombre: mostrarNombre
-};
-
-const persona2 = {
-  nombre: 'María',
-  mostrarNombre: mostrarNombre
-};
-
-persona1.mostrarNombre(); // Imprime: Mi nombre es Juan
-persona2.mostrarNombre(); // Imprime: Mi nombre es María
-```
-
-En este caso, `this` dentro de la función `mostrarNombre` cambia su valor según el objeto que llama al método `mostrarNombre`.
-
-Es importante tener en cuenta que el valor de `this` puede ser más complicado en ciertas situaciones, especialmente cuando se utiliza en funciones flecha (`=>`), dentro de callbacks, o cuando se utiliza en métodos de clases. En tales casos, el valor de `this` puede ser lexico y no referirse al contexto de ejecución actual, sino al contexto en el que se definió la función.
-
-Comprender cómo `this` funciona en JavaScript es fundamental para escribir código correcto y evitar errores comunes relacionados con el alcance y el contexto de ejecución.
 
 
 
 ## [JavaScript W3 Schools](https://www.w3schools.com/js/default.asp)
 ## [HTTP Networking in JavaScript, Handbook](https://www.freecodecamp.org/news/http-full-course/)
+
 
 ## JS Array Methods
 <p align="center">
@@ -1420,158 +1443,290 @@ Comprender cómo `this` funciona en JavaScript es fundamental para escribir cód
 </p>
 
 
-## ES6 Cheatsheet
-<p align="center">
-        <img src="media/ES6 Cheatsheet.png" alt="ES6 Cheatsheet">
-</p>
+# JavaScript Cheatsheet
+Cheatsheet con las funciones más importantes de JavaScript en las entrevistas técnicas.
 
-<p align="center">
-        <img src="media/ES6 Cheatsheet 2.png" alt="ES6 Cheatsheet 2">
-</p>
+### 1. Funciones de Array
+1. **`map`**: Crea un nuevo array con los resultados de la llamada a una función aplicada a cada elemento del array.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const doubled = numbers.map(num => num * 2);
+   console.log(doubled); // [2, 4, 6, 8]
+   ```
 
+2. **`filter`**: Crea un nuevo array con todos los elementos que pasen la prueba implementada por la función dada.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const evens = numbers.filter(num => num % 2 === 0);
+   console.log(evens); // [2, 4]
+   ```
 
+3. **`reduce`**: Aplica una función a un acumulador y a cada elemento del array (de izquierda a derecha) para reducirlo a un solo valor.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const sum = numbers.reduce((acc, num) => acc + num, 0);
+   console.log(sum); // 10
+   ```
 
-## Summary of JavaScript String, Arrays, Objects & ES6 Methods
-### String Methods:
+4. **`forEach`**: Ejecuta la función proporcionada una vez por cada elemento del array.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   numbers.forEach(num => console.log(num));
+   ```
 
-1. `charAt()`
-2. `charCodeAt()`
-3. `concat()`
-4. `includes()`
-5. `indexOf()`
-6. `lastIndexOf()`
-7. `match()`
-8. `replace()`
-9. `search()`
-10. `slice()`
-11. `split()`
-12. `substring()`
-13. `toLowerCase()`
-14. `toUpperCase()`
-15. `trim()`
+5. **`find`**: Devuelve el primer elemento del array que satisfaga la función de prueba proporcionada.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const found = numbers.find(num => num > 2);
+   console.log(found); // 3
+   ```
 
-### Array Methods:
+6. **`findIndex`**: Devuelve el índice del primer elemento del array que satisfaga la función de prueba proporcionada.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const index = numbers.findIndex(num => num > 2);
+   console.log(index); // 2
+   ```
 
-1. `concat()`
-2. `every()`
-3. `filter()`
-4. `find()`
-5. `findIndex()`
-6. `forEach()`
-7. `includes()`
-8. `indexOf()`
-9. `join()`
-10. `map()`
-11. `pop()`
-12. `push()`
-13. `reduce()`
-14. `reduceRight()`
-15. `reverse()`
-16. `shift()`
-17. `slice()`
-18. `some()`
-19. `sort()`
-20. `splice()`
-21. `toString()`
-22. `unshift()`
+7. **`some`**: Comprueba si al menos un elemento del array cumple con la función de prueba proporcionada.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const hasEven = numbers.some(num => num % 2 === 0);
+   console.log(hasEven); // true
+   ```
 
-### Object Methods:
+8. **`every`**: Comprueba si todos los elementos del array cumplen con la función de prueba proporcionada.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const allEven = numbers.every(num => num % 2 === 0);
+   console.log(allEven); // false
+   ```
 
-1. `Object.keys()`
-2. `Object.values()`
-3. `Object.entries()`
-4. `Object.assign()`
-5. `Object.freeze()`
-6. `Object.seal()`
-7. `Object.create()`
-8. `Object.defineProperty()`
-9. `Object.getOwnPropertyDescriptor()`
-10. `Object.getOwnPropertyNames()`
-11. `Object.getPrototypeOf()`
-12. `Object.setPrototypeOf()`
-13. `Object.is()`
+9. **`includes`**: Comprueba si un array contiene un elemento determinado.
+   ```javascript
+   const numbers = [1, 2, 3, 4];
+   const hasThree = numbers.includes(3);
+   console.log(hasThree); // true
+   ```
 
-### ES6 Features for Arrays and Objects:
+10. **`concat`**: Combina dos o más arrays.
+    ```javascript
+    const arr1 = [1, 2];
+    const arr2 = [3, 4];
+    const combined = arr1.concat(arr2);
+    console.log(combined); // [1, 2, 3, 4]
+    ```
 
-1. `Array.from()`
-2. `Array.of()`
-3. `Array.isArray()`
-4. `Array.prototype.find()`
-5. `Array.prototype.findIndex()`
-6. `Array.prototype.fill()`
-7. `Array.prototype.includes()`
-8. `Array.prototype.entries()`
-9. `Array.prototype.keys()`
-10. `Array.prototype.values()`
-11. `Array.prototype.forEach()`
-12. `Array.prototype.map()`
-13. `Array.prototype.filter()`
-14. `Array.prototype.reduce()`
-15. `Array.prototype.reduceRight()`
-16. `Array.prototype.some()`
-17. `Array.prototype.every()`
-18. `Object.entries()`
-19. `Object.values()`
-20. `Object.getOwnPropertyDescriptors()`
-21. `Object.fromEntries()`
+11. **`slice`**: Devuelve una copia de una parte del array dentro de un nuevo array.
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    const part = numbers.slice(1, 3);
+    console.log(part); // [2, 3]
+    ```
 
-## JavaScript Cheatsheet
-```js
-// Variables
-let variableName = value; // Mutable
-let constantName = value; // Immutable
+12. **`splice`**: Cambia el contenido de un array eliminando elementos existentes y/o agregando nuevos elementos.
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    numbers.splice(1, 2, 'a', 'b');
+    console.log(numbers); // [1, 'a', 'b', 4]
+    ```
 
+13. **`sort`**: Ordena los elementos del array.
+    ```javascript
+    const numbers = [4, 2, 3, 1];
+    numbers.sort();
+    console.log(numbers); // [1, 2, 3, 4]
+    ```
 
-// Data Types
-let myString = "hello";
-let myNumber = 50;
-let myBoolean = true;
-let myArray = [1,2,3];
-let myObject = {key: 'value'};
+14. **`reverse`**: Invierte el orden de los elementos del array.
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    numbers.reverse();
+    console.log(numbers); // [4, 3, 2, 1]
+    ```
 
-
-// Arrays
-myArray.push(4);  // Add to end
-myArray.pop()     // Remove from end
-myArray.unshift(0);//Add to beginning
-myArray.shift();  // Remove from beginning
+15. **`join`**: Une todos los elementos de un array en una cadena.
+    ```javascript
+    const numbers = [1, 2, 3, 4];
+    const joined = numbers.join('-');
+    console.log(joined); // "1-2-3-4"
 
 
-// Objects
-let person = {
-  name: 'John',
-  age: 20,
-  isStudent: true
-};
+### 2. Funciones de String
+1. **`charAt`**: Devuelve el carácter en el índice especificado.
+   ```javascript
+   const str = 'Hello';
+   console.log(str.charAt(1)); // 'e'
+   ```
+
+2. **`includes`**: Comprueba si una cadena contiene otra cadena.
+   ```javascript
+   const str = 'Hello world';
+   console.log(str.includes('world')); // true
+   ```
+
+3. **`indexOf`**: Devuelve el índice de la primera aparición de una cadena en otra cadena.
+   ```javascript
+   const str = 'Hello world';
+   console.log(str.indexOf('world')); // 6
+   ```
+
+4. **`slice`**: Extrae una sección de una cadena y devuelve una nueva cadena.
+   ```javascript
+   const str = 'Hello world';
+   const part = str.slice(0, 5);
+   console.log(part); // 'Hello'
+   ```
+
+5. **`substring`**: Devuelve una subcadena entre dos índices.
+   ```javascript
+   const str = 'Hello world';
+   const part = str.substring(1, 5);
+   console.log(part); // 'ello'
+   ```
+
+6. **`substr`**: Devuelve una parte de la cadena a partir de un índice y una longitud específica.
+   ```javascript
+   const str = 'Hello world';
+   const part = str.substr(1, 4);
+   console.log(part); // 'ello'
+   ```
+
+7. **`toLowerCase`**: Convierte una cadena a minúsculas.
+   ```javascript
+   const str = 'Hello World';
+   console.log(str.toLowerCase()); // 'hello world'
+   ```
+
+8. **`toUpperCase`**: Convierte una cadena a mayúsculas.
+   ```javascript
+   const str = 'Hello World';
+   console.log(str.toUpperCase()); // 'HELLO WORLD'
+   ```
+
+9. **`trim`**: Elimina los espacios en blanco de ambos extremos de una cadena.
+   ```javascript
+   const str = '   Hello World   ';
+   console.log(str.trim()); // 'Hello World'
+   ```
+
+10. **`split`**: Divide una cadena en un array de subcadenas.
+    ```javascript
+    const str = 'Hello world';
+    const parts = str.split(' ');
+    console.log(parts); // ['Hello', 'world']
+    ```
+
+11. **`replace`**: Reemplaza una subcadena con otra en una cadena.
+    ```javascript
+    const str = 'Hello world';
+    const newStr = str.replace('world', 'there');
+    console.log(newStr); // 'Hello there'
+    ```
+
+12. **`repeat`**: Devuelve una nueva cadena con un número especificado de copias de la cadena original.
+    ```javascript
+    const str = 'Hello';
+    console.log(str.repeat(3)); // 'HelloHelloHello'
+    ```
 
 
-// AJAX & Fetch
-fetch('https://api.example.com/data')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error: ', error));
+### 3. Funciones de Promesas
+- **`fetch`**: Realiza una solicitud HTTP.
+  ```javascript
+  fetch('https://api.example.com/data')
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(error => console.error('Error:', error));
+  ```
 
+- **`JSON.stringify`**: Convierte un objeto de JavaScript en una cadena JSON.
+  ```javascript
+  const obj = { name: 'Alice', age: 25 };
+  const jsonString = JSON.stringify(obj);
+  console.log(jsonString); // '{"name":"Alice","age":25}'
+  ```
 
-// ES6+ Features
-// Destructuring
-const { key } = object;
+- **`JSON.parse`**: Convierte una cadena JSON en un objeto de JavaScript.
+  ```javascript
+  const jsonString = '{"name": "Alice", "age": 25}';
+  const obj = JSON.parse(jsonString);
+  console.log(obj.name); // 'Alice'
+  ```
 
-// Spread Opeartor
-const newArray = [...oldArray];
+- **`Promise.all`**: Espera a que todas las promesas se resuelvan o a que alguna sea rechazada.
+  ```javascript
+  const promise1 = Promise.resolve(3);
+  const promise2 = 42;
+  const promise3 = new Promise((resolve, reject) => {
+    setTimeout(resolve, 100, 'foo');
+  });
 
-// Template literals
-`Hello, ${name}!`
+  Promise.all([promise1, promise2, promise3]).then(values => {
+    console.log(values); // [3, 42, "foo"]
+  });
+  ```
 
-// Promise
-new Promise((resolve, reject) => {
+### 4. Funciones Asíncronas
+- **`async/await`**: Simplifica el trabajo con promesas y hace el código asíncrono más legible.
+  ```javascript
+  async function fetchData() {
+    try {
+      const response = await fetch('https://api.example.com/data');
+      const data = await response.json();
+      console.log(data);
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  }
 
-});
+  fetchData();
+  ```
 
+### 5. Funciones de Control de Flujo
+- **`setTimeout`**: Ejecuta una función después de un retraso especificado.
+  ```javascript
+  setTimeout(() => {
+    console.log('This will run after 2 seconds');
+  }, 2000);
+  ```
 
-// Async / Await
-async function fetchData() {
+- **`setInterval`**: Ejecuta una función repetidamente con un intervalo de tiempo fijo.
+  ```javascript
+  const intervalId = setInterval(() => {
+    console.log('This will run every 2 seconds');
+  }, 2000);
 
-}
-```
+  // Para detener el intervalo
+  clearInterval(intervalId);
+  ```
 
+### 6. Funciones de Objeto
+- **`Object.keys`**: Devuelve un array de las propiedades enumerables de un objeto.
+  ```javascript
+  const obj = { name: 'Alice', age: 25 };
+  const keys = Object.keys(obj);
+  console.log(keys); // ['name', 'age']
+  ```
 
+- **`Object.values`**: Devuelve un array de los valores de las propiedades de un objeto.
+  ```javascript
+  const obj = { name: 'Alice', age: 25 };
+  const values = Object.values(obj);
+  console.log(values); // ['Alice', 25]
+  ```
+
+- **`Object.entries`**: Devuelve un array de pares [key, value] de las propiedades enumerables de un objeto.
+  ```javascript
+  const obj = { name: 'Alice', age: 25 };
+  const entries = Object.entries(obj);
+  console.log(entries); // [['name', 'Alice'], ['age', 25]]
+  ```
+
+- **`Object.assign`**: Copia las propiedades de uno o más objetos a un objeto destino.
+  ```javascript
+  const target = { a: 1, b: 2 };
+  const source = { b: 4, c: 5 };
+  const returnedTarget = Object.assign(target, source);
+  console.log(returnedTarget); // { a: 1, b: 4, c: 5 }
+  ```
