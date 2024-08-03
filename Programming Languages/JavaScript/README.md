@@ -1386,6 +1386,264 @@ En este ejemplo:
 
 
 
+
+# 10. Object Oriented Programming
+## 10.1 Objetos y clasesen JavaScript
+#### 1. Introducción a los Objetos
+
+En JavaScript, los objetos son una de las estructuras de datos fundamentales. Son utilizados para almacenar colecciones de datos y más complejas entidades. Un objeto es una colección de propiedades, y una propiedad es una asociación entre un nombre (o clave) y un valor. El valor de una propiedad puede ser una función, en cuyo caso la propiedad se llama método.
+
+#### 2. Sintaxis de Objetos
+
+##### 2.1. Creación de Objetos
+
+Los objetos en JavaScript se pueden crear de varias maneras:
+
+**1. Notación de objetos literales:**
+```javascript
+let persona = {
+    nombre: "Juan",
+    edad: 30,
+    saludar: function() {
+        console.log("Hola, soy " + this.nombre);
+    }
+};
+```
+
+**2. Usando el constructor `Object`:**
+```javascript
+let persona = new Object();
+persona.nombre = "Juan";
+persona.edad = 30;
+persona.saludar = function() {
+    console.log("Hola, soy " + this.nombre);
+};
+```
+
+**3. Usando una función constructora:**
+```javascript
+function Persona(nombre, edad) {
+    this.nombre = nombre;
+    this.edad = edad;
+    this.saludar = function() {
+        console.log("Hola, soy " + this.nombre);
+    };
+}
+
+let juan = new Persona("Juan", 30);
+```
+
+#### 3. Propiedades y Métodos
+
+##### 3.1. Propiedades
+
+Las propiedades de un objeto se pueden acceder usando la notación de punto o la notación de corchetes.
+
+**Notación de punto:**
+```javascript
+console.log(persona.nombre); // "Juan"
+persona.edad = 31;
+```
+
+**Notación de corchetes:**
+```javascript
+console.log(persona["nombre"]); // "Juan"
+persona["edad"] = 31;
+```
+
+##### 3.2. Métodos
+
+Los métodos son funciones asociadas a un objeto. Se definen de la misma manera que las propiedades, pero su valor es una función.
+
+```javascript
+persona.saludar(); // "Hola, soy Juan"
+```
+
+#### 4. Herencia y Prototipos
+
+JavaScript utiliza un modelo de herencia basado en prototipos. Cada objeto tiene una propiedad interna llamada `[[Prototype]]` que apunta a otro objeto, conocido como su prototipo. Los métodos y propiedades no encontrados en el objeto se buscan en su prototipo, y así sucesivamente hasta llegar a `null`.
+
+**Ejemplo de herencia prototípica:**
+```javascript
+let animal = {
+    comer: function() {
+        console.log("Comiendo...");
+    }
+};
+
+let perro = Object.create(animal);
+perro.ladrar = function() {
+    console.log("Guau!");
+};
+
+perro.comer(); // "Comiendo..."
+perro.ladrar(); // "Guau!"
+```
+
+#### 5. Propiedades y Métodos de Objeto Incorporados
+
+JavaScript proporciona varios métodos y propiedades incorporados para manipular objetos.
+
+##### 5.1. `Object.keys()`
+Devuelve un array con los nombres de las propiedades propias enumerables de un objeto.
+
+```javascript
+let propiedades = Object.keys(persona); // ["nombre", "edad", "saludar"]
+```
+
+##### 5.2. `Object.values()`
+Devuelve un array con los valores de las propiedades propias enumerables de un objeto.
+
+```javascript
+let valores = Object.values(persona); // ["Juan", 31, function]
+```
+
+##### 5.3. `Object.entries()`
+Devuelve un array de pares [clave, valor] de las propiedades propias enumerables de un objeto.
+
+```javascript
+let entradas = Object.entries(persona);
+// [["nombre", "Juan"], ["edad", 31], ["saludar", function]]
+```
+
+##### 5.4. `Object.assign()`
+Copia todas las propiedades enumerables de uno o más objetos fuente a un objeto destino.
+
+```javascript
+let destino = {};
+let fuente = { a: 1, b: 2 };
+Object.assign(destino, fuente);
+console.log(destino); // { a: 1, b: 2 }
+```
+
+##### 5.5. `Object.create()`
+Crea un nuevo objeto con el prototipo especificado y propiedades opcionales.
+
+```javascript
+let gato = Object.create(animal);
+gato.maullar = function() {
+    console.log("Miau!");
+};
+```
+
+#### 6. Clases (ES6+)
+
+Aunque JavaScript es un lenguaje basado en prototipos, ES6 introdujo la sintaxis de clases que proporciona una forma más clara y sencilla de crear objetos y manejar la herencia.
+
+**Las clases son plantillas para objetos en JavaScript**
+
+**Definición de clases:**
+```javascript
+class Persona {
+    constructor(nombre, edad) {
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    saludar() {
+        console.log("Hola, soy " + this.nombre);
+    }
+}
+
+let juan = new Persona("Juan", 30);
+juan.saludar(); // "Hola, soy Juan"
+```
+
+**Herencia con clases:**
+```javascript
+class Empleado extends Persona {
+    constructor(nombre, edad, trabajo) {
+        super(nombre, edad);
+        this.trabajo = trabajo;
+    }
+
+    trabajar() {
+        console.log("Estoy trabajando como " + this.trabajo);
+    }
+}
+
+let ana = new Empleado("Ana", 28, "Ingeniera");
+ana.saludar(); // "Hola, soy Ana"
+ana.trabajar(); // "Estoy trabajando como Ingeniera"
+```
+
+#### 7. Encapsulación
+
+JavaScript no tiene un verdadero soporte para la encapsulación de datos, pero a partir de ES6, se puede lograr un cierto grado de encapsulación utilizando símbolos o variables privadas.
+
+##### 7.1. Usando símbolos:
+```javascript
+let nombre = Symbol("nombre");
+
+class Persona {
+    constructor(nombre) {
+        this[nombre] = nombre;
+    }
+
+    obtenerNombre() {
+        return this[nombre];
+    }
+}
+
+let juan = new Persona("Juan");
+console.log(juan.obtenerNombre()); // "Juan"
+console.log(juan.nombre); // undefined
+```
+
+##### 7.2. Usando variables privadas (ES2020):
+```javascript
+class Persona {
+    #nombre;
+
+    constructor(nombre) {
+        this.#nombre = nombre;
+    }
+
+    obtenerNombre() {
+        return this.#nombre;
+    }
+}
+
+let juan = new Persona("Juan");
+console.log(juan.obtenerNombre()); // "Juan"
+console.log(juan.#nombre); // SyntaxError
+```
+
+#### 8. Manipulación y Operaciones Avanzadas
+
+##### 8.1. Copiar Objetos
+
+Copiar objetos puede hacerse de diferentes maneras, como utilizando el operador de propagación (`...`) o `Object.assign`.
+
+**Ejemplo con operador de propagación:**
+```javascript
+let copia = { ...persona };
+```
+
+##### 8.2. Comparación de Objetos
+
+Comparar objetos no es tan simple como comparar primitivos. En JavaScript, dos objetos son iguales solo si son el mismo objeto en la memoria.
+
+```javascript
+let a = { x: 1 };
+let b = { x: 1 };
+console.log(a === b); // false
+
+let c = a;
+console.log(a === c); // true
+```
+
+Para una comparación profunda, se necesita una función personalizada o usar una librería como Lodash.
+
+#### 9. Buenas Prácticas
+
+- **Evitar el uso de `this` en funciones anidadas:** Puede llevar a errores confusos. Usa funciones flecha o guarda el contexto `this` en una variable.
+- **Utilizar la notación de objeto literal:** Es más clara y concisa.
+- **Preferir clases para estructuras más complejas:** Aportan claridad y facilitan la reutilización y la herencia.
+
+
+
+
 # 12. AJAX & SPA
 ## 12.1 Que es AJAX?
 Ajax (Asynchronous JavaScript and XML) es una técnica de desarrollo web que permite actualizar partes específicas de una página web sin necesidad de recargar toda la página. Se basa en el intercambio de datos asíncrono entre el navegador y el servidor, lo que permite a las aplicaciones web realizar solicitudes y recibir respuestas en segundo plano, sin interrumpir la experiencia del usuario.

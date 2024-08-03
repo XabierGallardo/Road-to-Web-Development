@@ -1,10 +1,12 @@
 # JavaScript Key Concepts
+## Objects in JavaScript
+En JavaScript, los objetos son una de las estructuras de datos fundamentales. Son utilizados para almacenar colecciones de datos y más complejas entidades. Un objeto es una colección de propiedades, y una propiedad es una asociación entre un nombre (o clave) y un valor. El valor de una propiedad puede ser una función, en cuyo caso la propiedad se llama método.
 
 ## Vocabulario sintaxis
 ## Qué es: operador, expresión y keyword?
+
 ## El objeto Promise
 ## [Async/Await y js asincronico](https://www.freecodecamp.org/espanol/news/como-usar-async-await-para-escribir-un-codigo-mejor-en-javascript/)
-
 
 ## JavaScript complex data structures
 - **Objects** are used for storing key collections

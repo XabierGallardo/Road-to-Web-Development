@@ -1,4 +1,66 @@
-# Key lessons
+# Node.js
+Node es un entorno de ejecución de JavaScript que permite ejecutar JavaScript en el servidor.
+
+Si bien el navegador es un entorno de ejecución limitado y controlado para ejecutar JavaScript, Node.js nos permite construir apps del lado del servidor y herramientas de desarrollo. Entre sus características destacan
+
+1. Node.js está construido sobre el rapidísimo **motor V8 de Google Chrome**, que compila JS a código máquina nativo, por lo que la ejecución es muy rápida
+
+2. Node.js utiliza un **modelo I/O asíncrono y no bloqueante**, por lo que las operaciones de entrada y salida (leer archivos, consultar BBDD, etc) no detienen la ejecución dle programa y por tanto permite manejar muchas operaciones concurrentes eficientemnete
+
+3. Node.js utiliza una **arquitectura de eventos**, cuando una operación asíncrona se completa, se emite un evento con una función callback asociada, lo que permite construír apps escalables que manejen muchas conexiones concurrentes
+
+4. Node.js trabaja con NPM, Node Package Manager, el gestor de paquetes más grande del mundo para JavaScript. NPM permite instalar, compartir y gestionar dependencias de código de manera sencilla.
+
+
+## Ejemplo básico de un servidor con Node.js
+```js
+// nodeServer.js
+const http = require('http');
+const hostname = '127.0.0.1';
+const port = 3100;
+
+const server = http.createServer((req, res) => {
+	res.statusCode = 200;
+	res.setHeader('Content-Type', 'text/plain');
+	res.end('Hola mundo desde Node.js!');
+});
+
+server.listen(port, hostname, () => {
+	console.log(`Servidor corriendo en http://${hostname}:${port}/`);
+});
+
+// Al navegar a http://127.0.0.1:3100/ la pagina nos devuelve:
+// Hola mundo desde Node.js!
+```
+
+## Ejemplo básico de un servidor con el framework Express.js
+```sh
+# Instalar Express.js
+npm install express
+```
+
+```js
+const express = require('express');
+const app = express();
+const port = 3200;
+
+// Defining a route for index page
+app.get('/', (req, res) => {
+	res.send('Hola mundo con Express!');
+});
+
+// Starting server
+app.listen(port, () => {
+	console.log(`Servidor escuchando peticiones en http://localhost:${port}`);
+});
+
+// Al navegar a http://127.0.0.1:3200/ la pagina nos devuelve:
+// Hola mundo con Express!
+```
+
+
+
+## Key lessons
 # [ES Node.js](https://developer.mozilla.org/es/docs/Learn/Server-side/Express_Nodejs/Introduction)
 # [EN Node.js](https://developer.mozilla.org/es/docs/Learn/Server-side/Express_Nodejs/Introduction)
 
