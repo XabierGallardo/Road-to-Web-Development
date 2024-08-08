@@ -40,3 +40,12 @@ app.listen(port, () => {
 // Al navegar a http://127.0.0.1:3200/ la pagina nos devuelve:
 // Hola mundo con Express!
 ```
+
+## Cómo funciona Express.js
+Express.js utiliza el modelo cliente-servidor para aceptar las peticiones de los usuarios y devolver las respuestas al cliente.
+
+1. Cuando un usuario envía una petición desde su navegador escribiendo la dirección de un sitio web, el navegador envía una petición HTTP a la aplicación cliente servidor.
+
+2. El servidor recibirá la petición a través de una de sus rutas y la procesará utilizando el controlador que coincida con la ruta solicitada.
+
+3. Tras el procesamiento, el servidor enviará una respuesta al cliente utilizando HTTP, la respuesta al cliente puede ser un texto, una página HTML o datos JSON que los desarrolladores del frontend manejarán para mostrar la información en la página web.
