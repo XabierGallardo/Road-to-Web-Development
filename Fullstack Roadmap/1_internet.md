@@ -1,7 +1,5 @@
 ## [Protocolo HTTP y lenguaje HTML](https://www.youtube.com/watch?v=l6oF_RpBf64)
 
-
-
 # 1. Introducción a Internet
 Internet es una **red global de computadoras interconectadas que permite la comunicación y el intercambio de información a través de distintos sistemas y tecnologías**. Sus orígenes se remontan a la década de 1960, cuando el Departamento de Defensa de los Estados Unidos desarrolló ARPANET, una red de computadoras diseñada para permitir la comunicación entre diferentes instituciones académicas y gubernamentales.
 
