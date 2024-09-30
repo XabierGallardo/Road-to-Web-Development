@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muestra Bootstrap 5.3</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- El contenedor (container) mantiene el layout centrado y con márgenes adecuados. -->
+    <div class="container">
+
+
+        <!-- La fila (row) organiza el espacio horizontal. -->
+        <div class="row">
+
+
+            <!-- Las columnas (col-md-4) indican cuántas de las 12 columnas disponibles ocupa cada elemento. -->
+            <div class="col-md-4">Columna 1 (4/12)</div>
+            <div class="col-md-4">Columna 2 (4/12)</div>
+            <div class="col-md-4">Columna 3 (4/12)</div>
+        </div>
+    </div>
+
+
+
+    <!-- Layout responsivo
+
+        col-xs-*: Extra pequeña (<576px)
+        col-sm-*: Pequeña (≥576px)
+        col-md-*: Mediana (≥768px)
+        col-lg-*: Grande (≥992px)
+        col-xl-*: Extra grande (≥1200px)
+
+        En el ejemplo de abajo:
+        Para pantallas pequeñas, cada columna ocupa la mitad del espacio (col-sm-6).
+        Para pantallas medianas, cada columna ocupa un tercio (col-md-4).
+        Para pantallas grandes, cada columna ocupa un cuarto (col-lg-3).-->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-lg-3">Columna 1</div>
+            <div class="col-sm-6 col-md-4 col-lg-3">Columna 2</div>
+            <div class="col-sm-6 col-md-4 col-lg-3">Columna 3</div>
+            <div class="col-sm-6 col-md-4 col-lg-3">Columna 4</div>
+        </div>
+    </div>
+
+
+
+    <!-- Formularios -->
+    <form class="container mt-5">
+        <div class="form-group">
+            <label for="email">Correo Electrónico:</label>
+            <input type="email" class="form-control" id="email" placeholder="Ingresa tu email">
+        </div>
+        <div class="form-group">
+            <label for="pwd">Contraseña:</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Ingresa tu contraseña">
+        </div>
+        <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+      
+
+
+    <!-- Botones -->
+    <div class="container mt-5 d-block">
+        <!-- <button type="button" class="btn btn-primary mt-5 m-auto d-block">Primary button</button> -->
+        <button type="button" class="btn btn-primary">Primary button</button>
+        <button class="btn btn-secondary">Secondary button</button>
+        <button class="btn btn-success">Success button</button>
+    </div>
+
+
+
+    <!-- Encabezados -->
+    <div class="container-fluid">
+        <h1 class="h1">Encabezado principal</h1>
+        <h2 class="h2">Encabezado secundario</h2>
+        <p class="font-weight-bold">Este es un texto en negrita.</p>
+        <p class="font-italic">Este es un texto en cursiva.</p>
+    </div>
+
+
+
+    <!-- Navbars-->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light mt-5">
+        <a class="navbar-brand" href="#">Mi sitio</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Inicio <span class="sr-only">(actual)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Enlace</a>
+            </li>
+            </ul>
+        </div>
+    </nav>
+
+
+
+    <!-- Flexbox -->
+    <div class="d-flex justify-content-between bg-primary text-light p-3">
+        <div class="p-2">Elemento 1</div>
+        <div class="p-2">Elemento 2</div>
+        <div class="p-2">Elemento 3</div>
+    </div>
+
+
+</body>
+</html>

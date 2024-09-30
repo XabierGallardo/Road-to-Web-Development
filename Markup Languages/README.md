@@ -1,6 +1,7 @@
 # Markup Languages
 
 # CSS
+
 ## Selectores universales `*`, `html` y `body`
 ### Selectores Universales en CSS
 
@@ -281,3 +282,11 @@ Para asegurarte de que el margen del elemento hijo se respete dentro del contene
 
 ### **Resumiendo**:
 El colapso de márgenes en CSS ocurre cuando los márgenes verticales adyacentes se combinan en uno solo, causando que el margen del hijo no parezca separar el elemento hijo del contenedor padre. Puedes evitarlo usando `padding`, `border`, `overflow`, o alterando el flujo de diseño del contenedor o del hijo.
+
+
+## When to use `<form>` element?
+Your button and input elements do not necessarily need to be under a `<form>` label, **unless you are using them as part of a form submission process where you want to capture and process user input**. However, in many cases, it is perfectly acceptable and common to use buttons and input elements outside of a `<form>` label, especially if they are used for other purposes such as triggering actions or displaying information.
+
+The `<form>` element in HTML is typically used to group and submit user input controls (such as text inputs, checkboxes, radio buttons, etc.) to a server for processing. When you submit a form, the browser collects the data from the form controls and sends it to the specified URL for further processing, typically through an HTTP request.
+
+If you are not submitting any form data or using the form for its traditional purpose, you do not necessarily need to enclose your elements within a `<form>` label. However, it is always important to structure your HTML in a way that makes sense for your specific use case and maintains accessibility and usability for your users. If your buttons and input elements logically belong together and serve a common purpose, you may choose to group them together under a `<form>` label for clarity and organization. But if they are independent elements with distinct functions, it is perfectly fine to use them outside of a `<form>` label.
