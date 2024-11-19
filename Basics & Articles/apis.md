@@ -1,6 +1,156 @@
 # API / Application Programming Interfaces
 
-## Qué es una API? Ejemplo sencillo
+## Explicacion 1 / APIs y APIs REST
+### **¿Qué es una API en programación?**
+
+Una **API** (Application Programming Interface, o Interfaz de Programación de Aplicaciones) es un conjunto de reglas y herramientas que permite a diferentes sistemas de software comunicarse entre sí. En términos más simples, es un intermediario que permite que dos aplicaciones hablen entre sí. 
+
+Por ejemplo, cuando usas una aplicación en tu teléfono móvil para consultar el clima, la aplicación realiza una solicitud a un servidor y obtiene los datos meteorológicos en tiempo real a través de una API.
+
+---
+
+#### **Componentes clave de una API**
+1. **Interfaz**: Define cómo las aplicaciones interactúan con el sistema. Esto incluye las funciones o endpoints disponibles, los parámetros requeridos y los formatos de las respuestas.
+2. **Protocolo**: Define las reglas para la comunicación. Por ejemplo, las API web suelen usar el protocolo HTTP.
+3. **Entrada y salida**:
+   - **Entrada**: Una solicitud que el cliente envía al servidor con parámetros específicos.
+   - **Salida**: Una respuesta del servidor al cliente con los datos solicitados.
+
+---
+
+#### **Ejemplo de una API simple**
+
+Supongamos que una tienda tiene una API para consultar productos. Podríamos usar un endpoint como:
+
+- **URL de la API**: `https://api.tienda.com/productos`
+- **Solicitud**: `GET /productos`
+- **Respuesta**:
+   ```json
+   [
+       { "id": 1, "nombre": "Laptop", "precio": 800 },
+       { "id": 2, "nombre": "Mouse", "precio": 20 }
+   ]
+   ```
+
+En este ejemplo:
+- El cliente solicita todos los productos disponibles en la tienda.
+- El servidor devuelve una lista de productos en formato JSON.
+
+---
+
+### **¿Qué es una API REST en programación web?**
+
+Una **API REST (Representational State Transfer)** es un estilo arquitectónico para diseñar APIs que permiten la comunicación entre un cliente (como un navegador o aplicación móvil) y un servidor. REST se basa en principios sencillos que aprovechan el protocolo HTTP, lo que lo convierte en una de las formas más populares de diseñar APIs en la programación web.
+
+---
+
+#### **Principios de una API REST**
+
+1. **Cliente-servidor**: El cliente (por ejemplo, el navegador) y el servidor (donde se alojan los datos) están separados. Esto mejora la escalabilidad y permite que ambos evolucionen de manera independiente.
+
+2. **Sin estado**: Cada solicitud del cliente al servidor debe contener toda la información necesaria para procesarla. El servidor no guarda información sobre el estado de la sesión del cliente entre solicitudes.
+
+3. **Caché**: Las respuestas del servidor deben ser cacheables para mejorar el rendimiento y reducir la carga en el servidor.
+
+4. **Uniformidad**:
+   - Usar rutas coherentes para acceder a recursos.
+   - Por ejemplo:
+     - `GET /usuarios` para obtener todos los usuarios.
+     - `GET /usuarios/1` para obtener un usuario con ID 1.
+
+5. **Representación de recursos**: Los datos se representan en formatos legibles como JSON o XML. REST no se limita a un formato específico, pero JSON es el más común.
+
+6. **Uso de métodos HTTP**: REST utiliza los métodos HTTP estándar para realizar diferentes acciones:
+   - **GET**: Obtener datos (sin modificar el recurso).
+   - **POST**: Crear nuevos recursos.
+   - **PUT**: Actualizar un recurso existente.
+   - **DELETE**: Eliminar un recurso.
+   - **PATCH**: Actualizar parcialmente un recurso.
+
+---
+
+#### **Ejemplo de API REST**
+
+Supongamos que queremos crear, leer, actualizar y eliminar usuarios de una aplicación. Nuestra API REST podría tener los siguientes endpoints:
+
+| Método HTTP | Endpoint         | Acción                                 |
+|-------------|------------------|----------------------------------------|
+| `GET`       | `/usuarios`      | Obtener una lista de usuarios          |
+| `GET`       | `/usuarios/:id`  | Obtener un usuario específico por ID   |
+| `POST`      | `/usuarios`      | Crear un nuevo usuario                 |
+| `PUT`       | `/usuarios/:id`  | Actualizar un usuario existente        |
+| `DELETE`    | `/usuarios/:id`  | Eliminar un usuario por ID             |
+
+**Ejemplo práctico (en JSON)**:
+
+1. **Crear un usuario**:
+   - **Solicitud**:
+     ```http
+     POST /usuarios
+     Content-Type: application/json
+     Body: { "nombre": "Juan", "edad": 25 }
+     ```
+   - **Respuesta**:
+     ```json
+     { "mensaje": "Usuario creado", "id": 1 }
+     ```
+
+2. **Obtener todos los usuarios**:
+   - **Solicitud**:
+     ```http
+     GET /usuarios
+     ```
+   - **Respuesta**:
+     ```json
+     [
+         { "id": 1, "nombre": "Juan", "edad": 25 },
+         { "id": 2, "nombre": "Ana", "edad": 30 }
+     ]
+     ```
+
+3. **Actualizar un usuario**:
+   - **Solicitud**:
+     ```http
+     PUT /usuarios/1
+     Content-Type: application/json
+     Body: { "nombre": "Juan Pérez", "edad": 26 }
+     ```
+   - **Respuesta**:
+     ```json
+     { "mensaje": "Usuario actualizado" }
+     ```
+
+4. **Eliminar un usuario**:
+   - **Solicitud**:
+     ```http
+     DELETE /usuarios/1
+     ```
+   - **Respuesta**:
+     ```json
+     { "mensaje": "Usuario eliminado" }
+     ```
+
+---
+
+#### **Beneficios de usar una API REST**
+
+1. **Simplicidad**: REST utiliza los principios y verbos HTTP estándar, lo que lo hace fácil de entender.
+2. **Escalabilidad**: La separación cliente-servidor permite una escalabilidad eficiente.
+3. **Portabilidad**: REST usa formatos estándar como JSON, lo que permite que sea utilizado por diferentes lenguajes de programación.
+4. **Independencia de plataforma**: El cliente y el servidor pueden estar en plataformas diferentes y aún comunicarse sin problemas.
+
+---
+
+### **Resumen**
+
+- **API**: Es un puente entre sistemas, permitiendo la comunicación entre aplicaciones.
+- **API REST**: Es un tipo de API diseñada siguiendo los principios de REST. Es popular en aplicaciones web por su simplicidad, flexibilidad y uso de estándares HTTP.
+
+REST es ampliamente utilizado para construir aplicaciones modernas, especialmente en el desarrollo de frontends que necesitan comunicarse con backends. Su diseño basado en recursos y el uso de JSON como formato estándar lo hacen una opción versátil y poderosa.
+
+___
+
+## Explicacion 2 / Qué es una API? Ejemplo sencillo
 - Imagina que estás en un restaurante y quieres pedir comida. En lugar de ir a la cocina y hacer la comida tú mismo, simplemente le das tu pedido al camarero y él se encarga de llevarlo a la cocina, obtener la comida y traértela a la mesa.
 - En el desarrollo web, una API es como el camarero en este ejemplo. Es un intermediario que te permite solicitar datos o servicios a un sistema externo, como una base de datos o un servicio web, sin necesidad de saber cómo funciona internamente ese sistema. Simplemente envías una solicitud a través de la API y recibes una respuesta con los datos que necesitas.
 - Por ejemplo, si estás construyendo un sitio web de comercio electrónico, podrías utilizar una API para solicitar información sobre los productos disponibles en tu inventario desde una base de datos externa. La API se encargaría de obtener esos datos y devolvértelos en un formato que puedas usar en tu sitio web.
