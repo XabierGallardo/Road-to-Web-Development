@@ -1,5 +1,15 @@
 # Diccionario IT
 
+## MVP (Minimum Viable Product)
+- El MVP es un producto con suficientes características para satisfacer a los clientes iniciales, y proporcionar retroalimentación para el desarrollo futuro.
+- Un producto viable mínimo tiene solo las características básicas suficientes para lanzar el producto, y no más. Los desarrolladores típicamente lanzan el producto para un subconjunto de los posibles clientes, como los "primeros seguidores", que son más tolerantes, más propensos a dar retroalimentación y capaces de captar la visión de producto a partir de un prototipo temprano. Esta estrategia va enfocada a evitar la construcción de productos que los clientes no quieren y busca maximizar la obtención de información sobre el cliente con respecto a los gastos. "El producto mínimo viable es la versión de un nuevo producto que un equipo utiliza para obtener la cantidad máxima de conocimiento validado sobre los clientes con el menor esfuerzo". Las palabras máximo y mínimo no se utilizan formulaicamente. Se requiere una evaluación del contexto para que el alcance del MVP tenga sentido.
+
+- Un MVP puede ser parte de la estrategia y el proceso para vender un producto a los clientes.​ Es un artefacto central en un proceso iterativo de generación de ideas, creación de prototipos, presentación, recopilación de datos, análisis y aprendizaje.
+
+- El MVP o Minimum Viable Product, o en castellano el Producto Mínimo Viable, es aquel enfoque que permite el desarrollo de lo esencial en un proyecto, en este caso que comentamos, en el desarrollo app o web. Es decir, enfocar a no desarrollar un proyecto o producto hasta las últimas consecuencias, sino seguir la estrategia de invertir el mínimo de tiempo posible para conseguir algo que funcione, quizás no como esperamos en su forma completa, pero si que permita captar la esencia y salir al mercado o en grupo de testing, con algo probable.
+
+---
+
 ## Principios SOLID
 Los principios SOLID son un conjunto de cinco principios de diseño orientados a objetos que ayudan a crear software más comprensible, flexible y mantenible.
 

@@ -58,6 +58,242 @@ app.listen(port, () => {
 // Hola mundo con Express!
 ```
 
+---
+
+## Modulos en Node.js
+En **Node.js**, los módulos son bloques de código reutilizables que encapsulan funcionalidades específicas. Node.js proporciona un sistema de módulos para importar y exportar funcionalidades entre archivos. Este sistema permite organizar proyectos, dividir la lógica en partes más manejables y promover la reutilización del código.
+
+### **1. Sistemas de Módulos en Node.js**
+Node.js soporta dos sistemas de módulos principales:
+
+1. **CommonJS (CJS):** Es el sistema de módulos predeterminado de Node.js.
+2. **ECMAScript Modules (ESM):** Introducido oficialmente en la especificación ES6, soportado en Node.js a partir de la versión 12 (estable desde la 14).
+
+Ambos sistemas tienen diferencias clave en sintaxis y comportamiento. A continuación, se explican detalladamente cada uno.
+
+---
+
+## **2. CommonJS (CJS)**
+
+El sistema de módulos **CommonJS** usa las funciones `require()` para importar y `module.exports` o `exports` para exportar.
+
+### **2.1 Exportar Módulos con CommonJS**
+
+1. **Exportación de una única funcionalidad:**
+   ```javascript
+   // archivo: math.js
+   function sumar(a, b) {
+       return a + b;
+   }
+
+   module.exports = sumar;
+   ```
+
+2. **Exportación de múltiples funcionalidades (objeto):**
+   ```javascript
+   // archivo: math.js
+   function sumar(a, b) {
+       return a + b;
+   }
+
+   function restar(a, b) {
+       return a - b;
+   }
+
+   module.exports = {
+       sumar,
+       restar
+   };
+   ```
+
+3. **Exportación incremental con `exports`:**
+   ```javascript
+   // archivo: math.js
+   exports.sumar = (a, b) => a + b;
+   exports.restar = (a, b) => a - b;
+   ```
+
+---
+
+### **2.2 Importar Módulos con CommonJS**
+
+1. **Importar una funcionalidad única:**
+   ```javascript
+   // archivo: app.js
+   const sumar = require('./math');
+
+   console.log(sumar(5, 3)); // 8
+   ```
+
+2. **Importar múltiples funcionalidades:**
+   ```javascript
+   // archivo: app.js
+   const { sumar, restar } = require('./math');
+
+   console.log(sumar(5, 3)); // 8
+   console.log(restar(5, 3)); // 2
+   ```
+
+3. **Importar un módulo completo:**
+   ```javascript
+   // archivo: app.js
+   const math = require('./math');
+
+   console.log(math.sumar(5, 3)); // 8
+   console.log(math.restar(5, 3)); // 2
+   ```
+
+---
+
+## **3. ECMAScript Modules (ESM)**
+
+El sistema **ECMAScript Modules** usa las palabras clave `import` y `export`.
+
+### **3.1 Exportar Módulos con ESM**
+
+1. **Exportación nombrada:**
+   ```javascript
+   // archivo: math.js
+   export function sumar(a, b) {
+       return a + b;
+   }
+
+   export function restar(a, b) {
+       return a - b;
+   }
+   ```
+
+2. **Exportación por defecto:**
+   ```javascript
+   // archivo: math.js
+   export default function multiplicar(a, b) {
+       return a * b;
+   }
+   ```
+
+3. **Exportación combinada:**
+   ```javascript
+   // archivo: math.js
+   export function sumar(a, b) {
+       return a + b;
+   }
+
+   export function restar(a, b) {
+       return a - b;
+   }
+
+   export default function multiplicar(a, b) {
+       return a * b;
+   }
+   ```
+
+---
+
+### **3.2 Importar Módulos con ESM**
+
+1. **Importación de exportaciones nombradas:**
+   ```javascript
+   // archivo: app.js
+   import { sumar, restar } from './math.js';
+
+   console.log(sumar(5, 3)); // 8
+   console.log(restar(5, 3)); // 2
+   ```
+
+2. **Importación de exportación por defecto:**
+   ```javascript
+   // archivo: app.js
+   import multiplicar from './math.js';
+
+   console.log(multiplicar(5, 3)); // 15
+   ```
+
+3. **Importación combinada:**
+   ```javascript
+   // archivo: app.js
+   import multiplicar, { sumar, restar } from './math.js';
+
+   console.log(sumar(5, 3)); // 8
+   console.log(restar(5, 3)); // 2
+   console.log(multiplicar(5, 3)); // 15
+   ```
+
+4. **Importar todo como un objeto:**
+   ```javascript
+   // archivo: app.js
+   import * as math from './math.js';
+
+   console.log(math.sumar(5, 3)); // 8
+   console.log(math.restar(5, 3)); // 2
+   console.log(math.default(5, 3)); // 15
+   ```
+
+---
+
+## **4. Configuración de ESM o CommonJS en Node.js**
+
+### **4.1. CommonJS**
+Es el sistema predeterminado en Node.js. No requiere configuración adicional.
+
+### **4.2. ECMAScript Modules**
+Para usar ESM en Node.js, necesitas una configuración específica:
+
+1. **Activar ESM mediante el archivo `package.json`:**
+   ```json
+   {
+     "type": "module"
+   }
+   ```
+
+2. **Usar la extensión `.mjs`:**
+   Archivos con esta extensión son tratados como módulos ESM sin necesidad de modificar el `package.json`.
+
+---
+
+## **5. Diferencias entre CommonJS y ESM**
+
+| Aspecto                | CommonJS                     | ESM                          |
+|-------------------------|------------------------------|------------------------------|
+| **Importación**         | `require()`                 | `import`                    |
+| **Exportación**         | `module.exports` / `exports`| `export` / `export default` |
+| **Cargar dinámicamente**| Sí, con `require()`         | Sí, con `import()`          |
+| **Sincronía**           | Sincrónico                  | Asíncrónico                 |
+| **Compatibilidad**      | Nativo en Node.js           | Soporte moderno, depende de configuración. |
+
+---
+
+## **6. Casos de Uso Combinados**
+
+Si necesitas combinar módulos CommonJS con ESM (por ejemplo, usando librerías externas que aún usan CommonJS), Node.js permite interoperabilidad mediante:
+
+1. **Importar CommonJS en ESM:**
+   ```javascript
+   // archivo: app.js (ESM)
+   import sumar from './math.cjs';
+
+   console.log(sumar(5, 3)); // 8
+   ```
+
+2. **Importar ESM en CommonJS:**
+   ```javascript
+   // archivo: app.js (CommonJS)
+   const { sumar } = await import('./math.js');
+
+   console.log(sumar(5, 3)); // 8
+   ```
+
+---
+
+## **7. Conclusión**
+
+- **CommonJS** es más antiguo y ampliamente utilizado, especialmente en proyectos Node.js tradicionales.
+- **ESM** es el estándar moderno y recomendado para nuevos proyectos, alineándose con la especificación de JavaScript.
+
+Conocer ambos sistemas permite trabajar de manera efectiva en diferentes entornos y proyectos.
+
+
+---
+
 
 
 ## Key lessons
