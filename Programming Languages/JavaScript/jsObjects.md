@@ -1,4 +1,180 @@
 # Objetos en JavaScript
+
+## Iterando objetos en JavaScript
+En JavaScript, existen varias formas de iterar sobre un objeto.
+
+---
+
+### **1. Usando `for...in`**
+El bucle `for...in` recorre todas las propiedades enumerables de un objeto.
+
+#### Ejemplo:
+```javascript
+const user = {
+    id: 1,
+    name: "Juan",
+    email: "juan@example.com",
+};
+
+for (const key in user) {
+    console.log(`${key}: ${user[key]}`);
+}
+```
+
+**Salida:**
+```
+id: 1
+name: Juan
+email: juan@example.com
+```
+
+**Consideraciones:**
+- Incluye propiedades heredadas de la cadena de prototipos. Si no las deseas, usa `hasOwnProperty`:
+  ```javascript
+  if (user.hasOwnProperty(key)) {
+      console.log(`${key}: ${user[key]}`);
+  }
+  ```
+
+---
+
+### **2. Usando `Object.keys()`**
+Este método devuelve un arreglo con las claves propias del objeto (sin incluir propiedades heredadas). Se puede usar con un bucle `for` o métodos de arrays como `forEach`.
+
+#### Ejemplo:
+```javascript
+Object.keys(user).forEach(key => {
+    console.log(`${key}: ${user[key]}`);
+});
+```
+
+**Salida:**
+```
+id: 1
+name: Juan
+email: juan@example.com
+```
+
+---
+
+### **3. Usando `Object.values()`**
+Devuelve un arreglo con los valores de las propiedades del objeto, lo que resulta útil cuando no necesitas las claves.
+
+#### Ejemplo:
+```javascript
+Object.values(user).forEach(value => {
+    console.log(value);
+});
+```
+
+**Salida:**
+```
+1
+Juan
+juan@example.com
+```
+
+---
+
+### **4. Usando `Object.entries()`**
+Este método devuelve un arreglo de pares `[clave, valor]`, lo que facilita iterar tanto las claves como los valores simultáneamente.
+
+#### Ejemplo:
+```javascript
+Object.entries(user).forEach(([key, value]) => {
+    console.log(`${key}: ${value}`);
+});
+```
+
+**Salida:**
+```
+id: 1
+name: Juan
+email: juan@example.com
+```
+
+---
+
+### **5. Usando `for...of` con `Object.entries()`**
+El bucle `for...of` combinado con `Object.entries()` permite una sintaxis más limpia para recorrer pares clave-valor.
+
+#### Ejemplo:
+```javascript
+for (const [key, value] of Object.entries(user)) {
+    console.log(`${key}: ${value}`);
+}
+```
+
+**Salida:**
+```
+id: 1
+name: Juan
+email: juan@example.com
+```
+
+---
+
+### **6. Usando `Map` para objetos tipo mapa**
+Si el objeto es un `Map` (una estructura de datos para pares clave-valor), puedes usar directamente `for...of`.
+
+#### Ejemplo:
+```javascript
+const userMap = new Map([
+    ["id", 1],
+    ["name", "Juan"],
+    ["email", "juan@example.com"],
+]);
+
+for (const [key, value] of userMap) {
+    console.log(`${key}: ${value}`);
+}
+```
+
+**Salida:**
+```
+id: 1
+name: Juan
+email: juan@example.com
+```
+
+---
+
+### **7. Usando `Object.getOwnPropertyNames()`**
+Devuelve todas las propiedades propias del objeto, incluidas las no enumerables.
+
+#### Ejemplo:
+```javascript
+Object.getOwnPropertyNames(user).forEach(key => {
+    console.log(`${key}: ${user[key]}`);
+});
+```
+
+---
+
+### **8. Usando `Reflect.ownKeys()`**
+Este método devuelve todas las claves propias del objeto, incluidas las simbólicas y no enumerables.
+
+#### Ejemplo:
+```javascript
+Reflect.ownKeys(user).forEach(key => {
+    console.log(`${key}: ${user[key]}`);
+});
+```
+
+---
+
+### **¿Cuál usar?**
+
+- **`for...in`:** Útil para iterar propiedades enumerables, pero cuidado con las heredadas.
+- **`Object.keys()`:** Ideal si solo necesitas las claves del objeto.
+- **`Object.entries()`:** Muy conveniente para trabajar con claves y valores.
+- **`for...of` con `Object.entries()`:** Limpio y fácil de leer.
+- **`Reflect.ownKeys()` o `Object.getOwnPropertyNames()`:** Útiles para casos avanzados con propiedades no enumerables.
+
+
+---
+
+
 ## 1. ¿Qué es un objeto en JavaScript?
 Un **objeto** en JavaScript es una estructura de datos que permite almacenar un conjunto de pares clave-valor. Cada clave es una propiedad (o atributo) del objeto, y cada valor puede ser cualquier tipo de dato (números, cadenas, funciones, otros objetos, etc.). Los objetos son fundamentales en JavaScript porque permiten agrupar información relacionada y proporcionar un acceso organizado a los datos.
 
