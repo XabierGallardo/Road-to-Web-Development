@@ -1,3 +1,199 @@
+# **I** / Introduccion a `async await` en JavaScript
+
+`async` y `await` son palabras clave en JavaScript que facilitan trabajar con operaciones asíncronas de forma más legible, evitando la complejidad de manejar múltiples promesas encadenadas.
+
+### **`async`**
+- Define una función asíncrona que siempre devuelve una promesa.  
+- Si dentro de la función retornas un valor, este se envuelve en una promesa automáticamente.
+
+### **`await`**
+- Pausa la ejecución de la función `async` hasta que una promesa se resuelve o rechaza.  
+- Solo puede usarse dentro de funciones marcadas con `async`.
+
+---
+
+### Ejemplo básico:
+```javascript
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.example.com/data');
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+fetchData();
+```
+
+1. **Flujo síncrono:** La sintaxis se parece más al código síncrono.  
+2. **Manejo de errores:** Usa `try...catch` para manejar errores, como problemas de red.
+
+
+---
+
+
+# **II** / Profundizando con `async await` en JavaScript
+
+Las palabras clave `async` y `await` son herramientas modernas introducidas en ECMAScript 2017 (ES8) que simplifican el manejo de operaciones asíncronas. Estas permiten escribir código asíncrono que se lee y se comporta de manera más similar al código síncrono, eliminando la necesidad de anidar múltiples `then` en promesas.
+
+---
+
+### **1. Función `async`**
+
+- **Definición técnica:** Una función declarada con la palabra clave `async` devuelve siempre una **promesa**.  
+- Si la función contiene un valor de retorno explícito, este se convierte automáticamente en una promesa resuelta.
+- Si se lanza un error dentro de la función, este se transforma en una promesa rechazada.
+
+#### Ejemplo:
+```javascript
+async function example() {
+  return "Hello, World!";
+}
+
+example().then(console.log); // "Hello, World!" porque el retorno se envuelve en una promesa.
+```
+
+Equivalente sin `async`:
+```javascript
+function example() {
+  return Promise.resolve("Hello, World!");
+}
+```
+
+---
+
+### **2. Palabra clave `await`**
+
+- **Definición técnica:** Suspende la ejecución de una función `async` hasta que la promesa a la que se aplica se resuelve o rechaza.  
+- El valor resuelto de la promesa es "devuelto" al contexto donde se usa `await`.  
+- **Restricción:** Solo puede ser utilizado dentro de funciones marcadas con `async`.
+
+#### Ejemplo:
+```javascript
+async function fetchData() {
+  const response = await fetch('https://api.example.com/data');
+  const data = await response.json();
+  return data;
+}
+
+fetchData().then(console.log);
+```
+
+---
+
+### **3. Manejo de errores con `try...catch`**
+
+Cuando se usa `await`, los errores dentro de la función deben ser manejados con `try...catch`. Esto captura errores como rechazos de promesas o excepciones lanzadas.
+
+#### Ejemplo:
+```javascript
+async function fetchData() {
+  try {
+    const response = await fetch('https://api.invalid-url.com');
+    if (!response.ok) {
+      throw new Error(`HTTP Error: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error al obtener los datos:", error.message);
+  }
+}
+
+fetchData();
+```
+
+---
+
+### **4. Comportamiento síncrono dentro de `async/await`**
+
+Aunque las funciones son asíncronas, `await` introduce un comportamiento "bloqueante" dentro del contexto de la función, pausando la ejecución hasta que la promesa se resuelve.
+
+#### Ejemplo:
+```javascript
+async function example() {
+  console.log("Antes de await");
+  const result = await new Promise(resolve => setTimeout(() => resolve("Resultado"), 2000));
+  console.log("Después de await:", result);
+}
+example();
+// Output:
+// "Antes de await"
+// (espera 2 segundos)
+// "Después de await: Resultado"
+```
+
+---
+
+### **5. Paralelismo con `Promise.all`**
+
+Cuando múltiples operaciones asíncronas pueden ejecutarse en paralelo, usar `await` secuencialmente puede ser ineficiente. Para estas situaciones, se utiliza `Promise.all`.
+
+#### Ejemplo:
+```javascript
+async function fetchMultipleData() {
+  const urls = ['https://api.example.com/data1', 'https://api.example.com/data2'];
+  
+  // Inicia todas las solicitudes en paralelo
+  const promises = urls.map(url => fetch(url));
+  
+  // Espera a que todas se resuelvan
+  const results = await Promise.all(promises);
+  const data = await Promise.all(results.map(res => res.json()));
+
+  console.log(data);
+}
+
+fetchMultipleData();
+```
+
+---
+
+### **6. Ventajas de `async/await`**
+
+- Código más **legible** y cercano al comportamiento síncrono.  
+- Más fácil de **depurar**, ya que puedes usar `try...catch` para manejar errores.  
+- Se elimina la necesidad de anidar múltiples `.then`.
+
+---
+
+### **7. Limitaciones y consideraciones**
+
+- **Sólo funciona dentro de `async`:** No se puede usar `await` fuera de una función asíncrona.  
+- **Bloqueo local:** Mientras `await` espera una promesa, la ejecución de la función está "pausada", pero otras tareas en el Event Loop continúan ejecutándose.  
+- **Errores silenciosos:** Si no se maneja correctamente el rechazo de una promesa, puede llevar a comportamientos inesperados.
+
+#### Ejemplo incorrecto:
+```javascript
+async function example() {
+  const result = await fetch('https://invalid-url'); // Si falla, no hay manejo de errores.
+}
+example(); // Promesa rechazada sin manejar.
+```
+
+Solución:
+```javascript
+async function example() {
+  try {
+    const result = await fetch('https://invalid-url');
+  } catch (error) {
+    console.error('Error:', error.message);
+  }
+}
+```
+
+---
+
+### **8. Casos avanzados**
+
+- **Uso con funciones síncronas:** Combina `await` con lógica síncrona para manejar condiciones especiales.  
+- **Refresco de tokens:** Usa `async/await` para manejar cadenas complejas de solicitudes que dependen de validaciones o autenticación.
+
+
+---
+
+
 # Asynchronous JavaScript / Callbacks, Promises, Async Await
 ### [Free API for testing](https://jsonplaceholder.typicode.com/)
 
