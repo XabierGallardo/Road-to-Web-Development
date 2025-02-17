@@ -1,4 +1,215 @@
-# SQL Cheatsheets
+## **¿Qué son las bases de datos relacionales?**  
+
+Las **bases de datos relacionales** (RDB, por sus siglas en inglés: *Relational Database*) son un tipo de base de datos que almacena y organiza la información en **tablas** relacionadas entre sí. Estas tablas están estructuradas en filas y columnas, donde cada fila representa un registro único y cada columna representa un atributo del dato.  
+
+---
+
+## **1. Características principales**  
+
+✅ **Uso de tablas** 📊  
+- Cada tabla almacena datos sobre una entidad específica (por ejemplo, *usuarios*, *productos*, *pedidos*).  
+
+✅ **Relaciones entre datos** 🔗  
+- Las tablas se vinculan entre sí mediante **claves primarias** y **claves foráneas**.  
+
+✅ **Integridad y consistencia** ✅  
+- Se aplican restricciones para garantizar que los datos sean coherentes y correctos.  
+
+✅ **Uso de SQL (Structured Query Language)** 📜  
+- Se usa SQL para realizar operaciones como consultas, inserciones, actualizaciones y eliminaciones.  
+
+✅ **Normalización** 🔄  
+- Se aplica un conjunto de reglas para evitar la redundancia de datos y mejorar la eficiencia del almacenamiento.  
+
+---
+
+## **2. Elementos clave**  
+
+### **🔹 Tablas**  
+Estructuras donde se almacenan los datos, organizadas en filas y columnas.  
+
+Ejemplo de una tabla **usuarios**:  
+
+| id | nombre     | email                | edad |
+|----|-----------|----------------------|------|
+| 1  | Juan Pérez | juan@example.com     | 30   |
+| 2  | Ana Gómez | ana@example.com       | 25   |
+
+### **🔹 Clave primaria (Primary Key - PK)**  
+Es una columna o conjunto de columnas que identifica de forma **única** cada fila en una tabla.  
+
+Ejemplo:  
+En la tabla `usuarios`, la columna `id` es la **clave primaria** porque cada usuario tiene un identificador único.  
+
+```sql
+CREATE TABLE usuarios (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    email VARCHAR(100) UNIQUE,
+    edad INT
+);
+```
+
+### **🔹 Clave foránea (Foreign Key - FK)**  
+Es una columna que establece una **relación** entre dos tablas, apuntando a la clave primaria de otra tabla.  
+
+Ejemplo:  
+Una tabla `pedidos` que tiene una relación con `usuarios` mediante la clave foránea `usuario_id`:  
+
+```sql
+CREATE TABLE pedidos (
+    id INT PRIMARY KEY,
+    usuario_id INT,
+    fecha DATE,
+    total DECIMAL(10,2),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+```
+
+Aquí, `usuario_id` en la tabla `pedidos` se relaciona con `id` en `usuarios`, asegurando que cada pedido pertenece a un usuario válido.  
+
+---
+
+## **3. Tipos de relaciones en bases de datos relacionales**  
+
+Las relaciones permiten estructurar los datos de manera eficiente. Existen **tres tipos principales**:  
+
+### **🔹 Relación 1 a 1 (One to One, 1:1)**  
+Cada registro en una tabla tiene **exactamente un** registro relacionado en otra tabla.  
+
+Ejemplo:  
+Un usuario tiene **una** dirección única.  
+
+| usuarios | dirección |
+|----------|----------|
+| id (PK)  | id (PK, FK) |
+| nombre   | usuario_id (FK) |
+| email    | calle |
+
+```sql
+CREATE TABLE direccion (
+    id INT PRIMARY KEY,
+    usuario_id INT UNIQUE,
+    calle VARCHAR(100),
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+```
+
+---
+
+### **🔹 Relación 1 a Muchos (One to Many, 1:N)**  
+Un registro en una tabla puede estar relacionado con **varios** registros en otra tabla.  
+
+Ejemplo:  
+Un usuario puede tener **muchos** pedidos.  
+
+| usuarios | pedidos |
+|----------|--------|
+| id (PK)  | id (PK) |
+| nombre   | usuario_id (FK) |
+| email    | fecha |
+
+```sql
+CREATE TABLE pedidos (
+    id INT PRIMARY KEY,
+    usuario_id INT,
+    fecha DATE,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
+```
+
+---
+
+### **🔹 Relación Muchos a Muchos (Many to Many, N:M)**  
+Un registro en una tabla puede estar relacionado con **varios** registros en otra tabla y viceversa.  
+Se usa una **tabla intermedia** para gestionar la relación.  
+
+Ejemplo:  
+Un estudiante puede inscribirse en varios cursos, y un curso puede tener varios estudiantes.  
+
+| estudiantes | cursos | inscripciones |
+|------------|--------|---------------|
+| id (PK)    | id (PK) | id (PK) |
+| nombre     | nombre  | estudiante_id (FK) |
+| email      | profesor | curso_id (FK) |
+
+```sql
+CREATE TABLE inscripciones (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    estudiante_id INT,
+    curso_id INT,
+    FOREIGN KEY (estudiante_id) REFERENCES estudiantes(id),
+    FOREIGN KEY (curso_id) REFERENCES cursos(id)
+);
+```
+
+---
+
+## **4. Ventajas de las bases de datos relacionales**  
+✅ **Organización estructurada** 📊  
+Los datos están bien organizados en tablas con relaciones bien definidas.  
+
+✅ **Consistencia e integridad** ✅  
+Se pueden aplicar reglas para evitar datos duplicados o erróneos.  
+
+✅ **Eficiencia y escalabilidad** ⚡  
+Optimización mediante índices y normalización para manejar grandes volúmenes de datos.  
+
+✅ **Seguridad** 🔒  
+Permite controlar accesos con permisos y roles.  
+
+✅ **Consulta eficiente con SQL** 📝  
+El lenguaje SQL permite manipular y consultar datos de manera sencilla y potente.  
+
+---
+
+## **5. Ejemplo práctico en MySQL**
+Creemos una base de datos para una tienda en línea con dos tablas: `clientes` y `pedidos`.  
+
+```sql
+CREATE TABLE clientes (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(50),
+    email VARCHAR(100) UNIQUE
+);
+
+CREATE TABLE pedidos (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    cliente_id INT,
+    total DECIMAL(10,2),
+    fecha DATE,
+    FOREIGN KEY (cliente_id) REFERENCES clientes(id)
+);
+```
+
+### **Insertar datos**
+```sql
+INSERT INTO clientes (nombre, email) VALUES ('Juan Pérez', 'juan@example.com');
+
+INSERT INTO pedidos (cliente_id, total, fecha) VALUES (1, 150.75, '2024-02-16');
+```
+
+### **Consultar datos con JOIN**
+```sql
+SELECT clientes.nombre, pedidos.total, pedidos.fecha 
+FROM clientes 
+JOIN pedidos ON clientes.id = pedidos.cliente_id;
+```
+
+🔹 Resultado:
+| nombre     | total  | fecha      |
+|------------|--------|------------|
+| Juan Pérez | 150.75 | 2024-02-16 |
+
+---
+
+## **Conclusión**  
+Las bases de datos relacionales permiten almacenar y gestionar datos de forma eficiente, utilizando tablas interconectadas mediante claves primarias y foráneas. Su organización estructurada, junto con SQL, las hace ideales para aplicaciones como sistemas de gestión, comercio electrónico, redes sociales y más. 🚀
+
+
+---
+
+## SQL Cheatsheets
 <p>
 	<img src="../../img/sqlCheatsheet2.jpeg" alt="sql cheatsheet 2">
 </p>
@@ -10,7 +221,7 @@
 
 ---
 
-# Bases de datos Relacionales vs No Relacionales
+## Bases de datos Relacionales vs No Relacionales
 <p align="center">
    <img src="../../img/dbComparisons.jpeg" alt="Database comparisons">
 </p>
