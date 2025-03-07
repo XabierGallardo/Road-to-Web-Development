@@ -1,4 +1,67 @@
-# Node.js
+# Node.js & Express.js
+# Basics
+## `package.json`
+El `package.json` es un archivo esencial en proyectos de **Node.js** y **JavaScript** que almacena metadatos sobre el proyecto, sus dependencias y scripts. Es clave para gestionar paquetes y automatizar tareas.
+
+### **¿Qué contiene?**
+Algunas de las secciones más comunes en un `package.json` son:
+
+1. **Metadatos del proyecto**  
+   - `"name"`: Nombre del proyecto.  
+   - `"version"`: Versión del proyecto.  
+   - `"description"`: Descripción breve.  
+   - `"author"`: Nombre del creador.  
+   - `"license"`: Licencia del proyecto.  
+
+2. **Dependencias**  
+   - `"dependencies"`: Librerías necesarias para que la aplicación funcione.  
+   - `"devDependencies"`: Librerías necesarias solo para desarrollo (como herramientas de prueba o compilación).  
+   
+   Ejemplo:
+   ```json
+   "dependencies": {
+     "express": "^4.18.2"
+   },
+   "devDependencies": {
+     "nodemon": "^3.0.2"
+   }
+   ```
+
+3. **Scripts**  
+   Son comandos que se pueden ejecutar con `npm run nombre-del-script`.  
+   
+   Ejemplo:
+   ```json
+   "scripts": {
+     "start": "node index.js",
+     "dev": "nodemon index.js"
+   }
+   ```
+
+4. **Configuraciones adicionales**  
+   Puede incluir opciones como:  
+   - `"main"`: El archivo de entrada principal del proyecto.  
+   - `"engines"`: Versiones de Node.js requeridas.  
+   - `"keywords"`: Palabras clave para facilitar la búsqueda del paquete.  
+
+### **¿Cómo se genera?**  
+Puedes crear un `package.json` con el siguiente comando en la terminal:  
+```sh
+npm init
+```
+o si quieres generarlo rápidamente con valores predeterminados:  
+```sh
+npm init -y
+```
+
+---
+
+## ///////////////////
+
+---
+
+
+## Que es Node.js?
 Node es un entorno de ejecución de JavaScript que permite ejecutar JavaScript en el servidor.
 
 Si bien el navegador es un entorno de ejecución limitado y controlado para ejecutar JavaScript, Node.js nos permite construir apps del lado del servidor y herramientas de desarrollo. Entre sus características destacan
