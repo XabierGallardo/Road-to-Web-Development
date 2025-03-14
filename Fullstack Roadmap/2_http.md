@@ -1,8 +1,45 @@
+# El protocolo HTTP
 El **protocolo HTTP (Hypertext Transfer Protocol)** es uno de los pilares fundamentales de la comunicación en la web. Fue diseñado para transferir información en la World Wide Web, permitiendo la comunicación entre clientes (como navegadores) y servidores web. A continuación, te explico en detalle cada aspecto de este protocolo.
 
 ---
 
-## 1. **Definición y Propósito**
+## 1. Estructura de una peticion HTTP
+Estructura de Petición HTTP
+
+La estructura de una petición HTTP se compone de varias partes:
+
+1. **Línea de solicitud**: La primera línea de la petición, que indica el método HTTP utilizado (por ejemplo, GET, POST, PUT, DELETE, etc.), la ruta del recurso solicitado (URL) y la versión del protocolo HTTP (por ejemplo, HTTP/1.1).
+	* Ejemplo: `GET /index.html HTTP/1.1`
+2. **Cabeceras**: Las cabeceras se encuentran después de la línea de solicitud y proporcionan información adicional sobre la petición. Algunas cabeceras comunes son:
+	* `Host`: La dirección del servidor al que se dirige la petición.
+	* `User-Agent`: La información del cliente (navegador, sistema operativo, etc.).
+	* `Accept-Language`: El idioma preferido por el cliente.
+	* `Accept-Encoding`: El tipo de codificación o compresión que el cliente puede procesar.
+	* `Connection`: Indica si la conexión debe mantenerse viva o cerrarse después de la respuesta.
+3. **Cuerpo**: El cuerpo de la petición contiene los datos que se envían con la petición, como un formulario de envío o un archivo adjunto. El cuerpo es opcional y solo se utiliza con métodos como POST, PUT y PATCH.
+
+Estructura general:
+```
+Línea de solicitud
+Cabeceras
+Cuerpo (opcional)
+
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0
+Accept-Language: en-US
+Accept-Encoding: gzip, deflate
+Connection: Keep-Alive
+
+[Cuerpo opcional]
+```
+En el ejemplo anterior, la petición GET solicita el recurso `/index.html` del servidor `www.example.com`. Las cabeceras proporcionan información adicional sobre el cliente y la conexión. No hay cuerpo en este ejemplo, ya que el método GET solo devuelve información y no envía datos.
+
+Es importante destacar que la estructura de una petición HTTP puede variar dependiendo del método utilizado y de la implementación del servidor web. Sin embargo, la estructura básica descrita anteriormente se aplica a la mayoría de las peticiones HTTP.
+
+---
+
+## 2. **Definición y Propósito**
 HTTP es un protocolo de nivel de aplicación que sigue un modelo de solicitud-respuesta. Su principal función es facilitar la transferencia de recursos, como archivos HTML, imágenes, videos y datos estructurados, entre un cliente (generalmente un navegador) y un servidor web.
 
 HTTP está basado en texto y es **sin estado** (stateless), lo que significa que cada solicitud es independiente y no guarda información sobre las interacciones anteriores.
