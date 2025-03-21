@@ -1,3 +1,168 @@
+# MVC y otros modelos de arquitectura de software
+## **📌 Modelo Vista Controlador (MVC)**  
+El **Modelo Vista Controlador (MVC)** es un patrón de arquitectura de software que separa una aplicación en **tres componentes principales** para mejorar la organización y mantenimiento del código.  
+
+### **📌 Estructura de MVC**  
+1️⃣ **Modelo (Model)**  
+   - Representa los datos y la lógica de negocio.  
+   - Se encarga de acceder a la base de datos y gestionar los datos.  
+   - No interactúa directamente con la interfaz de usuario.  
+   
+   🔹 **Ejemplo en JavaScript (Express + MySQL)**  
+   ```js
+   class Usuario {
+       constructor(id, nombre, email) {
+           this.id = id;
+           this.nombre = nombre;
+           this.email = email;
+       }
+   }
+   ```
+
+2️⃣ **Vista (View)**  
+   - Se encarga de la interfaz de usuario (HTML, CSS, JavaScript).  
+   - Recibe datos del modelo y los muestra al usuario.  
+   - No contiene lógica de negocio.  
+   
+   🔹 **Ejemplo de una vista en HTML con EJS (Plantilla en Express.js)**  
+   ```html
+   <h1>Bienvenido, <%= usuario.nombre %>!</h1>
+   ```
+
+3️⃣ **Controlador (Controller)**  
+   - Gestiona la interacción entre el usuario, el modelo y la vista.  
+   - Recibe las solicitudes del usuario, procesa la lógica y actualiza el modelo o la vista.  
+
+   🔹 **Ejemplo de un controlador en Express.js**  
+   ```js
+   app.get('/usuario/:id', async (req, res) => {
+       const usuario = await obtenerUsuario(req.params.id);
+       res.render('perfil', { usuario });
+   });
+   ```
+
+### **📌 Flujo de Trabajo en MVC**  
+1. El usuario interactúa con la **Vista** (ejemplo: hace clic en un botón).  
+2. El **Controlador** recibe la solicitud y la procesa.  
+3. El **Modelo** obtiene los datos de la base de datos.  
+4. La **Vista** muestra los datos al usuario.  
+
+✅ **Ventajas de MVC:**  
+✔ Código más organizado y modular.  
+✔ Facilita la escalabilidad.  
+✔ Separa la lógica de negocio de la interfaz.  
+
+❌ **Desventajas de MVC:**  
+✖ Puede ser complejo en aplicaciones pequeñas.  
+✖ Más código y archivos para gestionar.  
+
+---
+
+## **📌 Otros Modelos de Arquitectura en Desarrollo de Aplicaciones**  
+
+### **1️⃣ Modelo MVVM (Modelo-Vista-VistaModelo)**  
+Este modelo se usa mucho en **frameworks frontend** como **Vue.js y Angular**.  
+
+📌 **Diferencia con MVC:**  
+- Usa un **ViewModel** en lugar de un controlador, que actúa como intermediario entre el modelo y la vista.  
+
+🔹 **Ejemplo en Vue.js**  
+```vue
+<template>
+  <p>{{ mensaje }}</p>
+</template>
+
+<script>
+export default {
+  data() {
+    return { mensaje: "Hola Mundo" };
+  }
+};
+</script>
+```
+
+✅ **Ventajas:**  
+✔ Excelente para interfaces dinámicas.  
+✔ Facilita el desarrollo frontend.  
+
+❌ **Desventajas:**  
+✖ Puede ser más difícil de depurar que MVC.  
+
+---
+
+### **2️⃣ Modelo MVP (Modelo-Vista-Presentador)**  
+📌 **Diferencia con MVC:**  
+- El **Presentador** toma el rol del controlador, pero la vista es más pasiva y solo muestra lo que recibe.  
+- Se usa en aplicaciones con interfaces gráficas como **Android y Windows Forms**.  
+
+✅ **Ventajas:**  
+✔ Separa mejor la lógica de la interfaz.  
+✔ Facilita la realización de pruebas unitarias.  
+
+❌ **Desventajas:**  
+✖ Puede requerir más código y archivos.  
+
+---
+
+### **3️⃣ Modelo Cliente-Servidor**  
+Este modelo separa una aplicación en **dos partes**:  
+1️⃣ **Cliente** (Frontend) → Es la interfaz de usuario.  
+2️⃣ **Servidor** (Backend) → Procesa las solicitudes y maneja la base de datos.  
+
+📌 **Ejemplo de una petición en este modelo con JavaScript (Fetch API + Express.js)**  
+```js
+// Cliente (Frontend)
+fetch('/api/datos')
+  .then(res => res.json())
+  .then(data => console.log(data));
+
+// Servidor (Backend con Express)
+app.get('/api/datos', (req, res) => {
+    res.json({ mensaje: "Hola desde el servidor" });
+});
+```
+
+✅ **Ventajas:**  
+✔ Escalable para aplicaciones web.  
+✔ Se puede usar con múltiples tecnologías (React, Angular, Vue).  
+
+❌ **Desventajas:**  
+✖ Requiere una buena gestión de seguridad.  
+
+---
+
+### **4️⃣ Modelo Microservicios**  
+En este modelo, en lugar de tener una sola aplicación grande (**monolito**), se dividen los servicios en **múltiples módulos independientes** que se comunican entre sí a través de APIs.  
+
+📌 **Ejemplo:**  
+- **Servicio de Autenticación:** Gestiona login y registro.  
+- **Servicio de Pedidos:** Maneja compras.  
+- **Servicio de Notificaciones:** Envío de emails/SMS.  
+
+✅ **Ventajas:**  
+✔ Más escalabilidad y flexibilidad.  
+✔ Cada microservicio puede usar un lenguaje diferente.  
+
+❌ **Desventajas:**  
+✖ Mayor complejidad en la comunicación entre servicios.  
+
+---
+
+## **📌 Conclusión: ¿Qué Modelo Usar?**
+| Modelo       | Ideal Para | Ejemplo de Uso |
+|-------------|-----------|---------------|
+| **MVC** | Aplicaciones web estructuradas | Laravel, Express.js, Django |
+| **MVVM** | Aplicaciones frontend dinámicas | Vue.js, Angular |
+| **MVP** | Aplicaciones con interfaces gráficas | Android, Windows Forms |
+| **Cliente-Servidor** | Aplicaciones web con frontend y backend separados | React + Node.js |
+| **Microservicios** | Aplicaciones grandes y escalables | Netflix, Amazon |
+
+### ✅ **Si desarrollas una web con Express.js, MVC es una de las mejores opciones.**  
+### ✅ **Si trabajas en un frontend dinámico, usa MVVM con Vue.js o Angular.**  
+
+🚀 **Elige el modelo según las necesidades de tu proyecto.**
+---
+
 # Arquitecturas de diseño de software
 Las **arquitecturas de diseño de software** representan el conjunto de principios, estructuras y patrones utilizados para organizar un sistema de software. La elección de una arquitectura es crucial, ya que define cómo los diferentes componentes interactúan entre sí, cómo se estructuran y cómo evolucionará el sistema con el tiempo.
 
