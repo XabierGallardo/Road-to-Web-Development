@@ -1,5 +1,78 @@
 # Diccionario IT
 
+### Qué significa mockear una API?
+"Mockear" una API significa **simular su comportamiento sin que exista realmente una conexión con el servidor real**. Es decir, en lugar de hacer peticiones reales a un backend o a una API externa, se **crean respuestas falsas (mocked)** que imitan lo que esa API devolvería. Esto es especialmente útil en desarrollo y pruebas.
+
+---
+
+### 🛠 ¿Por qué se mockea una API?
+
+1. **Desarrollo frontend sin backend disponible**.
+2. **Pruebas unitarias o de integración** sin depender de un servidor real.
+3. **Evitar peticiones reales** (por costos, rendimiento o límites de uso).
+4. **Probar diferentes escenarios** (errores, respuestas lentas, datos específicos).
+
+---
+
+### 💡 Ejemplo simple (mock en JavaScript):
+
+Supongamos que una API real devuelve esto:
+
+```json
+{
+  "user": { "id": 1, "name": "María" }
+}
+```
+
+En lugar de hacer:
+
+```js
+fetch("https://api.ejemplo.com/user")
+  .then(res => res.json())
+  .then(data => console.log(data));
+```
+
+Podés mockear así:
+
+```js
+const mockUser = {
+  user: { id: 1, name: "María" }
+};
+
+function getUserMock() {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(mockUser), 500); // simula retardo
+  });
+}
+
+getUserMock().then(data => console.log(data));
+```
+
+---
+
+### 🔧 Herramientas comunes para mockear APIs
+
+- **JavaScript puro**: como en el ejemplo anterior.
+- **Librerías**:  
+  - `json-server`: crea un servidor REST falso desde un archivo JSON.  
+  - `msw` (Mock Service Worker): intercepta peticiones fetch/xhr a nivel de navegador o tests.  
+  - `nock`: simula respuestas HTTP en tests de Node.js.  
+  - `axios-mock-adapter`: para simular respuestas de `axios`.
+
+---
+
+### 🧪 ¿Y en pruebas?
+
+En testing, mockear es parte esencial del proceso para aislar componentes. Por ejemplo:
+
+```js
+jest.mock('./api'); // en Jest
+```
+
+Con esto podés controlar qué devuelve una función sin que haga la llamada real.
+
+---
+
 ## MVP (Minimum Viable Product)
 - El MVP es un producto con suficientes características para satisfacer a los clientes iniciales, y proporcionar retroalimentación para el desarrollo futuro.
 - Un producto viable mínimo tiene solo las características básicas suficientes para lanzar el producto, y no más. Los desarrolladores típicamente lanzan el producto para un subconjunto de los posibles clientes, como los "primeros seguidores", que son más tolerantes, más propensos a dar retroalimentación y capaces de captar la visión de producto a partir de un prototipo temprano. Esta estrategia va enfocada a evitar la construcción de productos que los clientes no quieren y busca maximizar la obtención de información sobre el cliente con respecto a los gastos. "El producto mínimo viable es la versión de un nuevo producto que un equipo utiliza para obtener la cantidad máxima de conocimiento validado sobre los clientes con el menor esfuerzo". Las palabras máximo y mínimo no se utilizan formulaicamente. Se requiere una evaluación del contexto para que el alcance del MVP tenga sentido.
