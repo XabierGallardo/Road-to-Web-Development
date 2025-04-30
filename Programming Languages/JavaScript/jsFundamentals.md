@@ -1,4 +1,19 @@
 # JavaScript Key Concepts
+### [JavaScript, using let or const?](https://stackoverflow.com/questions/22308071/what-is-the-difference-between-let-and-const-ecmascript-2015-es6)
+
+#### let
+- Use block scope in programming.
+- for every block let create its own new scope which you cannot access in outside of that block.
+- value can be changed as many times as you want.
+- let is extremely useful to have for the vast majority of code. It can greatly enhance your code readability and decrease the chance of a programming error.
+
+#### const
+- It allows you to be immutable with variables.
+- const is a good practice for both readability and maintainability and avoids using magic literals e.g.
+- const declarations must be initialized
+
+---
+
 ## Objects in JavaScript
 En JavaScript, los objetos son una de las estructuras de datos fundamentales. Son utilizados para almacenar colecciones de datos y más complejas entidades. Un objeto es una colección de propiedades, y una propiedad es una asociación entre un nombre (o clave) y un valor. El valor de una propiedad puede ser una función, en cuyo caso la propiedad se llama método.
 
