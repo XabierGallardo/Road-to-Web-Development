@@ -1,4 +1,30 @@
 # Linux
+
+## Running custom scripts on startup
+```sh
+# 1. Create a custom script like customScreen.sh that contains:
+redshift -O 3700K -r -P && xgamma -gamma 0.8
+
+# 2. Add execution permissions to that script
+chmod +x /home/username/customScreen.sh
+
+# 3. Open app Startup Applications / Aplicativos de inicio and add that route to our custom script, that's it!
+# You can add a Name, Route, Comment and a custom Delay after the startup
+```
+
+---
+
+## Useful commands & shortcuts in Linux
+```sh
+# Repeats the previous command
+!!
+
+# Repeats the previous command with sudo
+sudo !!
+```
+
+---
+
 ## Grant full permissions to a directory in Linux
 ```sh
 sudo mkdir /var/szDirectoryName
@@ -10,12 +36,14 @@ sudo chmod -R 777 /var/DirectoryName
 sudo chmod a+rwx /var/szDirectoryName
 ```
 
+# Linux basic guides & tutorials
 ### [Understand Linux & Free Software](https://www.youtube.com/watch?v=UUJ0dFpj1-M) - Brief and entertaining history about Linux
 
 ### [Basic Linux commands](https://www.freecodecamp.org/news/basic-linux-commands-bash-tips-you-should-know/) - Basic guide of Linux Terminal
 
 ### [Beginners tutorial of Linux and GNU](https://www.youtube.com/watch?v=h1gSb9qn0Bo&list=PLpOqH6AE0tNjiU5erEwrvoTEqY36ArbCu) - Linux tutorial in Spanish
 
+---
 
 # Linux Filesystem
 
