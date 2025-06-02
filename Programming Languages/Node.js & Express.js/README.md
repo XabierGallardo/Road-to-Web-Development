@@ -1,5 +1,47 @@
 # Node.js & Express.js
-# Basics
+
+## Actualizar Node
+1. **Instalar NVM (Node Version Manager)**: NVM te permite gestionar diferentes versiones de Node.js fácilmente. Para instalar NVM, ejecuta el siguiente comando en tu terminal:
+
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+   ```
+
+   Después de instalar NVM, cierra y vuelve a abrir la terminal para que los cambios surtan efecto
+
+2. **Instalar la versión de Node.js deseada**: Una vez que NVM esté instalado, puedes instalar la última versión estable de Node.js con el comando:
+
+   ```bash
+   nvm install --lts
+   ```
+
+   Si prefieres una versión específica, puedes especificarla, por ejemplo:
+
+   ```bash
+   nvm install 16.14.0
+   ```
+
+   Luego, puedes verificar la versión de Node.js instalada con:
+
+   ```bash
+   node -v
+   ```
+
+3. **Actualizar npm**: Asegúrate de que npm también esté actualizado. Puedes hacerlo con el siguiente comando:
+
+   ```bash
+   npm install -g npm
+   ```
+
+   Luego, verifica la versión de npm con:
+
+   ```bash
+   npm -v
+   ```
+
+---
+
+
 ## `package.json`
 El `package.json` es un archivo esencial en proyectos de **Node.js** y **JavaScript** que almacena metadatos sobre el proyecto, sus dependencias y scripts. Es clave para gestionar paquetes y automatizar tareas.
 

@@ -406,6 +406,25 @@ Con `app.use(express.json())`, `req.body` será:
 | ------------------------- | ------------------------------------------------------------------------ |
 | `app.use(express.json())` | Para que Express entienda datos JSON en el cuerpo de las peticiones HTTP |
 
+
 ---
 
-¿Quieres que te muestre también cómo usar `urlencoded()` para datos enviados desde formularios HTML?
+## Actualizar Node (abreviado)
+1. **Instalar NVM (Node Version Manager)**: NVM te permite gestionar diferentes versiones de Node.js fácilmente. Para instalar NVM, ejecuta el siguiente comando en tu terminal:
+
+   ```bash
+   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+   ```
+
+2. **Instalar la versión de Node.js deseada**: Una vez que NVM esté instalado, puedes instalar la última versión estable de Node.js con el comando:
+
+   ```bash
+   nvm install --lts
+   ```
+
+3. **Actualizar npm**: Asegúrate de que npm también esté actualizado. Puedes hacerlo con el siguiente comando:
+
+   ```bash
+   npm install -g npm
+   ```
+
