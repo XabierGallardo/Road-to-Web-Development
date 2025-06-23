@@ -22,9 +22,9 @@ En un proyecto Express, esto podría significar:
 
 **MVC** divide la aplicación en tres capas:
 
-1. **Modelo (Model):**
+1. **Modelo (Model):**  
 
-   * Gestiona los datos y la lógica de negocio.
+   * Gestiona los datos y la lógica de negocio. *La lógica de negocio se refiere a las reglas y procesos que definen cómo funciona la aplicación, incluyendo las decisiones y operaciones que se realizan para cumplir los objetivos del negocio*.
    * Se comunica con la base de datos.
    * En Express.js, son los archivos donde defines los esquemas y métodos para acceder/modificar datos (por ejemplo, usando Mongoose si es MongoDB).
 
