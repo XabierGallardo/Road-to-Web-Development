@@ -1,5 +1,19 @@
 # Diccionario IT
 
+## CLI, Command Line Interface
+¿Qué es una CLI?
+
+La Interfaz de Línea de Comandos (CLI, por sus siglas en inglés) es una interfaz de usuario basada en texto que permite a los usuarios interactuar con un sistema operativo o un programa específico mediante la introducción de comandos de texto en una terminal o consola A diferencia de las interfaces gráficas de usuario (GUI), que utilizan elementos visuales como botones, ventanas y menús, la CLI se basa completamente en comandos escritos en texto plano, lo que requiere que el usuario escriba instrucciones directamente
+
+El funcionamiento de la CLI depende de un programa llamado *shell* (o intérprete de comandos), que actúa como un puente entre el usuario y el núcleo del sistema operativo Cuando se escribe un comando, el shell lo interpreta, lo procesa y lo ejecuta, mostrando el resultado, conocido como salida estándar (stdout), o posibles errores (stderr), en la misma interfaz Esta interacción puede ser interactiva, donde el usuario escribe comandos uno a uno, o automatizada mediante scripts, que son archivos con una serie de comandos guardados para ejecutar tareas repetitivas sin intervención manual
+
+La CLI existe desde los primeros años de la computación y fue estandarizada con el sistema operativo Unix en la década de 1970, introduciendo conceptos clave como las tuberías y el filtrado de archivos Aunque las interfaces gráficas se han vuelto dominantes en los sistemas de escritorio, la CLI sigue siendo ampliamente utilizada por desarrolladores, administradores de sistemas y en entornos científicos e ingenieriles debido a sus ventajas en eficiencia, control preciso y bajo consumo de recursos computacionales Además, permite tareas avanzadas, como la automatización de procesos, el acceso remoto a servidores y la gestión de grandes volúmenes de datos de manera más rápida que las GUI
+
+Las CLI están disponibles en todos los principales sistemas operativos, incluyendo Linux, macOS y Windows, donde se presentan a través de diferentes herramientas: el Terminal en macOS, diversas terminales en Linux (como Bash, Zsh o Fish) y el Símbolo del sistema o PowerShell en Windows Aunque puede parecer desalentadora al principio para usuarios no familiarizados con la sintaxis de los comandos, dominar la CLI es considerado una habilidad valiosa para optimizar flujos de trabajo y acceder a funcionalidades avanzadas que no siempre están disponibles en las interfaces gráficas
+
+---
+
+
 ### Qué significa mockear una API?
 "Mockear" una API significa **simular su comportamiento sin que exista realmente una conexión con el servidor real**. Es decir, en lugar de hacer peticiones reales a un backend o a una API externa, se **crean respuestas falsas (mocked)** que imitan lo que esa API devolvería. Esto es especialmente útil en desarrollo y pruebas.
 
