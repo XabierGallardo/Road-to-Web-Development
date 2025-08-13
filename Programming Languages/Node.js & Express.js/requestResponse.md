@@ -1,4 +1,4 @@
-# **Los objetos `req` y `res` en Express.js**  
+# 1. **Los objetos `req` y `res` en Express.js**  
 
 En Express.js, `req` (request) y `res` (response) son dos objetos fundamentales que representan la **solicitud del cliente** y la **respuesta del servidor** respectivamente. Estos objetos permiten gestionar la comunicación entre el cliente y el servidor dentro de una aplicación web.
 
@@ -106,7 +106,7 @@ En el contexto de **JavaScript** y **Node.js**, los **callbacks de `request` y `
 ---
 
 
-# **Los objetos `req` y `res` en Express.js**  
+# 2. **Los objetos `req` y `res` en Express.js**  
 En **JavaScript Vanilla** (JavaScript puro, sin frameworks como Express.js), no existen directamente los objetos `req` y `res` como en Express. Sin embargo, podemos trabajar con objetos equivalentes en el contexto de **solicitudes y respuestas HTTP** usando la API de **Fetch** o la API de **XMLHttpRequest**.
 
 ---
@@ -229,7 +229,7 @@ app.listen(3000, () => console.log('Servidor en http://localhost:3000'));
 ---
 
 
-# **1. ¿Qué son los Callbacks en General?**
+# **3. ¿Qué son los Callbacks en General?**
 
 Un **callback** es una función que se pasa como argumento a otra función y que se ejecutará más tarde, ya sea de manera síncrona o asíncrona. En el caso de servidores HTTP, los callbacks permiten manejar eventos, como recibir una solicitud o enviar una respuesta, de manera estructurada.
 
@@ -392,3 +392,168 @@ Los callbacks de `request` y `response` son fundamentales en Node.js y JavaScrip
 - Construir respuestas personalizadas y enviar datos al cliente (`res`).
 
 Su correcta comprensión es clave para el desarrollo de aplicaciones web eficientes y bien estructuradas.
+
+---
+
+# 4. Entendiendo `request` y `req.query`
+### **¿Qué es el objeto `request` en Express?**
+
+El objeto `request` (abreviado como `req`) es una representación de la solicitud HTTP que realiza un cliente (como un navegador) hacia el servidor. En una aplicación web construida con Express (o cualquier framework que maneje solicitudes HTTP), este objeto contiene información sobre la solicitud que hizo el cliente, incluyendo:
+
+* **Método de la solicitud** (GET, POST, etc.)
+* **Encabezados** de la solicitud (por ejemplo, `Content-Type`, `Authorization`, etc.)
+* **Cuerpo** de la solicitud (generalmente con `POST`, `PUT`, etc.)
+* **Parametros de la URL** (por ejemplo, `/users/:id`)
+* **Consultas de la URL** (query parameters)
+* **Cookies** enviadas por el cliente
+
+Dentro de este objeto, la propiedad más relevante en cuanto a los parámetros de consulta es **`req.query`**.
+
+### **¿Qué es `req.query`?**
+
+`req.query` es un objeto que contiene los parámetros de consulta (query parameters) de una URL en una solicitud GET. Estos parámetros se encuentran después del signo de interrogación (`?`) en una URL. Los parámetros de consulta permiten enviar información adicional a la solicitud, como filtros, búsquedas o cualquier dato adicional que se quiera pasar desde el cliente al servidor.
+
+### **¿Cómo se crea `req.query`?**
+
+Cuando se realiza una solicitud HTTP con parámetros de consulta, los parámetros son pasados en la URL en forma de pares clave-valor separados por el signo `&`. Por ejemplo:
+
+```
+/dashboard?paxina=2&porPaxina=10
+```
+
+En este caso, los parámetros `paxina` y `porPaxina` se pasan como parte de la URL, y Express automáticamente los captura y los coloca en `req.query` como un objeto.
+
+En este ejemplo, `req.query` sería:
+
+```javascript
+{
+  paxina: '2',
+  porPaxina: '10'
+}
+```
+
+El objeto `req.query` es accesible en cualquier ruta que se esté manejando dentro de Express, y cada clave dentro de `req.query` corresponde a un parámetro de consulta.
+
+### **¿Para qué sirve `req.query`?**
+
+`req.query` es útil cuando necesitamos obtener información enviada por el cliente en la URL, sin necesidad de enviar esa información en el cuerpo de la solicitud. Se usa comúnmente en operaciones como:
+
+* Filtrado de resultados (por ejemplo, mostrando productos basados en categorías o rangos de precio).
+* Paginación de resultados (como hemos visto en tu ejemplo).
+* Realización de búsquedas con términos específicos.
+* Determinar qué página de resultados mostrar (a través de `paxina`, `page`, etc.).
+
+### **Ejemplos sencillos de `req.query`**
+
+#### **Ejemplo 1: Filtrar productos por categoría**
+
+Supongamos que queremos permitir a los usuarios filtrar productos por categoría. En la URL podríamos tener algo como:
+
+```
+/productos?categoria=electronica
+```
+
+El servidor podría acceder a la categoría solicitada a través de `req.query` y mostrar los productos correspondientes.
+
+```javascript
+app.get('/productos', (req, res) => {
+  const categoria = req.query.categoria;  // "electronica"
+  
+  // Hacer algo con la categoría, como obtener productos de la base de datos
+  const productosFiltrados = obtenerProductosPorCategoria(categoria);
+
+  res.json(productosFiltrados);  // Devolver los productos filtrados
+});
+```
+
+Si el cliente no pasa ningún parámetro `categoria`, `req.query.categoria` sería `undefined`.
+
+#### **Ejemplo 2: Paginación de resultados**
+
+Si estamos mostrando productos y queremos implementarle paginación, podríamos tener una URL como esta:
+
+```
+/productos?paxina=3&porPaxina=5
+```
+
+En este caso, el servidor puede leer los valores de `paxina` y `porPaxina` desde `req.query` y usarlos para determinar qué productos cargar:
+
+```javascript
+app.get('/productos', (req, res) => {
+  const paxina = parseInt(req.query.paxina) || 1;  // Página actual, por defecto 1
+  const porPaxina = parseInt(req.query.porPaxina) || 10;  // Productos por página, por defecto 10
+
+  const offset = (paxina - 1) * porPaxina;  // Desplazamiento basado en la página
+
+  // Consultar la base de datos para obtener los productos de la página actual
+  const productos = obtenerProductos(offset, porPaxina);
+
+  res.json(productos);  // Devolver los productos de la página actual
+});
+```
+
+En este ejemplo, si no se pasan los parámetros `paxina` o `porPaxina`, el servidor asigna valores por defecto (página 1 y 10 productos por página).
+
+#### **Ejemplo 3: Búsqueda de productos por nombre**
+
+En una aplicación de búsqueda, podríamos permitir que los usuarios busquen productos por nombre. La URL podría ser algo como:
+
+```
+/productos?nombre=laptop
+```
+
+El servidor puede acceder al parámetro `nombre` de la siguiente manera:
+
+```javascript
+app.get('/productos', (req, res) => {
+  const nombre = req.query.nombre;  // "laptop"
+
+  // Buscar productos que coincidan con el nombre
+  const productosEncontrados = buscarProductosPorNombre(nombre);
+
+  res.json(productosEncontrados);  // Devolver los productos encontrados
+});
+```
+
+Si el parámetro `nombre` no se proporciona en la URL, el servidor podría devolver todos los productos o realizar una búsqueda con un término vacío.
+
+#### **Ejemplo 4: Varios parámetros de consulta**
+
+También puedes enviar varios parámetros de consulta en una URL. Por ejemplo:
+
+```
+/productos?categoria=ropa&precioMin=10&precioMax=100
+```
+
+En este caso, el servidor puede acceder a múltiples parámetros dentro de `req.query`:
+
+```javascript
+app.get('/productos', (req, res) => {
+  const categoria = req.query.categoria;  // "ropa"
+  const precioMin = parseFloat(req.query.precioMin) || 0;  // 10, con valor por defecto 0
+  const precioMax = parseFloat(req.query.precioMax) || 1000;  // 100, con valor por defecto 1000
+
+  // Buscar productos que coincidan con los filtros
+  const productosFiltrados = buscarProductosPorCategoriaYPrecio(categoria, precioMin, precioMax);
+
+  res.json(productosFiltrados);  // Devolver los productos filtrados
+});
+```
+
+En este ejemplo, se filtran productos basados en la categoría y en el rango de precios (con valores por defecto si no se pasan parámetros).
+
+### **Resumen de conceptos clave:**
+
+1. **`req.query`**: Es un objeto en Express que contiene los parámetros de consulta (query parameters) de la URL de una solicitud GET.
+
+2. **Cómo se crea `req.query`**: Los parámetros de consulta son enviados por el cliente a través de la URL, después del signo `?`, y se separan por `&` para múltiples parámetros. Express los coloca automáticamente en `req.query`.
+
+3. **Uso común de `req.query`**: Se utiliza para manejar filtros, búsquedas, paginación, y otros parámetros que el cliente pueda enviar en la URL.
+
+4. **Ejemplos comunes**:
+
+   * Filtros de búsqueda (por nombre, categoría, etc.).
+   * Paginación de resultados.
+   * Varios parámetros de consulta para filtrado múltiple (como rango de precios y categorías).
+
+En resumen, **`req.query`** es una forma de obtener datos enviados por el cliente en la URL para realizar acciones como búsquedas, filtrados o paginación en el servidor.
