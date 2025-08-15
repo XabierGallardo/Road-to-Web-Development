@@ -1,4 +1,81 @@
-# Fundamentos de la Programación Orientada a Objetos en TypeScript
+# Breve resumen de TypeScript
+### **¿Qué es TypeScript?**  
+**TypeScript (TS)** es un *superset* de JavaScript que añade **tipado estático** y características avanzadas de programación orientada a objetos. Fue creado por Microsoft y se compila a JavaScript puro.  
+
+#### Características clave:  
+1. **Tipado estático**: Permite definir tipos para variables, funciones y objetos, detectando errores *antes* de ejecutar el código.  
+   ```typescript
+   let nombre: string = "Juan"; // Tipo explícito
+   let edad: number = 25;
+   ```
+2. **Compatibilidad con JS**: Cualquier código JavaScript válido es TypeScript válido.  
+3. **Autocompletado inteligente**: Mejora la productividad en editores como VSCode.  
+4. **Interfaces y tipos avanzados**: Facilita el diseño de estructuras de datos complejas.  
+
+---
+
+### **¿Qué es una interfaz (`interface`)?**  
+Una **interfaz** en TypeScript es una estructura que define la *forma* (propiedades y tipos) que debe tener un objeto o clase. No genera código en JavaScript, solo sirve para verificación durante el desarrollo.  
+
+#### Ejemplo básico:  
+```typescript
+interface Usuario {
+  id: number;
+  nombre: string;
+  email: string;
+  edad?: number; // Propiedad opcional
+}
+
+// Objeto que cumple con la interfaz
+const usuario1: Usuario = {
+  id: 1,
+  nombre: "Ana",
+  email: "ana@example.com",
+  edad: 30 // Opcional
+};
+```
+
+#### Usos comunes:  
+1. **Tipar objetos**:  
+   ```typescript
+   function imprimirUsuario(usuario: Usuario) {
+     console.log(`Nombre: ${usuario.nombre}`);
+   }
+   ```  
+2. **Tipar respuestas de APIs**:  
+   ```typescript
+   interface Producto {
+     id: number;
+     nombre: string;
+     precio: number;
+   }
+   fetch("/api/productos").then((res) => res.json() as Producto[]);
+   ```  
+3. **Implementar en clases**:  
+   ```typescript
+   class Cliente implements Usuario {
+     id: number;
+     nombre: string;
+     email: string;
+   }
+   ```
+
+---
+
+### **Diferencia clave entre TypeScript y JavaScript**  
+| Característica       | JavaScript          | TypeScript          |  
+|----------------------|--------------------|---------------------|  
+| **Tipado**           | Dinámico (en tiempo de ejecución) | Estático (en tiempo de compilación) |  
+| **Interfaces**       | No existe          | Sí (`interface`)    |  
+| **Errores**          | Se ven al ejecutar | Se detectan al escribir código |  
+| **Herramientas**     | Básicas            | Autocompletado avanzado |  
+
+TypeScript es ideal para proyectos grandes o equipos que necesitan mayor robustez y mantenibilidad. JavaScript sigue siendo más flexible para scripts pequeños o prototipos rápidos.  
+
+
+---
+
+# 2. Fundamentos de la Programación Orientada a Objetos en TypeScript
 
 #### 1. **Clases**
 Una clase en TypeScript es una plantilla para crear objetos. Define propiedades y métodos que los objetos creados a partir de la clase tendrán. 
