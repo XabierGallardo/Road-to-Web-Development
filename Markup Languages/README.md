@@ -1,8 +1,370 @@
-# Markup Languages
-
 # CSS
 
-## Selectores universales `*`, `html` y `body`
+## 1. CSS Nesting
+
+**CSS Nesting** es una nueva característica de la especificación de CSS que permite **anidar reglas de estilo dentro de otras** siguiendo la jerarquía de los elementos HTML, en lugar de repetir selectores completos.
+
+👉 Esto busca resolver el problema de repetición y mejorar la **legibilidad** y el **mantenimiento** del código CSS, inspirándose en preprocesadores como **Sass/SCSS** o **Less**.
+
+---
+
+### 📌 Problema en CSS tradicional
+
+En **CSS normal**, si queremos aplicar estilos a un `h4` que está dentro de un `main`, escribimos:
+
+```css
+main {
+  border: 2px solid;
+}
+
+main h4 {
+  color: red;
+}
+
+main h4 span {
+  font-weight: bold;
+}
+```
+
+El problema es la **repetición del selector `main`** cada vez que se quiera aplicar un estilo descendente.
+
+---
+
+### 📌 Solución con CSS Nesting
+
+Con CSS Nesting, podés escribir:
+
+```css
+main {
+  border: 2px solid;
+
+  & h4 {
+    color: red;
+
+    & span {
+      font-weight: bold;
+    }
+  }
+}
+```
+
+🔍 Explicación:
+
+* `&` significa **el selector padre actual** (en este caso `main`).
+* `& h4` equivale a `main h4`.
+* `& span` dentro de `h4` equivale a `main h4 span`.
+
+---
+
+### 📌 Reglas sintácticas de CSS Nesting
+
+### 1. **El uso del `&` es obligatorio en la mayoría de los casos**
+
+A diferencia de SCSS, en CSS Nesting **no podés simplemente escribir el selector anidado sin `&`**.
+Ejemplo ❌ (inválido en CSS estándar moderno):
+
+```css
+main {
+  h4 {
+    color: red;
+  }
+}
+```
+
+Ejemplo ✅ (válido):
+
+```css
+main {
+  & h4 {
+    color: red;
+  }
+}
+```
+
+### 2. **Pseudo-clases y pseudo-elementos**
+
+Podés anidarlos fácilmente:
+
+```css
+button {
+  color: white;
+
+  &:hover {
+    background: blue;
+  }
+
+  &::before {
+    content: "👉 ";
+  }
+}
+```
+
+Esto equivale a:
+
+```css
+button { color: white; }
+button:hover { background: blue; }
+button::before { content: "👉 "; }
+```
+
+### 3. **Combinación con media queries y @rules**
+
+Podés anidar consultas dentro de selectores:
+
+```css
+.card {
+  padding: 1rem;
+
+  @media (min-width: 768px) {
+    padding: 2rem;
+  }
+}
+```
+
+Esto equivale a:
+
+```css
+.card { padding: 1rem; }
+@media (min-width: 768px) {
+  .card { padding: 2rem; }
+}
+```
+
+### 4. **Selectores de hermano y adyacente**
+
+```css
+h2 {
+  margin-bottom: 0.5rem;
+
+  & + p {
+    font-style: italic;
+  }
+}
+```
+
+Traducción:
+
+```css
+h2 { margin-bottom: 0.5rem; }
+h2 + p { font-style: italic; }
+```
+
+---
+
+### 📌 Diferencias con SCSS/Sass
+
+| Característica         | SCSS/Sass               | CSS Nesting (estándar)      |
+| ---------------------- | ----------------------- | --------------------------- |
+| Anidar sin `&`         | ✅ permitido             | ❌ no permitido              |
+| Variables              | ✅ `$color: red;`        | ❌ usa `var(--color)` de CSS |
+| Mixins/funciones       | ✅ soportado             | ❌ no                        |
+| Media queries anidadas | ✅                       | ✅                           |
+| Compatibilidad         | Preprocesador requerido | Navegadores modernos        |
+
+Ejemplo en SCSS:
+
+```scss
+main {
+  h4 {
+    color: red;
+  }
+}
+```
+
+En CSS Nesting eso es inválido, porque **siempre necesitas `&`**.
+
+---
+
+### 📌 Compatibilidad actual (2025)
+
+* ✅ **Chrome** (desde 112+)
+* ✅ **Edge** (desde 112+)
+* ✅ **Safari** (desde 16.5+)
+* ✅ **Firefox** (desde 117+)
+* ⚠️ Internet Explorer: no soportado (y nunca lo estará)
+
+👉 Hoy ya es **usable en producción**, pero se recomienda usar un **postcss-nesting** o **Autoprefixer** para mayor compatibilidad en proyectos legacy.
+
+---
+
+### 📌 Beneficios técnicos
+
+1. **Menos repetición** → código más limpio y DRY (Don't Repeat Yourself).
+2. **Mayor legibilidad** → estructura CSS refleja estructura HTML.
+3. **Estandarización** → ya no dependés de preprocesadores (Sass/Less).
+4. **Compatibilidad con cascade layers y custom properties**.
+
+---
+
+### 📌 Posibles riesgos / malas prácticas
+
+* **Demasiada anidación**: puede generar CSS muy específico y difícil de sobrescribir.
+  Ejemplo ❌:
+
+  ```css
+  main {
+    & section {
+      & article {
+        & p {
+          & span {
+            color: red;
+          }
+        }
+      }
+    }
+  }
+  ```
+
+  Resultado → `main section article p span { color: red; }` (hiper específico).
+
+* **Uso sin control de `&`**: si se confunde con SCSS, puede romper compatibilidad.
+
+---
+
+✅ **Conclusión técnica:**
+CSS Nesting es parte de la **nueva ola de CSS nativo** (junto con `:is()`, cascade layers, container queries, etc.). Ya es usable hoy, pero requiere usar `&` como referencia al selector padre. Reduce repetición y mejora la legibilidad, siempre que no se abuse de la profundidad de anidación.
+
+---
+
+## Ejemplo practico
+### 📌 HTML del formulario
+
+```html
+<main>
+  <form class="login-form">
+    <h2>Login</h2>
+
+    <label>
+      Usuario
+      <input type="text" name="username" />
+    </label>
+
+    <label>
+      Contraseña
+      <input type="password" name="password" />
+    </label>
+
+    <button type="submit">Ingresar</button>
+  </form>
+</main>
+```
+
+---
+
+### 📌 CSS con **Nesting nativo**
+
+```css
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #f5f5f5;
+
+  .login-form {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 300px;
+
+    h2 {
+      margin-bottom: 1.5rem;
+      text-align: center;
+      color: #333;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      color: #555;
+
+      input {
+        width: 100%;
+        padding: 0.6rem;
+        margin-top: 0.3rem;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 1rem;
+
+        &:focus {
+          border-color: #9b59b6;
+          outline: none;
+          box-shadow: 0 0 4px rgba(155, 89, 182, 0.5);
+        }
+      }
+    }
+
+    button {
+      width: 100%;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      background: #9b59b6;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+
+      &:hover {
+        background: #8e44ad;
+      }
+
+      &:active {
+        background: #732d91;
+      }
+    }
+
+    /* Responsive con nesting */
+    @media (max-width: 480px) {
+      width: 90%;
+      padding: 1rem;
+
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+```
+
+---
+
+### 📌 Traducción a **CSS plano**
+
+El navegador lo compila internamente a:
+
+```css
+main { display: flex; justify-content: center; ... }
+main .login-form { background: white; ... }
+main .login-form h2 { margin-bottom: 1.5rem; ... }
+main .login-form label { display: block; ... }
+main .login-form label input { width: 100%; ... }
+main .login-form label input:focus { border-color: #9b59b6; ... }
+main .login-form button { width: 100%; ... }
+main .login-form button:hover { background: #8e44ad; }
+main .login-form button:active { background: #732d91; }
+@media (max-width: 480px) {
+  main .login-form { width: 90%; padding: 1rem; }
+  main .login-form h2 { font-size: 1.2rem; }
+}
+```
+
+---
+
+✅ **Ventajas del nesting en este ejemplo:**
+
+* No repetimos `main .login-form` todo el tiempo.
+* La jerarquía CSS refleja **la estructura HTML real**.
+* Pseudo-clases (`:hover`, `:focus`, `:active`) y media queries quedan agrupadas en su contexto.
+
+
+
+---
+
+
+## 2. Selectores universales `*`, `html` y `body`
 ### Selectores Universales en CSS
 
 El **selector universal** en CSS es representado por el asterisco (`*`) y selecciona **todos los elementos** del documento, aplicando un conjunto de reglas de estilo a todos ellos sin importar el tipo o su posición en el árbol DOM.
@@ -149,7 +511,7 @@ En resumen, `*` es ideal para aplicar estilos generales a todos los elementos, `
 <hr>
 
 
-## `:root { }`
+## 3. `:root { }`
 En CSS, `:root` es un selector pseudo-clase que se refiere al elemento raíz del documento, generalmente el elemento `<html>`. Es similar a usar `html` como selector, pero con una ventaja clave: es más específico y se puede utilizar para definir variables CSS globales (también llamadas *custom properties*).
 
 ### ¿Qué puedes hacer con `:root`?
@@ -207,7 +569,7 @@ En este ejemplo, puedes cambiar de tema oscuro a claro al alternar la clase `dar
 <hr>
 
 
-## Margin Collapse
+## 4. Margin Collapse
 El fenómeno por el cual la etiqueta `margin` de un elemento hijo no separa dicho elemento del contenedor padre en CSS se conoce como **colapso de márgenes** (*margin collapsing*). Este es un comportamiento estándar en CSS que afecta a los márgenes verticales (márgenes `top` y `bottom`) en ciertas situaciones.
 
 ### **¿Qué es el colapso de márgenes?**
@@ -283,6 +645,8 @@ Para asegurarte de que el margen del elemento hijo se respete dentro del contene
 ### **Resumiendo**:
 El colapso de márgenes en CSS ocurre cuando los márgenes verticales adyacentes se combinan en uno solo, causando que el margen del hijo no parezca separar el elemento hijo del contenedor padre. Puedes evitarlo usando `padding`, `border`, `overflow`, o alterando el flujo de diseño del contenedor o del hijo.
 
+
+---
 
 ## When to use `<form>` element?
 Your button and input elements do not necessarily need to be under a `<form>` label, **unless you are using them as part of a form submission process where you want to capture and process user input**. However, in many cases, it is perfectly acceptable and common to use buttons and input elements outside of a `<form>` label, especially if they are used for other purposes such as triggering actions or displaying information.
