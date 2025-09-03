@@ -360,6 +360,158 @@ main .login-form button:active { background: #732d91; }
 * Pseudo-clases (`:hover`, `:focus`, `:active`) y media queries quedan agrupadas en su contexto.
 
 
+---
+
+## La propiedad `box-sizing`
+
+### 🔹 1. El **modelo de caja** en CSS
+
+Cada elemento en una página HTML se representa como una **caja rectangular**, y esa caja está formada por varias capas:
+
+1. **Content box** (contenido): el área donde se renderiza el contenido (texto, imágenes, etc.).
+2. **Padding box**: espacio interno entre el contenido y el borde (relleno).
+3. **Border box**: el borde que rodea al padding y al contenido.
+4. **Margin box**: el espacio externo que separa el elemento de otros elementos.
+
+📌 En CSS, cuando declaramos un `width` o `height`, por defecto, ese valor **aplica únicamente al content box**, y los `padding` y `border` se suman a ese tamaño.
+
+---
+
+### 🔹 2. La propiedad `box-sizing`
+
+La propiedad [`box-sizing`](https://developer.mozilla.org/en-US/docs/Web/CSS/box-sizing) define **cómo el navegador calcula el tamaño total de un elemento**:
+
+* Si el `width` y `height` afectan **solo al content box** (comportamiento por defecto).
+* O si abarcan también `padding` y `border` (más predecible en layouts modernos).
+
+Valores principales:
+
+* `content-box` (valor por defecto).
+* `border-box` (muy usado en frameworks como Bootstrap, Tailwind, etc.).
+* `inherit`, `initial`, `unset` → heredan o resetean valores (menos usados directamente).
+
+---
+
+### 🔹 3. `box-sizing: content-box;` (el valor por defecto)
+
+Esto significa:
+
+* El valor de `width` y `height` **solo incluye el área de contenido**.
+* El `padding` y el `border` **se suman** al tamaño final del elemento.
+
+📐 Ejemplo:
+
+```css
+div {
+  width: 200px;
+  padding: 20px;
+  border: 10px solid black;
+  box-sizing: content-box;
+}
+```
+
+👉 Cálculo del ancho total:
+
+* Content: **200px**
+* Padding izquierdo + derecho: **40px**
+* Border izquierdo + derecho: **20px**
+
+➡️ **Anchura final: 200 + 40 + 20 = 260px**
+
+Esto suele generar problemas cuando quieres que un `div` encaje exactamente en un layout.
+
+---
+
+### 🔹 4. `box-sizing: border-box;`
+
+Esto significa:
+
+* El valor de `width` y `height` **incluyen el área de contenido + padding + border**.
+* Es decir, el navegador "encaja" todo dentro del tamaño que declaraste.
+
+📐 Ejemplo:
+
+```css
+div {
+  width: 200px;
+  padding: 20px;
+  border: 10px solid black;
+  box-sizing: border-box;
+}
+```
+
+👉 Cálculo del ancho total:
+
+* `width` declarado = **200px**
+* De esos 200px, ya se reservan 40px para padding + 20px para border.
+* El contenido (content box) se reduce a **140px**.
+
+➡️ **Anchura final = 200px exactos** (no crece con padding ni borde).
+
+---
+
+### 🔹 5. Comparación visual
+
+| Propiedad                 | ¿Qué incluye `width`?        | Ancho final si `width=200px; padding=20px; border=10px` |
+| ------------------------- | ---------------------------- | ------------------------------------------------------- |
+| `box-sizing: content-box` | Solo contenido               | 260px                                                   |
+| `box-sizing: border-box`  | Contenido + padding + border | 200px                                                   |
+
+---
+
+### 🔹 6. Ejemplo práctico
+
+```html
+<style>
+  .content-box {
+    width: 200px;
+    padding: 20px;
+    border: 10px solid red;
+    box-sizing: content-box;
+  }
+
+  .border-box {
+    width: 200px;
+    padding: 20px;
+    border: 10px solid blue;
+    box-sizing: border-box;
+  }
+</style>
+
+<div class="content-box">Content-box</div>
+<div class="border-box">Border-box</div>
+```
+
+👉 Resultado:
+
+* El `.content-box` ocupará **260px de ancho** (más grande de lo que pediste).
+* El `.border-box` ocupará **200px exactos**.
+
+---
+
+### 🔹 7. ¿Por qué se recomienda `border-box`?
+
+Hoy en día, casi todos los proyectos grandes aplican un **reset CSS global** como este:
+
+```css
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+```
+
+Porque:
+
+* Evita cálculos extra: `width` significa **lo que ves**.
+* Facilita layouts responsivos.
+* Hace que `padding` y `border` **no rompan el diseño**.
+* Es el estándar de facto en frameworks modernos.
+
+---
+
+✅ **En resumen:**
+
+* `box-sizing: content-box` (default): `width` solo mide contenido → el tamaño total puede crecer.
+* `box-sizing: border-box`: `width` incluye contenido + padding + border → el tamaño total siempre coincide con el declarado.
 
 ---
 
