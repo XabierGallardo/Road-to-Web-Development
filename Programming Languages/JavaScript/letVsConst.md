@@ -1,4 +1,88 @@
-# 1. `let` vs `const`
+# Entendiendo `const`en arrays y objetos
+
+## 1. Qué significa `const`
+
+Cuando declarás algo con `const`, lo que se vuelve **constante** es **la referencia** al valor almacenado en memoria, no el valor en sí.
+
+```js
+const x = 10;
+x = 20; // ❌ Error: no se puede reasignar
+```
+
+En este caso, `x` apuntaba a la dirección de memoria con el valor `10`. Si intentás que `x` apunte a otro valor (`20`), no está permitido.
+
+---
+
+## 2. Caso de objetos y arrays
+
+Un objeto o array en JavaScript no es el valor en sí, sino una **referencia a una estructura en memoria**.
+
+```js
+const arr = [1, 2, 3];
+```
+
+Aquí lo que es **constante** es la **referencia a ese array en memoria**, no el contenido del array.
+Por eso:
+
+```js
+arr.push(4); // ✅ permitido → mutación del array
+arr[0] = 99; // ✅ permitido → cambio de un elemento
+```
+
+Pero:
+
+```js
+arr = [9, 8, 7]; // ❌ Error → intento de reasignar la referencia
+```
+
+Lo mismo aplica a objetos:
+
+```js
+const obj = { a: 1 };
+obj.a = 2;   // ✅ permitido
+obj.b = 3;   // ✅ permitido
+obj = {};    // ❌ Error
+```
+
+---
+
+## 3. Ejemplo gráfico
+
+* `const arr = [1,2,3]`
+
+  * `arr` (la **referencia**) 👉 🔗 \[ 1, 2, 3 ] en memoria
+  * La referencia es **inmutable**, pero lo que está dentro de esa caja en memoria **sí puede cambiar**.
+
+---
+
+## 4. Cómo congelar valores de verdad
+
+Si querés que el contenido de un objeto/array no pueda cambiar, además de usar `const`, tenés que usar métodos como:
+
+```js
+const obj = Object.freeze({ a: 1 });
+obj.a = 2; // ❌ no cambia
+```
+
+O para arrays:
+
+```js
+const arr = Object.freeze([1, 2, 3]);
+arr.push(4); // ❌ TypeError en modo estricto
+```
+
+---
+
+✅ En resumen:
+
+* `const` fija la **referencia**, no el contenido.
+* Objetos y arrays son **mutables** aunque su referencia esté bloqueada.
+* Si querés inmutabilidad real, necesitás `Object.freeze` o librerías de estructuras inmutables.
+
+
+---
+
+# 2. Que priorizar? `let` vs `const`
 
 **Usar `const` por defecto y `let` solo cuando sea necesario** es la práctica recomendada en JavaScript moderno. No es solo cuestión de estilo, sino de **buenas prácticas y principios de programación**.
 
