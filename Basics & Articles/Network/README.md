@@ -1,3 +1,94 @@
+# Que es un VPS?
+Un **VPS** significa **Virtual Private Server** (Servidor Privado Virtual).
+
+---
+
+## 🔹 1. Definición simple
+
+Un VPS es básicamente:
+➡️ **Una computadora virtual que funciona dentro de un servidor físico en un datacenter**, y que tú alquilas para usarla como si fuera tu propio servidor.
+
+Es como tener una **PC personal en la nube**: con sistema operativo, discos, RAM y CPU asignados.
+
+---
+
+## 🔹 2. ¿Cómo funciona?
+
+* Un proveedor (ej: DigitalOcean, Linode, AWS, OVH, etc.) tiene **servidores físicos muy potentes**.
+* Mediante **virtualización** (con tecnologías como KVM, VMware, Xen), dividen ese servidor físico en varias máquinas virtuales independientes.
+* Cada cliente alquila un VPS, que tiene su propio sistema operativo, dirección IP, recursos de CPU, RAM y almacenamiento.
+
+👉 Aunque compartes el hardware físico con otros clientes, tu VPS se comporta como un servidor **dedicado y aislado**.
+
+---
+
+## 🔹 3. ¿Qué puedes hacer con un VPS?
+
+Con un VPS tienes **control root** (como si fuera tu propia máquina). Puedes:
+
+* Instalar Linux (Ubuntu, Debian, CentOS, etc.) o Windows Server.
+* Instalar Node.js y correr tu aplicación Express.js.
+* Instalar Apache, Nginx, MySQL, MongoDB, Redis, etc.
+* Hostear páginas web, APIs, bots, aplicaciones.
+* Configurar un servidor de correo, VPN o juegos.
+
+---
+
+## 🔹 4. Diferencias con otros tipos de hosting
+
+* **Hosting compartido**:
+
+  * Barato.
+  * No tienes control total (solo subes archivos y usas cPanel).
+  * Compartes servidor con muchos usuarios.
+
+* **VPS**:
+
+  * Más caro que hosting compartido, más barato que un servidor dedicado.
+  * Tienes control completo (root).
+  * Buen equilibrio entre **precio, control y rendimiento**.
+
+* **Servidor dedicado**:
+
+  * Todo el servidor físico es tuyo.
+  * Muy caro.
+  * Solo necesario para proyectos enormes.
+
+---
+
+## 🔹 5. Ejemplo práctico
+
+Si contratas un VPS en DigitalOcean:
+
+1. Eliges "Ubuntu 22.04, 2 GB RAM, 1 CPU, 25 GB SSD".
+2. Se despliega en minutos.
+3. Te conectas por SSH:
+
+   ```bash
+   ssh root@IP_DEL_VPS
+   ```
+4. Desde ahí, instalas lo que quieras:
+
+   ```bash
+   apt update && apt install nodejs npm
+   git clone https://github.com/miapp/express.git
+   cd express && npm install
+   node app.js
+   ```
+5. Tu app ya corre en internet 🎉.
+
+---
+
+📌 **En resumen**:
+Un **VPS** es un servidor virtual en la nube que te da control total, casi como tener una PC en un datacenter.
+Es muy usado para **deployar aplicaciones Express.js**, porque puedes instalar lo que quieras y configurarlo a medida.
+
+
+
+---
+
+
+
 # Network protocols
 <p align="center">
 	<img src="../../img/networkprotocols.png" alt="Network Protocols">

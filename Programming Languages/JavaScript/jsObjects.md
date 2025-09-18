@@ -1,5 +1,93 @@
 # Objetos en JavaScript
 
+# 1. Que es prototype en `Array.prototype.method`?
+Cuando ves algo como `Array.prototype.reduce`, en realidad estás viendo **dónde está definida la función `reduce` dentro del sistema de prototipos de JavaScript**.
+
+### 1. ¿Qué es `prototype`?
+
+En JavaScript, cada **función constructora** (como `Array`, `Object`, `Date`, etc.) tiene una propiedad llamada **`prototype`**.
+Ese objeto `prototype` contiene métodos y propiedades que estarán disponibles para todas las instancias creadas por ese constructor.
+
+Ejemplo:
+
+```js
+function Persona(nombre) {
+  this.nombre = nombre;
+}
+
+// Agrego un método al prototipo
+Persona.prototype.saludar = function() {
+  return `Hola, soy ${this.nombre}`;
+};
+
+const p1 = new Persona("Xabier");
+console.log(p1.saludar()); // "Hola, soy Xabier"
+```
+
+👉 Aunque `p1` no tiene directamente el método `saludar`, lo "hereda" de `Persona.prototype`.
+
+---
+
+### 2. Aplicado a `Array`
+
+Cuando creas un array como:
+
+```js
+const numeros = [1, 2, 3];
+```
+
+Este array hereda métodos (como `map`, `filter`, `reduce`, etc.) de **`Array.prototype`**.
+
+Es decir:
+
+* `Array` es el constructor.
+* `Array.prototype` es el objeto que contiene los métodos comunes.
+* `reduce` es uno de esos métodos.
+
+---
+
+### 3. Entonces, ¿qué significa `Array.prototype.reduce`?
+
+Significa:
+➡️ *La función `reduce` está definida en el prototipo de los arrays, y por eso todos los arrays pueden usarla.*
+
+Ejemplo:
+
+```js
+const nums = [1, 2, 3, 4];
+
+// Internamente, cuando escribes:
+nums.reduce((a, b) => a + b, 0);
+
+// Lo que ocurre es:
+Array.prototype.reduce.call(nums, (a, b) => a + b, 0);
+```
+
+👉 En otras palabras, `nums` hereda `reduce` desde `Array.prototype`.
+
+---
+
+### 4. Visualizándolo
+
+```js
+console.log(Array.prototype); 
+```
+
+Verás un objeto que contiene todos los métodos de arrays (`map`, `filter`, `reduce`, etc.).
+
+Cada array que creas **apunta a ese mismo objeto prototipo**, así que no se duplican los métodos en cada instancia, sino que se comparten.
+
+---
+
+📌 **En resumen**:
+`prototype` es el objeto que almacena los métodos compartidos por todas las instancias creadas con un constructor.
+En `Array.prototype.reduce`, la palabra `prototype` indica que `reduce` es un método que todos los arrays pueden usar gracias al prototipo de `Array`.
+
+
+
+
+---
+
 ## Iterando objetos en JavaScript
 En JavaScript, existen varias formas de iterar sobre un objeto.
 
@@ -172,10 +260,177 @@ Reflect.ownKeys(user).forEach(key => {
 - **`Reflect.ownKeys()` o `Object.getOwnPropertyNames()`:** Útiles para casos avanzados con propiedades no enumerables.
 
 
+# 1. EXTRA, comprendiendo Prototype
+
+## 🔹 1. Todo en JavaScript son objetos (o se comportan como tales)
+
+En JavaScript, incluso cosas como arrays o funciones son objetos.
+Un objeto en JS es básicamente una **colección dinámica de pares clave-valor**, con una referencia interna a otro objeto llamado **prototype**.
+
+Ese "prototype" forma parte de lo que se conoce como la **cadena de prototipos** (*prototype chain*).
+
+---
+
+## 🔹 2. ¿Qué es el `prototype` de una función constructora?
+
+Cada **función que puede actuar como constructor** (por ejemplo, `Array`, `Object`, `Date`, tus propias funciones con `new`) tiene automáticamente una propiedad llamada **`prototype`**.
+
+👉 Ese `prototype` es un objeto que contiene los **métodos y propiedades compartidas por todas las instancias** creadas con esa función.
+
+Ejemplo:
+
+```js
+function Animal(nombre) {
+  this.nombre = nombre;
+}
+
+Animal.prototype.hablar = function() {
+  console.log(`${this.nombre} hace un ruido`);
+};
+
+const a1 = new Animal("Perro");
+const a2 = new Animal("Gato");
+
+a1.hablar(); // "Perro hace un ruido"
+a2.hablar(); // "Gato hace un ruido"
+```
+
+Internamente:
+
+* `a1` y `a2` **no tienen el método `hablar` dentro de ellos**.
+* Ambos tienen una referencia interna `[[Prototype]]` que apunta a `Animal.prototype`.
+* Cuando haces `a1.hablar()`, JS busca la propiedad:
+
+  1. En el objeto `a1` → no existe.
+  2. En `a1.[[Prototype]]` (o sea, `Animal.prototype`) → existe → la ejecuta.
+
+---
+
+## 🔹 3. ¿Qué es `__proto__` y `[[Prototype]]`?
+
+* Todo objeto tiene una referencia interna `[[Prototype]]` (invisible).
+* En navegadores puedes acceder a ella como `obj.__proto__`.
+* Esa referencia **apunta al prototipo de su constructor**.
+
+Ejemplo:
+
+```js
+const arr = [1,2,3];
+
+console.log(arr.__proto__ === Array.prototype); // true
+console.log(Array.prototype.__proto__ === Object.prototype); // true
+console.log(Object.prototype.__proto__); // null (fin de la cadena)
+```
+
+👉 Así se construye la **prototype chain**:
+
+```
+arr → Array.prototype → Object.prototype → null
+```
+
+---
+
+## 🔹 4. ¿Por qué almacenar métodos en objetos (prototipos)?
+
+Esto es **optimización de memoria y rendimiento**.
+
+Imagina que JavaScript hiciera esto:
+
+```js
+function Persona(nombre) {
+  this.nombre = nombre;
+  this.saludar = function() { return `Hola, soy ${this.nombre}` };
+}
+
+const p1 = new Persona("Xabier");
+const p2 = new Persona("Ana");
+```
+
+En este caso:
+
+* Cada instancia (`p1`, `p2`) tiene **su propia copia de la función `saludar`**.
+* Si creas 1 millón de `Personas`, tendrás 1 millón de funciones `saludar` iguales → ❌ desperdicio brutal de memoria.
+
+En cambio, con el **prototipo**:
+
+```js
+function Persona(nombre) {
+  this.nombre = nombre;
+}
+
+Persona.prototype.saludar = function() {
+  return `Hola, soy ${this.nombre}`;
+};
+
+const p1 = new Persona("Xabier");
+const p2 = new Persona("Ana");
+```
+
+Ahora:
+
+* `p1` y `p2` **no almacenan la función**.
+* Ambos tienen un puntero a `Persona.prototype.saludar`.
+* Esa función vive en un único lugar en memoria → ✅ eficiente.
+
+---
+
+## 🔹 5. Aplicado a `Array`
+
+Cuando creas:
+
+```js
+const numeros = [1,2,3];
+```
+
+Internamente:
+
+* `numeros` es un objeto con índices (`0:1, 1:2, 2:3`) y una propiedad `length`.
+* Además, su `[[Prototype]]` apunta a `Array.prototype`.
+* Y allí están definidos métodos como `map`, `filter`, `reduce`.
+
+Entonces:
+
+```js
+numeros.reduce((a, b) => a + b, 0);
+// JS busca en `numeros`: no existe.
+// Busca en `numeros.__proto__` (o sea, `Array.prototype`): existe `reduce`.
+// Lo ejecuta con el contexto de `numeros`.
+```
+
+---
+
+## 🔹 6. Resumen gráfico
+
+La herencia en JS no se hace copiando métodos como en Java o C#,
+sino **encadenando referencias a objetos prototipo**:
+
+```
+const arr = [1,2,3]
+
+arr
+ └── __proto__ → Array.prototype
+                  └── __proto__ → Object.prototype
+                                   └── __proto__ → null
+```
+
+---
+
+📌 **En resumen**:
+
+* `prototype` es un objeto asociado a funciones constructoras.
+* Los métodos viven en ese objeto para **compartirse entre todas las instancias**, evitando duplicación.
+* Los objetos en JS tienen una referencia interna `[[Prototype]]` que les permite acceder a esos métodos.
+* Esto es la base del **modelo de herencia prototipal** de JavaScript.
+
+
+
 ---
 
 
-## 1. ¿Qué es un objeto en JavaScript?
+---
+
+
+# 2. ¿Qué es un objeto en JavaScript?
 Un **objeto** en JavaScript es una estructura de datos que permite almacenar un conjunto de pares clave-valor. Cada clave es una propiedad (o atributo) del objeto, y cada valor puede ser cualquier tipo de dato (números, cadenas, funciones, otros objetos, etc.). Los objetos son fundamentales en JavaScript porque permiten agrupar información relacionada y proporcionar un acceso organizado a los datos.
 
 Un objeto en JavaScript se puede considerar una colección de propiedades, donde cada propiedad tiene un nombre (clave) y un valor asociado.
