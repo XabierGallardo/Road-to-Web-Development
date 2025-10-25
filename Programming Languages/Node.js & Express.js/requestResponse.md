@@ -1,4 +1,129 @@
-# 1. **Los objetos `req` y `res` en Express.js**  
+# 0 / Entendiendo los objetos `req` y `res`
+
+## 🧩 1️⃣ ¿Qué son `req` y `res`?
+
+Cuando Express recibe una petición HTTP (por ejemplo, un cliente hace un `GET` a `http://localhost:3000/products`), automáticamente crea **dos objetos** y los pasa a la función que maneja la ruta:
+
+* **`req`** → *request* (la petición que hace el cliente)
+* **`res`** → *response* (la respuesta que Express envía al cliente)
+
+Entonces, cada vez que un cliente hace una petición, Express ejecuta tu función con estos dos objetos listos para usar.
+
+---
+
+## 🧾 2️⃣ `req` (Request): Información que llega **desde el cliente** al servidor
+
+El objeto **`req`** contiene todos los datos que el cliente envía al servidor.
+Por ejemplo:
+
+| Propiedad     | Descripción                                 | Ejemplo                                                      |
+| ------------- | ------------------------------------------- | ------------------------------------------------------------ |
+| `req.method`  | Método HTTP usado                           | `"GET"`, `"POST"`, `"PUT"`, `"DELETE"`                       |
+| `req.url`     | Ruta de la petición                         | `"/products"`                                                |
+| `req.params`  | Parámetros de ruta                          | Si defines `/products/:id`, aquí accedes con `req.params.id` |
+| `req.query`   | Parámetros de consulta (query string)       | `/products?category=ropa` → `req.query.category === "ropa"`  |
+| `req.body`    | Datos enviados en el cuerpo (para POST/PUT) | `{ nombre: "zapatilla", precio: 2000 }`                      |
+| `req.headers` | Encabezados de la petición                  | Información técnica (autorización, tipo de contenido, etc.)  |
+
+🧠 **Ejemplo práctico:**
+
+```js
+app.get("/products/:id", (req, res) => {
+  console.log(req.params.id); // Muestra el valor que viene en la URL
+});
+```
+
+Si el cliente pide `http://localhost:3000/products/5`,
+entonces `req.params.id === "5"`.
+
+---
+
+## 📤 3️⃣ `res` (Response): Lo que el servidor **envía de vuelta** al cliente
+
+El objeto **`res`** te permite **responder** al cliente con datos, mensajes o errores.
+
+| Método           | Descripción                                | Ejemplo                                 |
+| ---------------- | ------------------------------------------ | --------------------------------------- |
+| `res.send()`     | Envía una respuesta simple                 | `res.send("Hola mundo")`                |
+| `res.json()`     | Envía un objeto JSON                       | `res.json({ mensaje: "OK" })`           |
+| `res.status()`   | Define el código HTTP de respuesta         | `res.status(404).send("No encontrado")` |
+| `res.redirect()` | Redirige a otra URL                        | `res.redirect("/login")`                |
+| `res.end()`      | Finaliza la respuesta sin enviar contenido | `res.end()`                             |
+
+🧠 **Ejemplo:**
+
+```js
+app.get("/products", (req, res) => {
+  res.status(200).json({
+    message: "Productos obtenidos correctamente",
+    data: productos
+  });
+});
+```
+
+Aquí:
+
+* `res.status(200)` → indica que todo salió bien (código HTTP 200)
+* `res.json({...})` → envía los datos al cliente en formato JSON
+
+---
+
+## 🔄 4️⃣ ¿Cómo se conectan entre cliente y servidor?
+
+1. El **cliente** (por ejemplo, tu frontend con `fetch`) hace una petición:
+
+   ```js
+   fetch("http://localhost:3000/products")
+   ```
+
+2. Express recibe esa petición y ejecuta el handler:
+
+   ```js
+   app.get("/products", (req, res) => { ... })
+   ```
+
+3. Dentro de esa función:
+
+   * `req` → tiene toda la información de la petición
+   * `res` → se usa para enviar la respuesta
+
+4. El cliente recibe esa respuesta y la procesa:
+
+   ```js
+   let respuesta = await fetch(...);
+   let datos = await respuesta.json();
+   ```
+
+---
+
+## ⚠️ 5️⃣ ¿Dónde entra el manejo de errores?
+
+Si algo falla en el servidor (por ejemplo, un error en la base de datos), tú puedes usar el objeto `res` para enviar un código y mensaje de error:
+
+```js
+catch (error) {
+  res.status(500).json({
+    message: "Error interno al obtener productos"
+  });
+}
+```
+
+El **cliente** puede detectar ese error si la respuesta tiene `status` distinto de 200, o si hay un problema de conexión, lo captura con su propio `catch(error)`.
+
+---
+
+## 💡 Resumen rápido
+
+| Objeto | Rol                               | Flujo                                  |
+| ------ | --------------------------------- | -------------------------------------- |
+| `req`  | Entrada (del cliente al servidor) | Contiene datos enviados por el cliente |
+| `res`  | Salida (del servidor al cliente)  | Envía respuesta, mensaje o error       |
+
+
+---
+
+
+# 1. EXTRA / **Los objetos `req` y `res` en Express.js**  
 
 En Express.js, `req` (request) y `res` (response) son dos objetos fundamentales que representan la **solicitud del cliente** y la **respuesta del servidor** respectivamente. Estos objetos permiten gestionar la comunicación entre el cliente y el servidor dentro de una aplicación web.
 
