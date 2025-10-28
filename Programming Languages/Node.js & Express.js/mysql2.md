@@ -1,3 +1,14 @@
+# Que es `payload`
+- El término "payload" en el contexto de bases de datos se refiere a la parte de los datos transmitidos que constituye el mensaje real o la información útil, excluyendo los encabezados, metadatos o información de control necesaria para la entrega del mensaje 
+
+- En redes informáticas, el payload es la sección de datos útiles dentro de un paquete o trama, como un archivo, una imagen o un mensaje enviado entre dispositivos 
+
+- **En el desarrollo de aplicaciones y servicios web, especialmente en APIs, el payload es el conjunto de datos relevantes que se envía en una solicitud o respuesta HTTP, comúnmente estructurado en formatos como JSON o XML**. Por ejemplo, en una solicitud POST a una API, el payload puede contener información como un ID de usuario y una acción a realizar 
+
+- Este concepto también se aplica en el diseño de bases de datos, donde el payload representa los datos reales que se almacenan y transmiten, como los campos de una tabla, mientras que la estructura de la base de datos (como esquemas o relaciones) se considera parte de la infraestructura de control
+
+---
+
 # [MySQL2](https://sidorares.github.io/node-mysql2/docs)
 
 La biblioteca **mysql2** en una aplicación de **Express.js** convierte las respuestas de las consultas SQL en JSON para facilitar la manipulación de los datos dentro de un entorno **JavaScript**. Aquí está la explicación técnica y detallada de por qué y cómo sucede esto:
