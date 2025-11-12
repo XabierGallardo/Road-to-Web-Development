@@ -1,3 +1,14 @@
+# Diferencia entre Endpoint y Ruta
+
+Un endpoint es una URL específica a la que una aplicación cliente envía una solicitud para acceder a una funcionalidad o recurso particular ofrecido por una API del servidor, actuando como el punto final de una conexión API  Por otro lado, una ruta se refiere a la estructura de la URL que determina cómo se procesa una solicitud, incluyendo la base de ruta y el recurso específico, y puede estar asociada a un endpoint  En el contexto de APIs, la ruta define la dirección a la que se envía la solicitud, mientras que el endpoint es la ubicación exacta donde se procesa esa solicitud 
+
+Aunque el término "ruta" puede referirse a la estructura general de la URL, el "endpoint" se enfoca en la dirección específica que responde a una solicitud, especialmente en el contexto de APIs REST, donde se utilizan métodos HTTP como GET, POST, PUT o PATCH para realizar acciones sobre los recursos  Así, mientras la ruta define la estructura de acceso, el endpoint es la dirección concreta donde se realiza la operación 
+
+---
+
+
+
+
 # Understanding URLs
 
 ## **Trabajando con URLs en Express.js: Guía Completa**
