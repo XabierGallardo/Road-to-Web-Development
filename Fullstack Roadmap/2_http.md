@@ -1,4 +1,4 @@
-# El protocolo HTTP
+# 1 / El protocolo HTTP
 El **protocolo HTTP (Hypertext Transfer Protocol)** es uno de los pilares fundamentales de la comunicación en la web. Fue diseñado para transferir información en la World Wide Web, permitiendo la comunicación entre clientes (como navegadores) y servidores web. A continuación, te explico en detalle cada aspecto de este protocolo.
 
 ---
@@ -160,3 +160,56 @@ Cuando escribes una URL en tu navegador, el proceso se realiza así:
 ---
 
 El protocolo HTTP es crucial para la web moderna, y aunque simple en su concepto, ha evolucionado para manejar aplicaciones complejas y demandas de alto rendimiento.
+
+
+---
+
+# 2 / Por que decimos que HTTP es un protocolo sin estado? (stateless)
+Decir que **HTTP es un protocolo *sin estado* (*stateless*)** significa que **el servidor no recuerda información de las solicitudes anteriores**.
+Cada vez que un cliente (como un navegador) envía una petición, esta es **independiente**, y el servidor la procesa sin saber nada del historial de ese cliente.
+
+---
+
+# ✅ Explicación simple
+
+* Cada petición HTTP es **autónoma**.
+* El servidor **no guarda memoria** de qué hiciste antes.
+* Si necesitas que el servidor "recuerde" algo, debes enviar esa información **en cada petición** (cookies, tokens, sesiones, etc.).
+
+---
+
+# 📌 Ejemplo claro
+
+Si un usuario hace:
+
+1. `GET /productos`
+2. Luego `GET /carrito`
+
+El servidor **no sabe que es el mismo usuario**, a menos que el navegador envíe algo adicional como:
+
+* una **cookie** de sesión
+* un **token JWT**
+* un **identificador** en la URL
+* etc.
+
+Sin esos datos, para el servidor, cada petición parece venir de un cliente distinto.
+
+---
+
+# 📚 ¿Por qué fue diseñado así?
+
+Porque hacerlo sin estado lo vuelve:
+
+* **más simple**
+* **más rápido**
+* **más escalable**
+* **más fácil de distribuir entre múltiples servidores**
+
+Pero implica que, para funcionalidades como login, carrito de compras, preferencias, etc., se necesite algún mecanismo externo para mantener el estado.
+
+---
+
+# 🎯 Resumen corto
+
+> **HTTP es sin estado porque no almacena ninguna información entre una petición y la siguiente. Cada petición debe contener toda la información necesaria para ser procesada.**
+
