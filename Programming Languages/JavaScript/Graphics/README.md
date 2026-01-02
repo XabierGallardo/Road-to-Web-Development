@@ -219,4 +219,162 @@ Pero en la mayoría de apps, **la diferencia es irrelevante**.
 ❌ No son equivalentes
 ✔ Se usan juntos en animación
 
+
+
 ---
+
+
+
+# Comprendiendo `getBoundingClientRect()`
+
+## 📌 El código a explicar
+
+```js
+let rect = canvas.getBoundingClientRect();
+const scaleX = canvas.width / rect.width;
+const scaleY = canvas.height / rect.height;
+
+const xOrigin = (event.clientX - rect.left) * scaleX;
+const yOrigin = (event.clientY - rect.top) * scaleY;
+```
+
+---
+
+## 🔍 Contexto antes de empezar
+
+Cuando el usuario mueve o hace clic con el ratón:
+
+* `event.clientX` y `event.clientY` → posición del ratón en **pantalla (ventana del navegador)**.
+* El `canvas` puede estar:
+
+  * desplazado por márgenes
+  * dentro de contenedores
+  * escalado por CSS
+  * afectado por zoom
+
+Entonces **no coinciden directamente** con las coordenadas internas del `canvas`.
+
+Estas líneas convierten esas coordenadas **a coordenadas reales del canvas**, de forma correcta.
+
+---
+
+## 🧠 Línea 1
+
+```js
+let rect = canvas.getBoundingClientRect();
+```
+
+### 🔹 ¿Qué hace?
+
+Llama al método `getBoundingClientRect()` que devuelve un objeto así:
+
+```js
+{
+  left:   posición x del borde izquierdo del canvas en pantalla,
+  top:    posición y del borde superior,
+  width:  ancho visible del canvas en pixeles CSS,
+  height: alto visible del canvas,
+  right:  left + width,
+  bottom: top + height
+}
+```
+
+---
+
+## 📏 Línea 2
+
+```js
+const scaleX = canvas.width / rect.width;
+```
+
+### 🔹 ¿Qué hace?
+
+Calcula el **factor de escala horizontal**.
+
+Porque:
+
+* `canvas.width` = resolución real interna del canvas (por defecto 300)
+* `rect.width` = tamaño visible en pantalla (puede ser distinto)
+
+Esto corrige:
+
+✔ CSS zoom
+✔ HiDPI / Retina
+✔ escalas responsivas
+
+---
+
+## 📐 Línea 3
+
+```js
+const scaleY = canvas.height / rect.height;
+```
+
+Hace lo mismo pero en vertical.
+
+---
+
+## 🎯 Línea 4
+
+```js
+const xOrigin = (event.clientX - rect.left) * scaleX;
+```
+
+Vamos parte por parte.
+
+### 1️⃣ `event.clientX`
+
+Posición X del mouse **en la ventana del navegador**.
+
+---
+
+### 2️⃣ Restar el offset del canvas
+
+```js
+event.clientX - rect.left
+```
+
+➡️ Eso ya es **la posición del mouse relativa al canvas**
+(no a la ventana)
+
+---
+
+### 3️⃣ Ajustar la escala
+
+```js
+* scaleX
+```
+
+Si `scaleX = 0.5`:
+
+```
+250 * 0.5 = 125
+```
+
+Entonces:
+
+> El ratón está en **x = 125 pixeles reales del canvas**
+
+Y eso es lo que guardas en `xOrigin`.
+
+---
+
+## 🎯 Línea 5
+
+```js
+const yOrigin = (event.clientY - rect.top) * scaleY;
+```
+
+Exactamente igual pero en vertical.
+
+---
+
+## 🧠 Resumen final
+
+| Línea                     | Explicación                                                    |
+| ------------------------- | -------------------------------------------------------------- |
+| `getBoundingClientRect()` | Obtiene posición y tamaño visible del canvas                   |
+| `scaleX / scaleY`         | Calculan relación entre tamaño real y visible                  |
+| `clientX - rect.left`     | Convierte posición del mouse a coordenadas relativas al canvas |
+| `* scaleX / scaleY`       | Corrige el escalado para obtener coordenadas REALES del canvas |
+
