@@ -310,6 +310,6 @@ Resultado: el servidor renderizará una lista de productos con datos dinámicos.
 ---
 
 ## 7. **Conclusión**
-El Server-Side Rendering con **Node.js** y **Express.js** es una técnica poderosa para generar contenido dinámico en aplicaciones web. Combinado con motores de plantillas como **EJS** o frameworks avanzados como **Next.js**, puede optimizar tanto el rendimiento como la experiencia del usuario.
+El Server-Side Rendering con **Node.js** y **Express.js** nos permite generar contenido dinámico en aplicaciones web. Combinado con motores de plantillas como **EJS** o frameworks avanzados como **Next.js**, puede optimizar tanto el rendimiento como la experiencia del usuario.
 
 Si bien SSR no es adecuado para todas las aplicaciones, es especialmente valioso en proyectos que priorizan el SEO, el rendimiento inicial y la accesibilidad.

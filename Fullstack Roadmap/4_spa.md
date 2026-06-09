@@ -392,7 +392,7 @@ Hoy las opciones se mezclan:
 * **SPA con framework**: aplicaciones ricas (herramientas, dashboards, editores, apps de productividad) donde la UX “tipo app” es prioritaria.
 * **Híbrido (SSR + SPA)**: la elección más común hoy: SSR o SSG para primera carga + SPA/React para interactividad compleja.
 
-# Resumen ejecutivo
+# Resumen
 
 * Las páginas tradicionales renderizan en servidor; cada navegación recarga y es simple/SEO-friendly.
 * Las SPA cargan una “shell” y hacen todo el routing y render en cliente para una UX más fluida.

@@ -1,7 +1,11 @@
 # Fullstack Roadmap
-## 1. HTML
-Programa formativo estructurado de HTML básico a avanzado:
+Roadmap personalizado para desarrollo web
 
+
+---
+
+
+## 1. HTML
 ### 1.1 **Bloque 1: Introducción a HTML (HTML Básico)**
 
 **Objetivos:**
@@ -39,6 +43,10 @@ Programa formativo estructurado de HTML básico a avanzado:
    - Estructura de un documento HTML.
    - Incluir encabezados, párrafos, enlaces e imágenes.
 
+
+---
+
+
 ### 1.2 **Bloque 2: HTML Intermedio**
 
 **Objetivos:**
@@ -72,6 +80,10 @@ Programa formativo estructurado de HTML básico a avanzado:
 
 6. **Práctica 2: Estructuración avanzada**
    - Creación de una página web con navegación, secciones, y uso de clases e IDs para estilar.
+
+
+---
+
 
 ### 1.3 **Bloque 3: HTML Avanzado I**
 
@@ -108,8 +120,11 @@ Programa formativo estructurado de HTML básico a avanzado:
    - Diseño de un formulario complejo con validaciones.
    - Integración de multimedia en una página.
 
+
+---
+
+
 ### 1.4 **Bloque 4: HTML Avanzado II**
-**Duración:** 4 horas
 
 **Objetivos:**
 - Explorar técnicas avanzadas para la creación de sitios web accesibles y optimizados.
@@ -144,12 +159,13 @@ Programa formativo estructurado de HTML básico a avanzado:
    - Creación de una página web completa que incluya todos los elementos aprendidos.
    - Enfocarse en la accesibilidad, el SEO y la optimización.
 
+
 ---
 
-## 2. CSS
-Programa formativo estructurado de CSS básico a avanzado:
-### 2.1 **Bloque 1: Introducción a CSS (CSS Básico)**
 
+## 2. CSS
+
+### 2.1 **Bloque 1: Introducción a CSS (CSS Básico)**
 **Objetivos:**
 - Comprender la estructura y sintaxis básica de CSS.
 - Aprender a seleccionar y estilar elementos HTML.
@@ -186,6 +202,10 @@ Programa formativo estructurado de CSS básico a avanzado:
    - Aplicar estilos básicos a una página web.
    - Usar selectores para estilar diferentes elementos.
 
+
+---
+
+
 ### 2.2 **Bloque 2: CSS Intermedio**
 
 **Objetivos:**
@@ -219,6 +239,10 @@ Programa formativo estructurado de CSS básico a avanzado:
 6. **Práctica 2: Diseño de una página**
    - Crear una estructura de diseño básico usando posicionamiento y floats.
    - Estilar una página web con múltiples elementos y diseño de bloques.
+
+
+---
+
 
 ### 2.3 **Bloque 3: CSS Avanzado I**
 
@@ -257,8 +281,11 @@ Programa formativo estructurado de CSS básico a avanzado:
    - Construir una página web con un layout complejo utilizando flexbox y grid.
    - Implementar transiciones y animaciones básicas.
 
+
+---
+
+
 ### 2.4 **Bloque 4: CSS Avanzado II**
-**Duración:** 4 horas
 
 **Objetivos:**
 - Profundizar en técnicas avanzadas de CSS para mejorar el rendimiento y la accesibilidad.
@@ -295,10 +322,11 @@ Programa formativo estructurado de CSS básico a avanzado:
    - Desarrollar una página web completa utilizando CSS avanzado.
    - Implementar un diseño responsivo con flexbox y grid, junto con optimizaciones y accesibilidad.
 
+
 ---
 
+
 ## 3. JavaScript
-Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaScript, desde lo básico hasta un nivel avanzado:
 
 ### 3.1 **Bloque 1: Introducción a JavaScript (JavaScript Básico I)**
 
@@ -335,6 +363,10 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
    - Creación de un script básico para interactuar con el usuario.
    - Uso de variables y operadores para realizar cálculos simples.
 
+
+---
+
+
 ### 3.2 **Bloque 2: Control de flujo y estructuras de control (JavaScript Básico II)**
 
 **Objetivos:**
@@ -362,6 +394,10 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
 5. **Práctica 2: Control de flujo**
    - Implementación de un programa que tome decisiones y repita acciones.
    - Uso de bucles para iterar sobre datos y generar resultados.
+
+
+---
+
 
 ### 3.3 **Bloque 3: Funciones en JavaScript (JavaScript Intermedio I)**
 
@@ -391,6 +427,10 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
    - Creación de funciones para modularizar el código.
    - Uso de funciones anónimas y funciones flecha en ejemplos prácticos.
 
+
+---
+
+
 ### 3.4 **Bloque 4: Manipulación del DOM (JavaScript Intermedio II)**
 
 **Objetivos:**
@@ -416,6 +456,10 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
 5. **Práctica 4: Interacción con el DOM**
    - Crear un proyecto que manipule el DOM en respuesta a eventos del usuario.
    - Ejercicios de selección y modificación de elementos HTML.
+
+
+---
+
 
 ### 3.5 **Bloque 5: Programación orientada a objetos (JavaScript Avanzado I)**
 
@@ -445,6 +489,10 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
    - Implementar un proyecto utilizando objetos y clases.
    - Aplicar herencia y crear estructuras de objetos interconectadas.
 
+
+---
+
+
 ### 3.6 **Bloque 6: Programación asincrónica y Promesas (JavaScript Avanzado II)**
 
 **Objetivos:**
@@ -473,8 +521,11 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
    - Implementar un proyecto que utilice Promesas y `async/await`.
    - Resolución de problemas de asincronía con diferentes técnicas.
 
+
+---
+
+
 ### 3.7 **Bloque 7: Manejo de APIs y Fetch (JavaScript Avanzado III)**
-**Duración:** 4 horas
 
 **Objetivos:**
 - Aprender a interactuar con APIs externas usando JavaScript.
@@ -502,6 +553,10 @@ Aquí tienes un programa formativo estructurado en 8 bloques para explicar JavaS
 5. **Práctica 7: Consumo de una API**
    - Crear un proyecto que consuma datos de una API externa.
    - Manejo de datos JSON y renderización dinámica en la web.
+
+
+---
+
 
 ### 3/8 **Bloque 8: Técnicas avanzadas y mejores prácticas (JavaScript Avanzado IV)**
 

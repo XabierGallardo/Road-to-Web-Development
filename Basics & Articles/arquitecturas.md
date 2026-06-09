@@ -353,3 +353,100 @@ Un sistema de CRM donde:
 ## **5. Conclusión**
 
 La elección de una arquitectura de software debe basarse en los requisitos técnicos, las expectativas de escalabilidad y el contexto del proyecto. No existe una arquitectura universalmente "mejor"; cada una tiene ventajas y desventajas según el caso de uso. Entender estas diferencias es crucial para diseñar sistemas robustos, escalables y fáciles de mantener.
+
+
+
+---
+
+
+
+# Design Patterns
+Over the last 20 years, websites have changed from simple HTML pages with little CSS to much more complex and powerfull applications
+To make these applications easier to develop, programmers use  software design patterns to make the code less complicated
+
+
+
+## What is it a Design Pattern?
+In software engineering, a **software design pattern** is a description or template for how to solve a problem that can be used in many different situations
+Design patterns are formalized best practices that the programmer can use to solve common problems when designing an application or system
+
+They can be seen as a **blueprint**
+
+
+
+# MVC - Model View Controller
+- MVC is a design patter for computer software, by far one of the most popular ones.
+- It's an approach to distinguish between the Data Model, Proccesing Control and User Interface
+- The objective is to provide a framework which enforces better and more accurate design, less complex code and easier to work with
+
+### The Model
+The model contains all teh data-related logic that the user works with
+From the schemas and interfaces of a project, databases and their fields
+A customer object will retrieve the customer information from the database, manipulate or update their record in the database, or use it to render data
+
+### The View
+The view contains the UI and the presentation of an application
+The customer view will include all the UI components such as text boxes, dropdowns and everything that the user interacts with
+
+### The Controller
+The controller contains all teh business-related logic and handles incoming requests
+It's the interface between the Model and the View
+
+The customer controller will handle all the interactions and inputs from the customer
+The same controller will be used to view the customer data
+
+<p align="center">
+        <img src="../img/mvc_3.png" alt="Model View Controller img 3">
+</p>
+
+
+## Modelo, Vista, Controlador
+En una arquitectura Modelo-Vista-Controlador (MVC), un modelo es uno de los tres componentes principales que trabajan juntos para organizar y estructurar el código de una aplicación. Aquí hay una descripción de las responsabilidades de cada componente en una arquitectura MVC:
+
+1. **Modelo (Model):** El modelo representa la estructura y la lógica de la aplicación. Es responsable de gestionar los datos y el estado de la aplicación, así como de realizar operaciones sobre esos datos. En otras palabras, el modelo encapsula la lógica empresarial y los datos de la aplicación. Puede interactuar con la base de datos, realizar cálculos y actualizar su estado interno según las instrucciones de la lógica de la aplicación.
+
+2. **Vista (View):** La vista se encarga de mostrar la información al usuario y de interpretar las acciones del usuario. Muestra la interfaz de usuario y presenta los datos del modelo de una manera comprensible. La vista no realiza ninguna manipulación de datos; simplemente muestra la información y envía las acciones del usuario al controlador.
+
+3. **Controlador (Controller):** El controlador actúa como intermediario entre el modelo y la vista. Recibe las acciones del usuario desde la vista, procesa esas acciones (por ejemplo, actualiza el modelo correspondiente) y actualiza la vista según sea necesario. El controlador gestiona el flujo de datos entre la vista y el modelo, asegurando que ambos permanezcan independientes entre sí.
+
+En resumen, el modelo en una arquitectura MVC es responsable de la gestión de datos y lógica empresarial. Realiza operaciones en los datos, responde a las solicitudes de la vista y se comunica con la base de datos si es necesario. Separar estas responsabilidades facilita la mantenibilidad y la escalabilidad de las aplicaciones, ya que cada componente puede evolucionar de manera independiente.
+
+
+## [Controllers & Handlers](https://softwareengineering.stackexchange.com/questions/82262/difference-between-handler-manager-and-controller)
+- Usually a controller is the interface between a UI component and a model. Controllers should be thin classes, doing little more than mapping user interface events to model functions
+- A Handler is usually a single function wrapped in an object.
+
+
+# MVC
+- **Views**: Mostly to keep graphical design
+- **Models**: Wrapper around database tables
+- **Controllers**: Classes where every function is called from a route and returns a http response, like view or redirect or error.
+- Handlers: Mostly for Exception handling and Event handling
+- Services: Wrappers around APIs
+- Requests: To describe some inputs, it also can handle validation, authorization and some basic data processing
+- Middleware: To abstract out some common logic from the multiple routes, like authentication and authorization
+- Helpers: Some tiny classes and functions used throughout the project
+
+
+## Handler
+- A handler is a routine/function/method which is specialized in a certain type of data or focused on certains special tasks
+- **Event handler**: *Receives and digests events and signals from the surrounding system (OS or GUI)*
+- **Memory handler**: Performs certain special tasks on memory
+- **File input handler**:  A function receiving file input and performing special tasks on the data, all depending on context of course.
+
+
+#### MVC How it works
+<p align="center">
+        <img src="../img/mvc_1.png" alt="Model View Controller img 1">
+</p>
+
+
+
+#### MVC example
+<p align="center">
+        <img src="../img/mvc_2.png" alt="Model View Controller img 2">
+</p>
+
+##### [Wikipedia - Software design patterns](https://en.wikipedia.org/wiki/Software_design_pattern) / Wikipedia
+##### [MVC Explained in 4 Minutes](https://www.youtube.com/watch?v=DUg2SWWK18I) / MVC Tutorial
+##### [How Model-View-Controller Architecture Works](https://www.freecodecamp.org/news/model-view-architecture/) / MVC examples
