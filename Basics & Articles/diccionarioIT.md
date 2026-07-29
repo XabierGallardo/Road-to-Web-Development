@@ -1,5 +1,47 @@
 # Diccionario IT
 
+## Qué es un algoritmo?
+Cualquier secuencia finita de pasos bien definidos para resolver un problema se considera un algoritmo.
+
+#### Una definición clásica es:
+> Un algoritmo es un conjunto finito y ordenado de instrucciones precisas que, a partir de unos datos de entrada, produce un resultado para resolver un problema.
+
+Por ejemplo, una receta de cocina también es un algoritmo:
+
+```text
+Entrada:
+- Harina
+- Huevos
+- Leche
+
+Pasos:
+1. Mezclar.
+2. Batir.
+3. Hornear.
+
+Salida:
+- Bizcocho
+```
+
+En programación ocurre lo mismo.
+
+```javascript
+Entrada:
+[4, 1, 8, 2, 0]
+
+Pasos:
+1. Buscar el mayor.
+2. Guardarlo.
+3. Eliminarlo.
+4. Repetir.
+
+Salida:
+[8, 4, 2, 1, 0]
+```
+
+---
+
+
 ## Resumen `MVC` y `Middlewares`
 - Modelo
 - Middleware
