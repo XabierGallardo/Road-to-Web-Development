@@ -1,6 +1,466 @@
 # Objetos en JavaScript
 
-# 1. Que es prototype en `Array.prototype.method`?
+# Que es un diccionario en JavaScript?
+La respuesta corta es:
+
+* Un **diccionario** o **mapa** es una **estructura de datos**, no un tipo específico de JavaScript.
+* En JavaScript puedes implementar un diccionario utilizando un **Objeto (`Object`)** o un **`Map`**.
+* Un **Array** no es un diccionario, aunque internamente también es un objeto.
+
+Vamos por partes.
+
+---
+
+## ¿Qué es un diccionario?
+
+Un diccionario es una estructura que almacena pares:
+
+```text
+clave → valor
+```
+
+Como un diccionario de español.
+
+```text
+"casa" → "house"
+
+"perro" → "dog"
+
+"gato" → "cat"
+```
+
+Cada palabra (clave) tiene asociada una definición (valor).
+
+En programación ocurre lo mismo.
+
+```text
+"id"
+
+↓
+
+15
+```
+
+o
+
+```text
+"nombre"
+
+↓
+
+"Juan"
+```
+
+La idea es poder buscar un valor usando una clave.
+
+---
+
+## ¿Qué es un mapa?
+
+En informática, un **Map** (mapa) es prácticamente lo mismo que un diccionario.
+
+Ambos representan una colección de:
+
+```text
+clave → valor
+```
+
+Dependiendo del lenguaje reciben nombres distintos:
+
+* Java → `HashMap`
+* Python → `dict`
+* C# → `Dictionary`
+* JavaScript → `Map`
+
+El concepto es el mismo.
+
+---
+
+## ¿Qué pasa en JavaScript?
+
+Durante muchos años JavaScript no tenía la clase `Map`.
+
+La gente hacía esto:
+
+```javascript
+const usuario = {
+  nombre: "Ana",
+  edad: 25
+};
+```
+
+Aquí:
+
+```text
+nombre → Ana
+
+edad → 25
+```
+
+Eso ya es un diccionario.
+
+---
+
+## Los objetos funcionan como diccionarios
+
+Por ejemplo:
+
+```javascript
+const colores = {};
+
+colores.rojo = "#ff0000";
+colores.azul = "#0000ff";
+colores.verde = "#00ff00";
+```
+
+Visualmente:
+
+```text
+rojo
+
+↓
+
+#ff0000
+
+----------------
+
+azul
+
+↓
+
+#0000ff
+
+----------------
+
+verde
+
+↓
+
+#00ff00
+```
+
+Cuando haces
+
+```javascript
+colores.azul
+```
+
+obtienes
+
+```javascript
+"#0000ff"
+```
+
+Has buscado un valor mediante una clave.
+
+Eso es exactamente un diccionario.
+
+---
+
+## ¿Entonces un objeto ES un diccionario?
+
+No exactamente.
+
+Un objeto **puede usarse como diccionario**, pero fue diseñado para representar entidades.
+
+Por ejemplo:
+
+```javascript
+const persona = {
+    nombre: "Juan",
+    edad: 30,
+    ciudad: "Córdoba"
+}
+```
+
+Aquí el objeto representa una persona.
+
+No una tabla de búsqueda.
+
+---
+
+En cambio
+
+```javascript
+const frecuencias = {
+    hola: 5,
+    mundo: 2,
+    javascript: 8
+}
+```
+
+Aquí el objeto sí está funcionando como un diccionario.
+
+---
+
+## ¿Y un Array?
+
+Un array no es un diccionario.
+
+Un array almacena elementos por posición.
+
+```javascript
+const numeros = [10,20,30];
+```
+
+Visualmente
+
+```text
+Índice
+
+0 → 10
+
+1 → 20
+
+2 → 30
+```
+
+Accedes mediante índices.
+
+```javascript
+numeros[1]
+```
+
+Resultado
+
+```javascript
+20
+```
+
+---
+
+Un objeto usa claves.
+
+```javascript
+persona.nombre
+```
+
+Un array usa posiciones.
+
+```javascript
+numeros[0]
+```
+
+Son conceptos distintos.
+
+---
+
+## Comparación
+
+### Array
+
+```text
+0 → Ana
+
+1 → Juan
+
+2 → Pedro
+```
+
+---
+
+### Diccionario
+
+```text
+Ana → 25
+
+Juan → 30
+
+Pedro → 20
+```
+
+No hay posiciones.
+
+Hay claves.
+
+---
+
+## Entonces... ¿qué es `Map`?
+
+En ES6 apareció una nueva estructura:
+
+```javascript
+const mapa = new Map();
+```
+
+Hace exactamente esto.
+
+```javascript
+mapa.set("nombre","Ana");
+mapa.set("edad",25);
+```
+
+Visualmente
+
+```text
+nombre
+
+↓
+
+Ana
+
+edad
+
+↓
+
+25
+```
+
+Puedes recuperar
+
+```javascript
+mapa.get("nombre");
+```
+
+Resultado
+
+```javascript
+"Ana"
+```
+
+---
+
+## ¿Por qué crear `Map` si ya existían los objetos?
+
+Porque tiene varias ventajas.
+
+### 1. Las claves pueden ser cualquier cosa
+
+Objeto
+
+```javascript
+const obj = {};
+
+obj["nombre"] = "Ana";
+```
+
+La clave termina siendo un string.
+
+---
+
+Con `Map`
+
+```javascript
+const mapa = new Map();
+
+const usuario = {
+    id:1
+};
+
+mapa.set(usuario,"Administrador");
+```
+
+La clave puede ser un objeto completo.
+
+Incluso una función.
+
+O un array.
+
+---
+
+### 2. Métodos incorporados
+
+```javascript
+mapa.set()
+
+mapa.get()
+
+mapa.has()
+
+mapa.delete()
+
+mapa.clear()
+```
+
+Todo ya viene preparado.
+
+---
+
+### 3. Saber el tamaño
+
+Objeto
+
+```javascript
+Object.keys(obj).length
+```
+
+Map
+
+```javascript
+mapa.size
+```
+
+Mucho más sencillo.
+
+---
+
+### 4. Recorrerlo
+
+```javascript
+for (const [clave, valor] of mapa) {
+}
+```
+
+Muy cómodo.
+
+---
+
+## ¿Cuándo usar un objeto?
+
+Cuando representa una entidad.
+
+```javascript
+const producto = {
+    nombre:"Mouse",
+    precio:50,
+    stock:10
+}
+```
+
+Eso es un objeto.
+
+---
+
+O cuando quieres una tabla sencilla.
+
+```javascript
+const frecuencia = {};
+```
+
+Como hicimos al contar palabras.
+
+---
+
+### ¿Cuándo usar `Map`?
+
+Cuando necesitas una estructura dedicada a almacenar pares clave-valor, especialmente si:
+
+* las claves no son necesariamente cadenas;
+* vas a insertar y eliminar muchos elementos;
+* necesitas recorrer frecuentemente todas las entradas;
+* quieres usar los métodos específicos de `Map`.
+
+---
+
+---
+
+## Resumen
+
+| Estructura | ¿Qué almacena?                | Acceso                                 |
+| ---------- | ----------------------------- | -------------------------------------- |
+| **Array**  | Elementos ordenados           | Índice (`array[0]`)                    |
+| **Object** | Propiedades (`clave → valor`) | Clave (`obj.nombre` o `obj["nombre"]`) |
+| **Map**    | Pares (`clave → valor`)       | Clave (`map.get(clave)`)               |
+
+En entrevistas, cuando alguien habla de un **diccionario** en JavaScript, normalmente se refiere a una estructura de búsqueda por **clave → valor**. Muchas veces un objeto (`{}`) es suficiente y es la opción más simple. Sin embargo, si las claves pueden ser de cualquier tipo o necesitas las capacidades específicas de una estructura de mapeo, `Map` suele ser la elección más adecuada.
+
+
+
+---
+
+
+
+# Que es prototype en `Array.prototype.method`?
 Cuando ves algo como `Array.prototype.reduce`, en realidad estás viendo **dónde está definida la función `reduce` dentro del sistema de prototipos de JavaScript**.
 
 ### 1. ¿Qué es `prototype`?
@@ -260,7 +720,7 @@ Reflect.ownKeys(user).forEach(key => {
 - **`Reflect.ownKeys()` o `Object.getOwnPropertyNames()`:** Útiles para casos avanzados con propiedades no enumerables.
 
 
-# 1. EXTRA, comprendiendo Prototype
+## 1. EXTRA, comprendiendo Prototype
 
 ## 🔹 1. Todo en JavaScript son objetos (o se comportan como tales)
 
@@ -430,7 +890,7 @@ arr
 ---
 
 
-# 2. ¿Qué es un objeto en JavaScript?
+# ¿Qué es un objeto en JavaScript?
 Un **objeto** en JavaScript es una estructura de datos que permite almacenar un conjunto de pares clave-valor. Cada clave es una propiedad (o atributo) del objeto, y cada valor puede ser cualquier tipo de dato (números, cadenas, funciones, otros objetos, etc.). Los objetos son fundamentales en JavaScript porque permiten agrupar información relacionada y proporcionar un acceso organizado a los datos.
 
 Un objeto en JavaScript se puede considerar una colección de propiedades, donde cada propiedad tiene un nombre (clave) y un valor asociado.
