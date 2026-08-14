@@ -1,5 +1,342 @@
-# JavaScript / La Guía Definitiva
-## Capítulo 3 / Tipos, Valores y variablesTypes, Values and Variables
+# [JavaScript / La Guía Definitiva](https://scienceadvantage.net/wp-content/uploads/2020/08/JavaScript-The-Definitive-Guide-Master-The-Worlds-Most-Used-Programming-Language-7th-Edition-04.08-2020-.pdf)
+
+# 0. Prefacio
+Este libro cubre el lenvuaje JavaScript y las APIs de JavaScript implementadas por los navegadores y por Node.
+Veamos algunos conceptos generales.
+
+- APIs principales de JavaScript
+- JavaScript como lenguaje multiparadigma
+- JavaScript como lenguaje de proposito general
+- Nombres, versiones y modos en JavaScript
+
+---
+
+## 0.1 APIs principales de JavaScript
+JavaScript cuenta con un vasto ecosistema de APIs. Dado que JavaScript fue creado originalmente para el navegador y luego fue extraído para funcionar en servidores con Node.js, hay un conjunto de APIs que comparten (definidas por el estándar ECMAScript) y otras que son exclusivas de cada entorno.
+
+Podemos desglosar las siguientes APIs:
+
+---
+
+### 1. APIs Comunes (Implementadas por ambos)
+Estas APIs están definidas por la especificación **ECMAScript** o por estándares universales y funcionan exactamente igual (o muy similar) tanto en el navegador como en Node.js:
+
+*   **Manipulación de datos y sintaxis:**
+    *   `String`, `Number`, `Math`, `Date`, `RegExp`, `Array`, `Object`, `JSON`.
+    *   *Nota:* Históricamente hubo diferencias, pero hoy en día están totalmente estandarizadas.
+*   **Estructuras de datos modernas:**
+    *   `Promise`, `Map`, `Set`, `WeakMap`, `WeakSet`, `Symbol`.
+*   **APIs de Iteración y Funciones:**
+    *   `Array.prototype` (`.map`, `.filter`, `.reduce`), `Object.entries`, `Object.values`.
+*   **Internacionalización:**
+    *   `Intl` (para formatear fechas, números y monedas según la localidad).
+*   **Módulos:**
+    *   `import` / `export` (Sintaxis ESM). *Nota: Node lo soporta nativamente desde la versión 12+, aunque con diferencias de configuración.*
+*   **APIs Web Universales (Fetch, Timers, etc.):**
+    *   **`fetch`:** Node.js lo implementó de forma experimental en v18 y estable en v21.
+    *   **Timers:** `setTimeout`, `setInterval`, `setImmediate` (con ligeras variaciones de rendimiento).
+    *   **`console`:** Aunque la implementación interna es distinta, la API de superficie es la misma.
+    *   **`URL` y `URLSearchParams`:** Disponibles globalmente en ambos.
+    *   **`TextEncoder` y `TextDecoder`:** Disponibles globalmente en ambos.
+    *   **`crypto.subtle` (WebCrypto):** Disponible en navegadores modernos y en Node (desde v15 globalmente).
+
+---
+
+### 2. APIs Exclusivas del Navegador (Web APIs)
+Estas APIs están ligadas al modelo del navegador (ventanas, pestañas, interacción del usuario y seguridad del cliente).
+
+**A. DOM (Document Object Model)**
+*   **`document`:** El punto de entrada principal para manipular HTML.
+    *   `document.getElementById`, `querySelector`, `createElement`, `innerHTML`, etc.
+*   **Eventos:** `addEventListener`, `Event`, `MouseEvent`, `KeyboardEvent`.
+*   **`MutationObserver`:** Para observar cambios en el árbol del DOM.
+*   **`IntersectionObserver`:** Para saber cuándo un elemento entra o sale del viewport.
+
+**B. BOM (Browser Object Model)**
+*   **`window`:** El objeto global del navegador.
+*   **`location`:** Para manipular la URL actual (redirecciones, recargar).
+*   **`history`:** Para navegar entre páginas (SPA - Single Page Applications).
+*   **`navigator`:** Información del navegador y del dispositivo (geolocalización, batería, conexión).
+*   **`localStorage` / `sessionStorage`:** Almacenamiento síncrono clave-valor en el cliente.
+
+**C. Renderizado y Gráficos**
+*   **Canvas API:** Dibujo 2D y 3D (WebGL).
+*   **WebGL / WebGPU:** Acceso a la GPU para gráficos de alto rendimiento.
+*   **SVG API:** Manipulación de gráficos vectoriales.
+
+**D. Multimedia y Dispositivos**
+*   **Web Audio API:** Procesamiento y síntesis de audio.
+*   **MediaDevices / getUserMedia:** Acceso a cámara y micrófono.
+*   **WebRTC:** Comunicación en tiempo real (videollamadas, P2P).
+*   **Web Speech API:** Reconocimiento y síntesis de voz.
+
+**E. Red y Comunicación**
+*   **XMLHttpRequest (XHR):** La forma antigua de hacer peticiones HTTP (aún soportada).
+*   **WebSockets:** Comunicación bidireccional en tiempo real (también existe en Node, pero como librería externa o global reciente).
+*   **Server-Sent Events (EventSource):** Recepción de eventos unidireccionales del servidor.
+*   **Web Workers / Service Workers:** Multithreading y soporte offline.
+
+---
+
+### 3. APIs Exclusivas de Node.js
+Node.js no tiene el concepto de `window` o DOM. En su lugar, se centra en el sistema operativo, archivos, procesos y servidores.
+
+**A. Sistema de Archivos (fs)**
+*   **API:** `fs.readFile`, `fs.writeFile`, `fs.readdir`, `fs.watch`, etc.
+*   **Característica clave:** Ofrece versiones Síncronas (`fs.readFileSync`), Callback (`fs.readFile`) y Basadas en Promesas (`require('fs').promises.readFile`).
+
+**B. Sistema Operativo (os) y Procesos**
+*   **`process`:** El objeto global principal. Información del proceso actual.
+    *   `process.argv` (argumentos), `process.env` (variables de entorno), `process.exit()`, `process.cwd()`.
+*   **`os`:** Información del sistema operativo anfitrión (memoria libre, CPUs, tipo de SO).
+
+**C. Módulos y Paquetes (CommonJS)**
+*   **`require` y `module.exports`:** Aunque Node soporta ESM (`import`), la sintaxis `require` sigue siendo el estándar de facto en el ecosistema npm.
+
+**D. Red y Servidores**
+*   **`http` y `https`:** Los módulos de más bajo nivel para crear servidores web o hacer peticiones sin depender de librerías externas (como Express).
+*   **`net`:** Para crear servidores y clientes TCP.
+*   **`dgram`:** Para protocolo UDP.
+*   **`dns`:** Resolución de nombres de dominio.
+
+**E. Utilidades de Buffer y Streams**
+*   **`Buffer`:** Clase global para manejar datos binarios crudos (muy usada al leer archivos o manejar sockets). En el navegador ahora existe `ArrayBuffer`, pero la implementación clásica de Node es `Buffer`.
+*   **`Stream`:** Módulo fundamental para procesar datos en trozos (chunks) sin cargar todo en memoria (clave para el rendimiento de Node).
+
+**F. Seguridad y Criptografía**
+*   **`crypto`:** Aunque ahora comparte el estándar `WebCrypto`, Node expone una API más avanzada y de más bajo nivel para encriptación, hashing y generación de números aleatorios.
+
+**G. Hilos y Rendimiento**
+*   **`worker_threads`:** Para ejecutar JavaScript en paralelo (multi-threading real, a diferencia del event loop).
+*   **`cluster`:** Para crear múltiples procesos hijos que comparten el mismo puerto de red.
+
+---
+
+### Resumen comparativo rápido
+
+| Característica | Navegador | Node.js |
+| :--- | :--- | :--- |
+| **DOM (document, window)** | ✅ Sí | ❌ No |
+| **Fetch** | ✅ Sí | ✅ Sí (desde v18+) |
+| **Filesystem (fs)** | ❌ No (seguridad) | ✅ Sí |
+| **Web Workers** | ✅ Sí (dedicados) | ✅ Sí (worker_threads, distinta API) |
+| **localStorage** | ✅ Sí | ❌ No |
+| **process.env** | ❌ No | ✅ Sí |
+| **Timers** | ✅ Sí | ✅ Sí |
+| **Web Audio** | ✅ Sí | ❌ No (requiere librerías nativas) |
+
+
+---
+
+
+## 0.2 JavaScript como lenguaje multiparadigma
+Los **estilos de programación** (también llamados **paradigmas de programación**) son formas fundamentales de estructurar y organizar el código para resolver problemas. No son lenguajes en sí, sino "filosofías" o enfoques que puedes aplicar al escribir código.
+
+Aquí tienes los principales estilos, divididos en dos grandes categorías: **Paradigmas principales** y **Paradigmas de especialidad**.
+
+---
+
+### 1. Paradigmas Principales
+
+Estos son los estilos más comunes que encontrarás en la industria y en la mayoría de los lenguajes populares (JavaScript, Python, Java, C++, etc.).
+
+#### A. Programación Imperativa
+Es el estilo más antiguo y básico. Consiste en darle a la computadora una secuencia exacta de pasos (comandos) para cambiar el estado del programa.
+
+-   **Concepto clave:** "¿CÓMO se hace?" (paso a paso).
+-   **Elementos:** Bucles (`for`, `while`), condicionales (`if`), variables que se reasignan constantemente.
+-   **Ejemplo (JavaScript):**
+    ```javascript
+    let total = 0;
+    let numeros = [1, 2, 3, 4];
+    for (let i = 0; i < numeros.length; i++) {
+        total = total + numeros[i]; // Cambiando el estado de 'total'
+    }
+    console.log(total); // 10
+    ```
+
+#### B. Programación Declarativa
+Es el concepto opuesto al imperativo. En lugar de decir "cómo" hacer las cosas, le dices al programa "qué" quieres obtener. El "cómo" se abstrae.
+
+-   **Concepto clave:** "¿QUÉ quiero obtener?".
+-   **Ejemplo:** SQL (bases de datos), HTML, o funciones de alto nivel en JS.
+    ```javascript
+    let numeros = [1, 2, 3, 4];
+    let total = numeros.reduce((acumulador, numero) => acumulador + numero, 0);
+    // No le dije que hiciera un bucle, le dije que "redujera" el array a una suma.
+    ```
+
+#### C. Programación Orientada a Objetos (POO / OOP)
+Este estilo modela el código basándose en "objetos" del mundo real. Cada objeto tiene **propiedades** (datos) y **métodos** (funciones que actúan sobre esos datos).
+
+-   **Conceptos clave:** Clases, Herencia, Encapsulamiento, Polimorfismo.
+-   **Ideal para:** Videojuegos, interfaces gráficas, sistemas empresariales complejos.
+-   **Ejemplo (JavaScript moderno):**
+    ```javascript
+    class Coche {
+        constructor(marca) {
+            this.marca = marca;
+            this.velocidad = 0;
+        }
+        acelerar() {
+            this.velocidad += 10;
+        }
+    }
+    const miCoche = new Coche("Toyota");
+    miCoche.acelerar();
+    ```
+
+#### D. Programación Funcional (PF)
+Trata la programación como si fuera matemática. Se basa en "funciones puras" (sin efectos secundarios) y en tratar los datos como **inmutables** (no se modifican, se crean copias).
+
+-   **Conceptos clave:** Funciones puras, inmutabilidad, recursión, funciones de orden superior (`.map`, `.filter`, `.reduce`), composición de funciones.
+-   **Ideal para:** Ciencia de datos, procesamiento de grandes flujos de datos, sistemas que requieren alta confiabilidad.
+-   **Ejemplo (JavaScript):**
+    ```javascript
+    const numeros = [1, 2, 3];
+    // No modificamos 'numeros', creamos un array nuevo
+    const dobles = numeros.map(n => n * 2); 
+    ```
+
+#### E. Programación Orientada a Eventos (Event-Driven)
+El flujo del programa no sigue una línea recta, sino que reacciona a "eventos" (clics del usuario, respuestas de un servidor, timers). Es el estilo dominante en el desarrollo web frontend.
+
+-   **Concepto clave:** Event Loop, Listeners (escuchadores), Callbacks.
+-   **Ejemplo (JavaScript en el navegador):**
+    ```javascript
+    // No sabemos cuándo el usuario hará clic, pero definimos qué pasará cuando lo haga.
+    document.getElementById("boton").addEventListener("click", () => {
+        console.log("¡Me hicieron clic!");
+    });
+    ```
+
+---
+
+### 2. Paradigmas Secundarios o Derivados
+
+Estos estilos a menudo se mezclan con los anteriores o están ganando popularidad recientemente.
+
+#### F. Programación Procedural
+Es un subconjunto de la Programación Imperativa. Consiste en agrupar el código imperativo en "procedimientos" o "funciones" reutilizables para evitar repetir código. (Muchos lenguajes como C usan este estilo).
+
+-   **Diferencia con POO:** No usa clases ni objetos, solo funciones sueltas.
+
+#### G. Programación Reactiva
+Es una evolución de la Programación Funcional y Orientada a Eventos. Se centra en "flujos de datos" (streams) y en la propagación automática del cambio. Si una variable cambia, todo lo que depende de ella se actualiza solo.
+
+-   **Ejemplos modernos:** Librerías como RxJS, o frameworks de UI como React, Vue o Svelte (el "estado" cambia y la "vista" reacciona).
+
+#### H. Programación Genérica (Metaprogramación)
+Consiste en escribir código que puede funcionar con cualquier tipo de dato sin necesidad de reescribirlo. Es muy común en lenguajes fuertemente tipados como C++ o TypeScript (usando *Genéricos* `<T>`).
+
+#### I. Programación Lógica
+Se basa en definir un conjunto de hechos y reglas lógicas. El programa "infiere" las respuestas. Es muy usada en Inteligencia Artificial.
+
+-   **Lenguaje representativo:** Prolog.
+
+#### J. Programación Concurrente y Paralela
+Estilo enfocado en ejecutar múltiples tareas "al mismo tiempo". Puede ser real (multihilos en CPUs de varios núcleos) o simulada (como el Event Loop de JavaScript o los async/await).
+
+---
+
+### Resumen en JavaScript: ¿Cuál deberías usar?
+
+JavaScript es un lenguaje **multiparadigma**, lo que significa que puedes mezclar todos estos estilos en un mismo proyecto:
+
+1.  **Orientado a Objetos (POO):** Usado mucho en el Backend (Node.js con TypeScript) y en aplicaciones grandes empresariales (Angular).
+    *   *Estilo:* `class`, `new`, `this`, `extends`.
+2.  **Funcional (PF):** Es el estilo dominante en el Frontend moderno (React, Redux).
+    *   *Estilo:* Funciones flecha, `.map`, `.filter`, `...spread`, evitando mutar variables.
+3.  **Orientado a Eventos:** Es el corazón de JavaScript tanto en el navegador (clics) como en Node.js (el patrón `EventEmitter`).
+4.  **Imperativo:** Es como todo el mundo empieza a programar, y lo usas para escribir la lógica básica dentro de tus funciones.
+
+**La clave:** Un buen programador no se casa con un solo estilo; elige el que mejor resuelve el problema específico que tiene delante.
+
+
+---
+
+
+## 0.3 JavaScript como lenguaje de proposito general
+Cuando decimos que JavaScript es un **lenguaje de propósito general (General-Purpose Language)**, significa que **no fue diseñado para resolver un único tipo de problema o funcionar en un solo entorno**, sino que es lo suficientemente flexible y completo como para usarse en casi cualquier ámbito del desarrollo de software.
+
+Esto contrasta con los **lenguajes de dominio específico (DSL - Domain-Specific Languages)**, que están creados para hacer una sola cosa muy bien.
+
+---
+
+### La metáfora perfecta: La Navaja Suiza vs. El Taladro
+
+*   **Lenguaje de dominio específico (DSL):** Es como un taladro. Es perfecto para hacer agujeros (ej. SQL para bases de datos, o HTML para estructurar páginas web), pero no sirve para cortar madera o apretar tornillos.
+*   **Lenguaje de propósito general (JavaScript):** Es una navaja suiza. Puedes cortar, abrir botellas, usar el destornillador y hasta limarte las uñas. No será el mejor taladro del mundo, pero puede hacer un agujero si es necesario.
+
+---
+
+### ¿En qué áreas se puede usar JavaScript hoy en día?
+
+Para justificar su título de "propósito general", JavaScript salió del navegador y conquistó prácticamente todas las capas del desarrollo de software:
+
+1.  **Desarrollo Web Frontend (El origen):**
+    *   Manipular el DOM, animaciones, lógica de interfaces, frameworks como React, Vue o Angular.
+
+2.  **Desarrollo Backend (Servidores):**
+    *   Gracias a **Node.js**, **Deno** o **Bun**, JavaScript corre fuera del navegador. Puedes crear APIs REST, manejar bases de datos, gestionar autenticación y manejar miles de conexiones simultáneas (como hace Netflix o PayPal).
+
+3.  **Aplicaciones de Escritorio:**
+    *   Con frameworks como **Electron** (usado por VS Code, Slack, Discord) o **Tauri**, puedes construir aplicaciones nativas para Windows, Mac y Linux usando solo JavaScript, HTML y CSS.
+
+4.  **Aplicaciones Móviles:**
+    *   Con **React Native** o **Ionic**, escribes el código una vez en JavaScript y generas aplicaciones nativas o híbridas para iOS y Android (Facebook, Instagram y Airbnb usan esto en parte).
+
+5.  **Internet de las Cosas (IoT) y Robótica:**
+    *   Frameworks como **Johnny-Five** o **Cylon.js** permiten programar microcontroladores (como Arduino o Raspberry Pi) para encender luces, leer sensores o mover motores usando JavaScript.
+
+6.  **Inteligencia Artificial y Ciencia de Datos:**
+    *   Aunque Python es el rey aquí, JavaScript tiene librerías potentes como **TensorFlow.js** para entrenar y ejecutar redes neuronales directamente en el navegador o en Node.
+
+7.  **Bases de Datos:**
+    *   Bases de datos NoSQL como **MongoDB** utilizan JavaScript como su lenguaje de consulta interno.
+
+8.  **Automatización de Tareas (Scripting):**
+    *   Puedes escribir un script en Node.js para renombrar cientos de archivos en tu computadora, descargar información de internet automáticamente (Web Scraping con Puppeteer) o publicar posts en redes sociales.
+
+---
+
+### ¿Por qué JavaScript logró ser de "Propósito General"?
+
+Originalmente (1995), JavaScript era un lenguaje de scripting *solo* para el navegador, muy limitado. Se convirtió en un lenguaje de propósito general gracias a tres factores clave:
+
+1.  **El Event Loop (Programación Asíncrona):** JavaScript fue diseñado para no bloquearse. Esto lo hace ideal para manejar muchas tareas a la vez (como leer un archivo mientras responde a un chat), lo cual es vital para servidores modernos.
+2.  **El motor V8 (de Google Chrome):** En 2008, Google creó un motor increíblemente rápido para ejecutar JavaScript. Un programador llamado Ryan Dahl tomó ese motor, lo sacó del navegador, le añadió APIs para leer archivos y crear servidores, y nació **Node.js**.
+3.  **Una comunidad gigante y NPM:** Al ser el único lenguaje que entienden los navegadores, millones de programadores ya lo sabían. Al sacarlo del navegador, toda esa gente pudo aplicar su conocimiento para crear herramientas para otras áreas, llenando el registro de paquetes (NPM) con soluciones para casi todo.
+
+**En resumen:** Ser un lenguaje de propósito general significa que con JavaScript no solo haces páginas web; puedes crear el servidor que las alimenta, la base de datos que las guarda, la app móvil que las consume y el robot que te trae un café mientras programas.
+
+
+---
+
+## 0.4 Nombres, versiones y modos en JavaScript
+JavaScript fue creado por Netscape en los primeros años de la web, denominado "JavaScript", Netscape delegó la estandarizacion del lenguaje a ECMA (European Computer Manufacturer's Association). Como JavaScript era una marca registrada de Sun Microsystems (ahora Oracle), debido a cuestiones relativas a esta marca registrada, la versión estandarizada de JavaScript fue registrada como ECMAScript.
+
+Desde el estandar ES6 en 2015, donde se implementaron grandes cambios que hicieron que JavaScript pasara de ser un lenguaje de scripting a un lenguaje serio de proposito general para proyectos complejos de ingenieria de software. Desde entonces, a partir de ES6, los lanzamientos y las nuevas implementaciones en JavaScript son anuales (ES2016, ES2017, ES2020,ES2025, etc)
+
+-- p20
+
+
+
+---
+
+
+
+
+
+# 1. Introduccion a JavaScript
+
+---
+
+# 2. Estructura lexica
+
+---
+
+# 3. Tipos, Valores y variables
 ### 3.1 Tipos de datos en JavaScript
 Los tipos de datos en JavaScript se pueden dividir en 2 categorías, tipos de datos primitivos y objetos
 
@@ -52,3 +389,61 @@ let bigNumber = 1234567890123456789012345678901234567890n; // BigInt
 
 Estos tipos de datos son fundamentales para entender cómo funciona la gestión de memoria y el manejo de valores en JavaScript.
 
+
+---
+
+
+# 4. Expresiones y operadores
+
+---
+
+
+# 5. Declaraciones
+
+---
+
+# 6. Objetos
+
+---
+
+# 7. Arrays
+
+---
+
+# 8. Funciones
+
+---
+
+# 9. Clases
+
+---
+
+# 10.Modulos
+
+---
+
+# 11. La Libreria estandar de JavaScript
+
+---
+
+# 12. Generadores e iteradores
+
+---
+
+# 13. JavaScript asincrono
+
+---
+
+# 14. Metaprogramacion
+
+---
+
+# 15. JavaScript en navegadores web
+
+---
+
+# 16. JavaScript en el servidor con Node
+
+---
+
+# 17. Herramientas de JavaScript y Extensiones
