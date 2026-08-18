@@ -1,17 +1,12 @@
 # [JavaScript / La Guía Definitiva](https://scienceadvantage.net/wp-content/uploads/2020/08/JavaScript-The-Definitive-Guide-Master-The-Worlds-Most-Used-Programming-Language-7th-Edition-04.08-2020-.pdf)
 
 # 0. Prefacio
-Este libro cubre el lenvuaje JavaScript y las APIs de JavaScript implementadas por los navegadores y por Node.
-Veamos algunos conceptos generales.
+Este libro cubre el lenguaje JavaScript y las APIs de JavaScript implementadas por los navegadores y por Node.
 
-- APIs principales de JavaScript
-- JavaScript como lenguaje multiparadigma
-- JavaScript como lenguaje de proposito general
-- Nombres, versiones y modos en JavaScript
-
----
 
 ## 0.1 APIs principales de JavaScript
+
+
 JavaScript cuenta con un vasto ecosistema de APIs. Dado que JavaScript fue creado originalmente para el navegador y luego fue extraído para funcionar en servidores con Node.js, hay un conjunto de APIs que comparten (definidas por el estándar ECMAScript) y otras que son exclusivas de cada entorno.
 
 Podemos desglosar las siguientes APIs:
@@ -126,10 +121,13 @@ Node.js no tiene el concepto de `window` o DOM. En su lugar, se centra en el sis
 | **Web Audio** | ✅ Sí | ❌ No (requiere librerías nativas) |
 
 
+
 ---
 
 
-## 0.2 JavaScript como lenguaje multiparadigma
+# 1. Introduccion a JavaScript
+
+## 1.1 JavaScript como lenguaje multiparadigma
 Los **estilos de programación** (también llamados **paradigmas de programación**) son formas fundamentales de estructurar y organizar el código para resolver problemas. No son lenguajes en sí, sino "filosofías" o enfoques que puedes aplicar al escribir código.
 
 Aquí tienes los principales estilos, divididos en dos grandes categorías: **Paradigmas principales** y **Paradigmas de especialidad**.
@@ -256,7 +254,7 @@ JavaScript es un lenguaje **multiparadigma**, lo que significa que puedes mezcla
 ---
 
 
-## 0.3 JavaScript como lenguaje de proposito general
+## 1.2 JavaScript como lenguaje de proposito general
 Cuando decimos que JavaScript es un **lenguaje de propósito general (General-Purpose Language)**, significa que **no fue diseñado para resolver un único tipo de problema o funcionar en un solo entorno**, sino que es lo suficientemente flexible y completo como para usarse en casi cualquier ámbito del desarrollo de software.
 
 Esto contrasta con los **lenguajes de dominio específico (DSL - Domain-Specific Languages)**, que están creados para hacer una sola cosa muy bien.
@@ -313,28 +311,417 @@ Originalmente (1995), JavaScript era un lenguaje de scripting *solo* para el nav
 
 ---
 
-## 0.4 Nombres, versiones y modos en JavaScript
+
+## 1.3 Nombres, versiones y modos en JavaScript
 JavaScript fue creado por Netscape en los primeros años de la web, denominado "JavaScript", Netscape delegó la estandarizacion del lenguaje a ECMA (European Computer Manufacturer's Association). Como JavaScript era una marca registrada de Sun Microsystems (ahora Oracle), debido a cuestiones relativas a esta marca registrada, la versión estandarizada de JavaScript fue registrada como ECMAScript.
 
 Desde el estandar ES6 en 2015, donde se implementaron grandes cambios que hicieron que JavaScript pasara de ser un lenguaje de scripting a un lenguaje serio de proposito general para proyectos complejos de ingenieria de software. Desde entonces, a partir de ES6, los lanzamientos y las nuevas implementaciones en JavaScript son anuales (ES2016, ES2017, ES2020,ES2025, etc)
 
--- p20
+
+## 1.4 Como funciona JavaScript?
+La idea central es esta:
+
+> **JavaScript como lenguaje define las herramientas fundamentales para manipular datos, pero necesita un entorno que le proporcione herramientas para interactuar con el mundo exterior.**
+
+### 1. ¿Qué es el lenguaje JavaScript?
+
+El lenguaje JavaScript, por sí mismo, define cosas como:
+
+```js
+let nombre = "Juan";
+let numeros = [1, 2, 3];
+
+console.log(numeros.length);
+
+let persona = {
+    nombre: "Juan",
+    edad: 30
+};
+```
+
+También define:
+
+* variables
+* funciones
+* objetos
+* arrays
+* strings
+* números
+* `Map`
+* `Set`
+* `Promise`
+* `Date`
+* operadores
+* estructuras `if`, `for`, `while`
+* clases
+* módulos, etc.
+
+Estas características forman parte de la **especificación del lenguaje JavaScript** (ECMAScript).
+
+Pero hay una pregunta importante:
+
+**¿Cómo hago para leer un archivo?**
+
+```js
+leerArchivo("datos.txt");
+```
+
+¿Quién implementa `leerArchivo()`?
+
+JavaScript como lenguaje no lo define.
+
+Lo mismo ocurre con:
+
+```js
+enviarDatosPorInternet(...)
+crearVentana(...)
+dibujarEnPantalla(...)
+leerTeclado(...)
+accederAlGPS(...)
+```
+
+Todas esas cosas dependen del **entorno donde se ejecuta JavaScript**.
+
+---
+
+### 2. ¿Qué es una librería estándar?
+
+Una **librería estándar (standard library)** es un conjunto de funcionalidades que vienen asociadas oficialmente a un lenguaje y que permiten hacer tareas comunes sin tener que implementarlas desde cero.
+
+Por ejemplo, JavaScript tiene funcionalidades estándar para trabajar con texto:
+
+```js
+"Hola".toUpperCase();
+```
+
+Arrays:
+
+```js
+[1, 2, 3].map(x => x * 2);
+```
+
+Sets:
+
+```js
+let conjunto = new Set([1, 2, 3]);
+```
+
+Mapas:
+
+```js
+let mapa = new Map();
+mapa.set("nombre", "Juan");
+```
+
+Y objetos como:
+
+```js
+Math
+JSON
+Date
+Promise
+RegExp
+Map
+Set
+```
+
+Todo eso forma parte de las APIs que proporciona el ecosistema estándar de JavaScript/ECMAScript.
+
+Por eso el libro dice:
+
+> "The core JavaScript language defines a minimal API for working with numbers, text, arrays, sets, maps, and so on"
+
+Es decir:
+
+**el núcleo de JavaScript trae herramientas básicas para trabajar con datos.**
+
+---
+
+### 3. Entonces, ¿qué es una "plataforma"?
+
+Aquí está la parte que puede resultar confusa.
+
+Una **plataforma** es el entorno completo que proporciona JavaScript para poder hacer cosas útiles.
+
+Por ejemplo, cuando ejecutás JavaScript en un navegador, tenés:
+
+```text
+JavaScript
+    │
+    ▼
+Navegador
+    │
+    ├── DOM
+    ├── Web APIs
+    ├── fetch()
+    ├── localStorage
+    ├── Canvas
+    ├── WebSockets
+    ├── Geolocation
+    └── etc.
+```
+
+El navegador es el **host environment** (entorno anfitrión) de JavaScript.
+
+JavaScript proporciona:
+
+```js
+let numeros = [1, 2, 3];
+
+numeros.map(x => x * 2);
+```
+
+Pero el navegador proporciona cosas como:
+
+```js
+document.querySelector("button");
+
+fetch("https://example.com");
+
+localStorage.setItem("nombre", "Juan");
+
+navigator.geolocation.getCurrentPosition(...);
+```
+
+Estas APIs **no son simplemente "el lenguaje JavaScript"**.
+
+Son APIs proporcionadas por el navegador.
+
+---
+
+### 4. Y Node.js es otro host environment
+
+Esto es especialmente importante si estás aprendiendo Node.js.
+
+Podemos pensar:
+
+```text
+                    JavaScript
+                        │
+             ┌──────────┴──────────┐
+             │                     │
+         Navegador               Node.js
+             │                     │
+        Web APIs              APIs de Node
+             │                     │
+       ┌─────┼─────┐        ┌──────┼──────┐
+       │     │     │        │      │      │
+      DOM  fetch  Canvas    fs    http   process
+```
+
+Por ejemplo:
+
+#### JavaScript estándar
+
+```js
+const numeros = [1, 2, 3];
+
+console.log(numeros.map(n => n * 2));
+```
+
+Esto pertenece al ecosistema estándar del lenguaje.
+
+#### Node.js
+
+```js
+import fs from "fs";
+
+fs.readFileSync("archivo.txt", "utf8");
+```
+
+`fs` no es una característica del lenguaje JavaScript.
+
+Es una API proporcionada por **Node.js**.
+
+Por eso:
+
+```js
+fs.readFileSync(...)
+```
+
+funciona en Node.js, pero no podés asumir que funciona directamente en un navegador.
+
+---
+
+### 5. Un ejemplo todavía más claro
+
+Imaginá que JavaScript es un idioma.
+
+El idioma te permite formar frases:
+
+> "Quiero abrir el archivo."
+
+Pero saber decir esa frase **no significa que tengas la capacidad física de abrir el archivo**.
+
+Necesitás un entorno que te dé esa capacidad.
+
+En programación:
+
+```text
+Lenguaje JavaScript
+        │
+        │ define
+        ▼
+Sintaxis + tipos + estructuras + operaciones básicas
+        │
+        │ se ejecuta dentro de
+        ▼
+Host Environment
+        │
+        ├── Browser
+        │      ├── DOM
+        │      ├── fetch
+        │      ├── Canvas
+        │      └── Web Storage
+        │
+        └── Node.js
+               ├── fs
+               ├── http
+               ├── net
+               ├── process
+               └── streams
+```
+
+El **host environment** le proporciona a JavaScript las capacidades para interactuar con el exterior.
+
+---
+
+### 6. ¿Y por qué el texto menciona "input/output"?
+
+Porque un lenguaje necesita alguna forma de interactuar con el exterior.
+
+Por ejemplo:
+
+**Input:**
+
+```text
+teclado → programa
+archivo → programa
+red → programa
+cámara → programa
+```
+
+**Output:**
+
+```text
+programa → pantalla
+programa → archivo
+programa → red
+programa → impresora
+```
+
+JavaScript no define por sí mismo cosas como:
+
+```js
+leerTeclado()
+leerArchivo()
+mostrarVentana()
+enviarPorRed()
+```
+
+El entorno donde se ejecuta JavaScript decide cómo ofrecer esas capacidades.
+
+---
+
+### 7. La diferencia entre JavaScript, Web APIs y Node.js
+
+Esta distinción te va a resultar muy útil:
+
+| Cosa                             | ¿Quién la proporciona? | Ejemplo                             |
+| -------------------------------- | ---------------------- | ----------------------------------- |
+| Lenguaje JavaScript              | ECMAScript             | `let`, `if`, `Array`, `Map`         |
+| Standard library / APIs estándar | ECMAScript             | `JSON`, `Math`, `Promise`, `Map`    |
+| Web APIs                         | Navegador              | `document`, `fetch`, `localStorage` |
+| APIs de Node.js                  | Node.js                | `fs`, `http`, `process`             |
+| Librerías externas               | terceros               | Express, Axios, Lodash              |
+
+Por ejemplo:
+
+```js
+const express = require("express");
+```
+
+`express` **no es JavaScript**.
+
+Tampoco es parte de la librería estándar de JavaScript.
+
+Es una **librería externa** que alguien instaló, normalmente mediante npm.
+
+---
+
+### 8. Una distinción importante: librería vs plataforma
+
+Una **librería** es normalmente un conjunto de código que te proporciona funcionalidades.
+
+Por ejemplo:
+
+```text
+Express
+Axios
+React
+Lodash
+```
+
+Una **plataforma/entorno** es mucho más grande. Incluye el motor que ejecuta JavaScript y numerosas APIs y servicios.
+
+Por ejemplo:
+
+```text
+Node.js
+```
+
+incluye:
+
+```text
+JavaScript engine (V8)
+        +
+Node.js APIs
+        +
+módulos
+        +
+event loop
+        +
+sistema de módulos
+        +
+herramientas
+```
+
+Por eso Node.js se considera un **runtime/environment** para JavaScript, mientras que Express es una **librería/framework** que corre encima de Node.js.
+
+---
+
+### En una frase
+
+El párrafo quiere decir:
+
+> **JavaScript define principalmente cómo escribir y manipular datos dentro de un programa; el entorno en el que JavaScript se ejecuta —por ejemplo un navegador o Node.js— le proporciona las herramientas necesarias para comunicarse con archivos, redes, pantalla, sistema operativo, etc.**
+
+Y esto explica por qué **JavaScript en el navegador y JavaScript en Node.js tienen el mismo lenguaje, pero APIs disponibles diferentes**.
+
+
+## 1.5 Expresiones, Sentencias y Funciones
+
+Si las **expresiones** en JavaScript fuesen frases, las **sentencias** serian oraciones completas.
+- Una expresion es algo que computa un valor, nada mas, no alteran el estado del programa de ninguna manera
+- Las sentencias por otra parte no tienen un valor pero alteran el estado.
+
+Una funcion es un bloque nombrado de JavaScript que se define una vez y se invoca cuantas veces se quiera.
 
 
 
 ---
 
 
-
-
-
-# 1. Introduccion a JavaScript
-
----
 
 # 2. Estructura lexica
 
+*-- pp 33*
+
+
+
 ---
+
+
 
 # 3. Tipos, Valores y variables
 ### 3.1 Tipos de datos en JavaScript
