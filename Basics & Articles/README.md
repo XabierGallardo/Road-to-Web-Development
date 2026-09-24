@@ -1,3 +1,58 @@
+# SaaS vs Página Web vs Desarrollo de Software
+
+## ¿Qué es un SaaS?
+
+**SaaS** (Software as a Service / Software como Servicio) es un modelo de distribución de software donde una aplicación se aloja en servidores del proveedor y los usuarios acceden a ella a través de internet, generalmente mediante un navegador, pagando normalmente una suscripción periódica.
+
+**Características clave:**
+- Acceso vía navegador (no instalas nada localmente)
+- Modelo de pago recurrente (mensual/anual)
+- El proveedor gestiona infraestructura, actualizaciones y mantenimiento
+- Multiusuario y multiempresa (multi-tenant)
+- Escalable automáticamente
+
+**Ejemplos:** Gmail, Slack, Notion, Salesforce, Dropbox, Shopify.
+
+---
+
+## Diferencias entre un SaaS y una página web
+
+| Aspecto | Página web | SaaS |
+|---------|-----------|------|
+| **Propósito** | Informar, mostrar contenido, marketing | Proveer una funcionalidad/herramienta |
+| **Interacción** | Principalmente lectura | El usuario realiza tareas (crear, editar, gestionar datos) |
+| **Autenticación** | Opcional | Casi siempre obligatoria (cuentas de usuario) |
+| **Base de datos** | A veces (blog, CMS) | Siempre (datos por usuario/organización) |
+| **Modelo de negocio** | Publicidad, ventas, branding | Suscripción, planes por uso |
+| **Complejidad técnica** | Baja-media | Alta (lógica de negocio, permisos, integraciones) |
+| **Mantenimiento** | Esporádico | Continuo y crítico |
+
+> Una página web puede ser estática (HTML/CSS) o dinámica con un CMS. Un SaaS es siempre una aplicación compleja con lógica de negocio, usuarios, roles y persistencia de datos.
+
+---
+
+## Diferencias entre desarrollo de aplicaciones web y desarrollo de software
+
+| Aspecto | Aplicaciones web | Software (tradicional/escritorio) |
+|---------|------------------|-----------------------------------|
+| **Plataforma** | Navegador, multiplataforma por defecto | SO específico (Windows, macOS, Linux, móvil) |
+| **Instalación** | No requiere instalación | Requiere instalación/actualización |
+| **Actualizaciones** | Centralizadas e inmediatas | Distribuidas al usuario (manual o auto-update) |
+| **Distribución** | Internet (URL) | Tiendas, descargas, medios físicos |
+| **Tecnologías típicas** | HTML, CSS, JS, React, Node, Python, bases de datos | C++, C#, Java, Swift, Kotlin, Qt |
+| **Modelo de negocio** | Suscripción, freemium, ads | Licencia única, perpetual |
+| **Escalabilidad** | Horizontal (servidores, cloud) | Limitada al hardware del usuario |
+| **Seguridad** | Superficie de ataque amplia (web) | Menor exposición pero dependiente del cliente |
+
+**En resumen:**
+- **Página web** → presencia informativa.
+- **SaaS** → producto de software completo entregado por internet con modelo de suscripción.
+- **Desarrollo web** → construcción de aplicaciones que corren en el navegador; el **desarrollo de software** es el término más amplio que incluye web, escritorio, móvil, embebido, etc.
+
+
+---
+
+
 # Frontend roadmap
 - **HTML**: Tags, basic structure, forms, links, tables
 - **CSS**: Selectors, box model, positions, sizing, flexbox vs grid
