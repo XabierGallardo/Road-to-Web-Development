@@ -1,4 +1,1333 @@
-# ¿Qué significa hacer deploy?
+# Evolución del desplegamiento de páginas web, antes y ahora
+La mejor forma de entenderlo es imaginar que tenés una aplicación web y seguir **todo el recorrido desde que alquilás el servidor hasta que un usuario entra al sitio**. La diferencia entre el modelo tradicional y el moderno no es solamente tecnológica: cambia **qué administrás vos, qué automatizás y a qué escala**.
+
+---
+
+# 1. El modelo tradicional: alquilar hosting y subir la página
+
+Durante muchos años, para publicar un sitio web se hacía algo bastante parecido a esto:
+
+```text
+Tu computadora
+     │
+     │ FTP / SFTP / SSH
+     ▼
+Servidor del hosting
+     │
+     ├── Apache
+     │
+     └── /var/www/html
+           │
+           ├── index.html
+           ├── style.css
+           ├── script.js
+           └── imágenes
+```
+
+Supongamos que desarrollaste una página:
+
+```text
+mi-sitio/
+├── index.html
+├── css/
+│   └── style.css
+├── js/
+│   └── app.js
+└── images/
+```
+
+## Paso 1: alquilar hosting
+
+Contratabas un servicio de hosting.
+
+Podía ser algo como:
+
+> "Hosting Linux — 10 GB — PHP — MySQL"
+
+El proveedor te daba algo parecido a:
+
+```text
+Servidor
+IP: xxx.xxx.xxx.xxx
+
+Usuario: usuario123
+Password: ********
+```
+
+Muchas veces **no administrabas el servidor completo**.
+
+El proveedor ya tenía:
+
+```text
+Linux
+Apache
+PHP
+MySQL
+FTP
+DNS
+panel de administración
+```
+
+configurados.
+
+---
+
+# 2. El proveedor ya había hecho gran parte del trabajo
+
+Esto es importante.
+
+Cuando contratabas un **hosting compartido**, no necesariamente instalabas Apache.
+
+El proveedor ya tenía algo parecido a:
+
+```text
+                    SERVIDOR
+┌──────────────────────────────────────────┐
+│ Linux                                    │
+│                                          │
+│ Apache                                   │
+│                                          │
+│ ├── Cliente A                            │
+│ ├── Cliente B                            │
+│ ├── Cliente C                            │
+│ └── Cliente D                            │
+│                                          │
+└──────────────────────────────────────────┘
+```
+
+Es decir, **muchos sitios compartían el mismo servidor Apache**.
+
+Vos simplemente recibías acceso a tu espacio.
+
+---
+
+# 3. Subías los archivos
+
+Por ejemplo mediante FTP/SFTP.
+
+Con un programa como FileZilla podías ver:
+
+```text
+LOCAL
+─────────────────
+mi-sitio/
+ index.html
+ css/
+ js/
+ images/
+
+
+REMOTO
+─────────────────
+/public_html/
+ index.html
+ css/
+ js/
+ images/
+```
+
+Arrastrabas los archivos.
+
+Eso era esencialmente el deploy.
+
+---
+
+# 4. ¿Qué ocurría cuando alguien entraba?
+
+El usuario escribía:
+
+```text
+https://midominio.com
+```
+
+El proceso era:
+
+```text
+Usuario
+   │
+   ▼
+DNS
+   │
+   ▼
+Servidor del hosting
+   │
+   ▼
+Apache
+   │
+   ▼
+public_html/index.html
+   │
+   ▼
+Navegador
+```
+
+Apache recibía:
+
+```http
+GET /
+```
+
+y buscaba:
+
+```text
+/public_html/index.html
+```
+
+Después se lo enviaba al navegador.
+
+---
+
+# 5. ¿Y si había PHP?
+
+Acá empezaba a aparecer algo más interesante.
+
+Supongamos:
+
+```text
+index.php
+```
+
+con:
+
+```php
+<?php
+echo "Hola";
+?>
+```
+
+Apache recibía:
+
+```http
+GET /
+```
+
+y en vez de simplemente entregar el archivo como texto, lo procesaba mediante PHP.
+
+Conceptualmente:
+
+```text
+Navegador
+    │
+    ▼
+Apache
+    │
+    ▼
+PHP
+    │
+    ▼
+HTML generado
+    │
+    ▼
+Navegador
+```
+
+Por eso los hostings tradicionales eran muy populares para:
+
+* WordPress
+* Joomla
+* Drupal
+* PHP
+* MySQL
+
+---
+
+# 6. ¿Y la base de datos?
+
+El hosting podía darte también:
+
+```text
+MySQL
+```
+
+Entonces tenías:
+
+```text
+              INTERNET
+                  │
+                  ▼
+               Apache
+                  │
+                  ▼
+                PHP
+                  │
+                  ▼
+                MySQL
+```
+
+Todo estaba bastante integrado.
+
+Desde un panel podías crear:
+
+```text
+Base de datos: tienda
+Usuario: tienda_user
+Password: ********
+```
+
+Y tu aplicación PHP se conectaba.
+
+---
+
+# 7. El modelo tradicional con VPS
+
+Hay otro modelo tradicional más avanzado: **alquilar un VPS**.
+
+Acá sí tenías control del servidor.
+
+Por ejemplo:
+
+```text
+VPS
+Ubuntu
+2 CPU
+4 GB RAM
+80 GB SSD
+IP pública
+```
+
+Entrabas:
+
+```bash
+ssh root@IP
+```
+
+Y vos instalabas:
+
+```bash
+apt install apache2
+```
+
+Después:
+
+```bash
+apt install php
+```
+
+Después:
+
+```bash
+apt install mysql-server
+```
+
+Y configurabas Apache.
+
+Por ejemplo:
+
+```text
+/etc/apache2/
+├── apache2.conf
+├── ports.conf
+└── sites-available/
+      └── mi-sitio.conf
+```
+
+---
+
+# 8. Virtual Hosts
+
+Apache permitía alojar varios sitios en el mismo servidor.
+
+Por ejemplo:
+
+```text
+VPS
+│
+└── Apache
+    │
+    ├── sitio1.com
+    │
+    ├── sitio2.com
+    │
+    └── sitio3.com
+```
+
+Configurabas un **VirtualHost**.
+
+Conceptualmente:
+
+```apache
+<VirtualHost *:80>
+    ServerName sitio1.com
+    DocumentRoot /var/www/sitio1
+</VirtualHost>
+
+<VirtualHost *:80>
+    ServerName sitio2.com
+    DocumentRoot /var/www/sitio2
+</VirtualHost>
+```
+
+Apache miraba el dominio solicitado y sabía qué directorio debía servir.
+
+---
+
+# 9. El deploy tradicional en un VPS
+
+Podría ser:
+
+```text
+1. Escribís código
+        ↓
+2. Probás localmente
+        ↓
+3. Te conectás por SSH
+        ↓
+4. Copiás archivos
+        ↓
+5. Configurás Apache
+        ↓
+6. Configurás DNS
+        ↓
+7. Configurás HTTPS
+        ↓
+8. Reiniciás Apache
+        ↓
+9. Sitio publicado
+```
+
+Por ejemplo:
+
+```bash
+scp -r ./mi-sitio/* usuario@vps:/var/www/mi-sitio/
+```
+
+---
+
+# 10. El problema que aparece al crecer
+
+Imaginemos ahora que tu aplicación deja de ser:
+
+```text
+HTML + CSS + JS
+```
+
+y pasa a ser:
+
+```text
+Frontend
++
+Node.js / Express
++
+MySQL
++
+Redis
++
+Nginx
+```
+
+El VPS empieza a tener:
+
+```text
+Ubuntu
+├── Nginx
+├── Node.js
+├── npm
+├── MySQL
+├── Redis
+├── Git
+├── certificados
+└── aplicación
+```
+
+Y después aparece otra aplicación:
+
+```text
+Ubuntu
+├── Nginx
+├── Node.js 22
+├── Node.js 20
+├── MySQL
+├── Redis
+├── aplicación A
+└── aplicación B
+```
+
+Ahora empiezan los problemas de dependencias y configuración.
+
+Ahí Docker resulta especialmente útil.
+
+---
+
+# 11. Docker cambia la unidad de despliegue
+
+Tradicionalmente pensabas:
+
+> "Tengo un servidor y tengo que instalar las cosas que necesita mi aplicación."
+
+Con Docker empezás a pensar:
+
+> "Tengo una aplicación empaquetada en una imagen que puedo ejecutar."
+
+Por ejemplo:
+
+```text
+Aplicación
+│
+├── código
+├── dependencias
+├── configuración de runtime
+└── Dockerfile
+```
+
+Construís:
+
+```bash
+docker build -t mi-app .
+```
+
+y obtenés:
+
+```text
+mi-app:latest
+```
+
+Después:
+
+```bash
+docker run mi-app
+```
+
+---
+
+# 12. La diferencia conceptual
+
+### Tradicional
+
+```text
+VPS
+│
+├── Ubuntu
+├── Apache
+├── PHP
+├── Node
+├── MySQL
+└── aplicación
+```
+
+La aplicación depende directamente del entorno del VPS.
+
+### Docker
+
+```text
+VPS
+│
+├── Ubuntu
+│
+└── Docker
+     │
+     ├── Container Apache
+     │
+     ├── Container Node
+     │
+     └── Container MySQL
+```
+
+Cada componente tiene un entorno más aislado.
+
+---
+
+# 13. Docker Compose
+
+Ahora imaginemos que tu aplicación necesita:
+
+```text
+Frontend
+Backend
+MySQL
+```
+
+Podrías crear:
+
+```text
+docker-compose.yml
+```
+
+Por ejemplo conceptualmente:
+
+```yaml
+services:
+
+  frontend:
+    build: ./frontend
+
+  backend:
+    build: ./backend
+
+  database:
+    image: mysql
+```
+
+Ahora tenés declarada la arquitectura:
+
+```text
+          Docker Compose
+                │
+      ┌─────────┼─────────┐
+      ▼         ▼         ▼
+ frontend    backend    database
+```
+
+Y podés levantar todo:
+
+```bash
+docker compose up -d
+```
+
+En vez de hacer manualmente:
+
+```bash
+docker run ...
+docker run ...
+docker run ...
+```
+
+---
+
+# 14. Compose es principalmente "orquestación local/simple"
+
+Docker Compose es muy útil para:
+
+* desarrollo;
+* servidores pequeños;
+* proyectos personales;
+* aplicaciones pequeñas/medianas;
+* entornos de staging.
+
+Por ejemplo:
+
+```text
+VPS
+│
+└── Docker Compose
+     │
+     ├── nginx
+     ├── frontend
+     ├── backend
+     ├── mysql
+     └── redis
+```
+
+Pero todavía estás administrando **un servidor**.
+
+---
+
+# 15. ¿Dónde aparece Kubernetes?
+
+Kubernetes aparece cuando la infraestructura empieza a ser mucho más grande.
+
+Supongamos que ya no tenés:
+
+```text
+1 VPS
+```
+
+sino:
+
+```text
+Servidor 1
+Servidor 2
+Servidor 3
+Servidor 4
+Servidor 5
+...
+```
+
+Y necesitás ejecutar muchas instancias de tu aplicación.
+
+Kubernetes puede encargarse de cosas como:
+
+* ejecutar containers;
+* reiniciarlos si fallan;
+* distribuirlos;
+* escalar replicas;
+* realizar actualizaciones;
+* balancear tráfico;
+* gestionar configuración;
+* administrar servicios entre múltiples máquinas.
+
+Conceptualmente:
+
+```text
+                 Kubernetes
+                     │
+       ┌─────────────┼─────────────┐
+       ▼             ▼             ▼
+    Node 1         Node 2        Node 3
+       │             │             │
+    ┌──────┐       ┌──────┐      ┌──────┐
+    │ API  │       │ API  │      │ API  │
+    └──────┘       └──────┘      └──────┘
+       │             │             │
+    ┌──────┐       ┌──────┐      ┌──────┐
+    │ API  │       │ API  │      │ API  │
+    └──────┘       └──────┘      └──────┘
+```
+
+Ahora ya no estás pensando simplemente:
+
+> "¿En qué directorio pongo `index.html`?"
+
+Estás pensando:
+
+> "¿Cómo mantengo funcionando 20 instancias de mi aplicación distribuidas entre varios servidores?"
+
+Es un problema completamente distinto.
+
+---
+
+# 16. Y después aparece CI/CD
+
+Hay otra evolución importante.
+
+Supongamos que modificás:
+
+```javascript
+app.js
+```
+
+En el modelo tradicional:
+
+```text
+Modificar código
+      ↓
+FTP/SSH
+      ↓
+Copiar archivos
+      ↓
+Reiniciar aplicación
+```
+
+Con CI/CD podés tener:
+
+```text
+Modificar código
+      ↓
+git push
+      ↓
+GitHub
+      ↓
+CI/CD
+      ↓
+Tests
+      ↓
+Build
+      ↓
+Docker image
+      ↓
+Deploy
+      ↓
+Producción
+```
+
+La gran diferencia es la **automatización del proceso**.
+
+---
+
+# 17. ¿Qué significa CI?
+
+**CI = Continuous Integration.**
+
+La idea básica:
+
+> Cada vez que incorporás cambios al código, un sistema automático los verifica.
+
+Por ejemplo:
+
+```text
+git push
+   ↓
+Tests
+   ↓
+Lint
+   ↓
+Build
+   ↓
+OK / ERROR
+```
+
+Si rompiste algo:
+
+```text
+Tests
+   ↓
+ERROR
+   ↓
+Deploy NO
+```
+
+---
+
+# 18. ¿Qué significa CD?
+
+Puede significar **Continuous Delivery** o **Continuous Deployment**, dependiendo del contexto.
+
+Una vez que el código pasa las verificaciones:
+
+```text
+Código
+ ↓
+Tests
+ ↓
+Build
+ ↓
+Deploy
+```
+
+El sistema puede publicar automáticamente.
+
+Por ejemplo:
+
+```text
+git push main
+       ↓
+GitHub Actions
+       ↓
+npm test
+       ↓
+docker build
+       ↓
+docker push
+       ↓
+VPS
+       ↓
+docker compose pull
+       ↓
+docker compose up -d
+```
+
+Entonces vos prácticamente hacés:
+
+```bash
+git push
+```
+
+y el resto ocurre automáticamente.
+
+---
+
+# 19. Comparación completa
+
+Podemos visualizar las cuatro generaciones así.
+
+## A. Hosting tradicional
+
+```text
+         INTERNET
+             │
+             ▼
+       Hosting
+             │
+           Apache
+             │
+       public_html
+             │
+       index.html
+```
+
+Vos básicamente subís archivos.
+
+**Complejidad:** baja.
+
+**Control:** bajo.
+
+**Automatización:** baja.
+
+---
+
+# 20. B. VPS tradicional
+
+```text
+             INTERNET
+                 │
+                 ▼
+                VPS
+                 │
+               Linux
+                 │
+              Apache
+                 │
+        ┌────────┴────────┐
+        │                 │
+     sitio A           sitio B
+```
+
+Vos administrás:
+
+* Linux;
+* Apache;
+* firewall;
+* usuarios;
+* certificados;
+* actualizaciones;
+* aplicaciones;
+* bases de datos.
+
+**Complejidad:** media.
+
+**Control:** alto.
+
+**Automatización:** normalmente manual.
+
+---
+
+# 21. C. VPS + Docker Compose
+
+```text
+                 INTERNET
+                     │
+                     ▼
+                    VPS
+                     │
+                   Docker
+                     │
+              Docker Compose
+                     │
+        ┌────────────┼────────────┐
+        ▼            ▼            ▼
+     Nginx         Node         MySQL
+    container     container     container
+```
+
+Ahora empaquetás las aplicaciones.
+
+**Complejidad:** media.
+
+**Control:** alto.
+
+**Reproducibilidad:** mucho mayor.
+
+---
+
+# 22. D. CI/CD + Docker
+
+Ahora agregás automatización:
+
+```text
+                   Git
+                    │
+                    ▼
+                 GitHub
+                    │
+                    ▼
+                  CI/CD
+                    │
+             ┌──────┴──────┐
+             ▼             ▼
+           Tests          Build
+                           │
+                           ▼
+                     Docker image
+                           │
+                           ▼
+                         Deploy
+                           │
+                           ▼
+                          VPS
+```
+
+Vos hacés:
+
+```bash
+git push
+```
+
+y el pipeline se ocupa del resto.
+
+---
+
+# 23. E. Kubernetes
+
+Y si necesitás escalar mucho:
+
+```text
+                     INTERNET
+                         │
+                         ▼
+                    Kubernetes
+                         │
+          ┌──────────────┼──────────────┐
+          ▼              ▼              ▼
+       Node 1          Node 2          Node 3
+          │              │              │
+       containers      containers      containers
+```
+
+Ahora Kubernetes puede gestionar:
+
+```text
+replicas
+scaling
+networking
+health checks
+rolling updates
+service discovery
+```
+
+etc.
+
+---
+
+# 24. Pero hay algo muy importante
+
+Estas tecnologías **no forman necesariamente una escalera donde una reemplaza a la anterior**.
+
+Podés tener:
+
+```text
+CI/CD
+  │
+  ▼
+Docker
+  │
+  ▼
+Docker Compose
+  │
+  ▼
+VPS
+```
+
+O:
+
+```text
+CI/CD
+  │
+  ▼
+Docker
+  │
+  ▼
+Kubernetes
+  │
+  ▼
+varios servidores
+```
+
+Y también:
+
+```text
+VPS
+│
+└── Apache
+    └── sitio web
+```
+
+que sigue siendo perfectamente válido.
+
+---
+
+# 25. Un ejemplo concreto: tu aplicación Node/Express
+
+Supongamos que desarrollás:
+
+```text
+mi-app/
+├── package.json
+├── src/
+│   ├── server.js
+│   ├── routes/
+│   └── controllers/
+└── views/
+```
+
+### Tradicionalmente
+
+En el VPS:
+
+```bash
+sudo apt install nodejs
+```
+
+Después:
+
+```bash
+git clone ...
+npm install
+```
+
+Y arrancás:
+
+```bash
+node src/server.js
+```
+
+Quizás usás PM2:
+
+```bash
+pm2 start src/server.js
+```
+
+Y Apache/Nginx hace **reverse proxy** (`6_proxys.md`):
+
+```text
+Internet
+   ↓
+Apache
+   ↓
+Node.js
+```
+
+---
+
+# 26. Con Docker
+
+Creás:
+
+```text
+Dockerfile
+```
+
+que define cómo construir la aplicación.
+
+Entonces:
+
+```text
+Código
+ ↓
+Dockerfile
+ ↓
+Docker image
+ ↓
+Container
+ ↓
+Node.js
+```
+
+El VPS ya no necesita tener necesariamente Node.js instalado directamente para esa aplicación.
+
+Lo tiene dentro del entorno de la imagen/container.
+
+---
+
+# 27. Con Compose
+
+Si además tenés MySQL:
+
+```text
+Node.js
+   │
+   ▼
+MySQL
+```
+
+podés declarar ambos:
+
+```text
+docker-compose.yml
+```
+
+y ejecutar:
+
+```bash
+docker compose up -d
+```
+
+Queda:
+
+```text
+VPS
+│
+└── Docker
+    │
+    ├── node-container
+    │
+    └── mysql-container
+```
+
+---
+
+# 28. Con CI/CD
+
+Después conectás GitHub:
+
+```text
+                         GitHub
+                           │
+                       git push
+                           │
+                           ▼
+                       CI/CD
+                           │
+                    ┌──────┴──────┐
+                    │             │
+                  Tests          Build
+                                  │
+                                  ▼
+                            Docker image
+                                  │
+                                  ▼
+                                VPS
+                                  │
+                                  ▼
+                            New container
+```
+
+Ahora publicar una nueva versión puede ser simplemente:
+
+```bash
+git push origin main
+```
+
+---
+
+# 29. Con Kubernetes
+
+Finalmente, si tu aplicación crece muchísimo:
+
+```text
+                    Kubernetes
+                         │
+              ┌──────────┼──────────┐
+              │          │          │
+             API        API        API
+              │          │          │
+             API        API        API
+```
+
+Kubernetes puede aumentar o disminuir las instancias según la configuración y las necesidades del sistema.
+
+Pero para una pequeña aplicación personal, probablemente sería una infraestructura innecesariamente compleja.
+
+---
+
+# 30. Roadmap conceptual
+
+Para alguien que está aprendiendo **HTML/CSS/JS → Node/Express → MySQL**, podría ordenarse conceptualmente así:
+
+```text
+1. HTML/CSS/JS
+       ↓
+2. Servidor web
+   Apache / Nginx
+       ↓
+3. HTTP
+       ↓
+4. DNS
+       ↓
+5. VPS
+       ↓
+6. Node.js / Express
+       ↓
+7. Reverse proxy
+       ↓
+8. Docker
+       ↓
+9. Docker Compose
+       ↓
+10. CI/CD
+       ↓
+11. Kubernetes
+```
+
+No porque Kubernetes sea "el siguiente nivel obligatorio", sino porque cada paso resuelve un problema que aparece después.
+
+---
+
+## La evolución en una sola imagen mental
+
+```text
+                 MODELO TRADICIONAL
+                 ──────────────────
+
+ Internet
+    │
+    ▼
+ Hosting / VPS
+    │
+    ▼
+ Apache
+    │
+    ▼
+ Archivos / PHP / aplicación
+```
+
+↓
+
+```text
+                 DOCKER
+
+ Internet
+    │
+    ▼
+ VPS
+    │
+    ▼
+ Docker
+    │
+    ├── Container frontend
+    ├── Container backend
+    └── Container database
+```
+
+↓
+
+```text
+                 COMPOSE
+
+ Internet
+    │
+    ▼
+ VPS
+    │
+    ▼
+ Docker Compose
+    │
+    ├── frontend
+    ├── backend
+    ├── database
+    └── redis
+```
+
+↓
+
+```text
+                 CI/CD
+
+ git push
+    │
+    ▼
+ GitHub
+    │
+    ▼
+ Tests → Build → Docker image
+                    │
+                    ▼
+                   VPS
+                    │
+                    ▼
+                 Deploy
+```
+
+↓
+
+```text
+                 KUBERNETES
+
+                    INTERNET
+                       │
+                       ▼
+                  Load Balancer
+                       │
+          ┌────────────┼────────────┐
+          ▼            ▼            ▼
+       servidor     servidor     servidor
+          │            │            │
+       containers   containers   containers
+```
+
+La transición fundamental es entonces **de "yo entro al servidor y modifico cosas manualmente" hacia "describo mi infraestructura y automatizo cómo se construye, prueba y despliega"**.
+
+Y hay una distinción especialmente importante para tu aprendizaje: **Docker y Kubernetes no son alternativas directas a Apache**. Apache/Nginx son servidores web/reverse proxies; Docker es una tecnología de empaquetado/ejecución de procesos; Compose coordina varios containers; Kubernetes coordina containers a mayor escala; y CI/CD automatiza el camino desde el código fuente hasta una versión desplegada.
+
+
+
+
+
+---
+
+
+
+
+
+# Explicacion secundaria / ¿Qué significa hacer deploy?
 
 Hacer deploy consiste en tomar una aplicación que funciona en tu computadora y publicarla en un servidor para que otros usuarios puedan acceder a ella a través de Internet.
 
