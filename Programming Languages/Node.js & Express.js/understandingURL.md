@@ -1,5 +1,112 @@
 # Diferencia entre Endpoint y Ruta
 
+Un endpoint suele ser una URL que permite acceder a una funcionalidad o recurso de una API. Pero hay un detalle importante: **técnicamente, un endpoint no es solamente una URL; también suele involucrar el método HTTP que se utiliza para acceder a él**.
+
+## 1. ¿Qué es un endpoint?
+
+Imaginá que tenés una API desarrollada con Node.js y Express para administrar usuarios.
+
+Podrías tener estos endpoints:
+
+| Método HTTP | URL | Función |
+| --- | --- | --- |
+| `GET` | `/users` | Obtener todos los usuarios |
+| `GET` | `/users/15` | Obtener el usuario con ID 15 |
+| `POST` | `/users` | Crear un usuario |
+| `PUT` | `/users/15` | Actualizar el usuario 15 |
+| `DELETE` | `/users/15` | Eliminar el usuario 15 |
+
+Cada combinación de método HTTP y ruta representa una operación diferente de tu API.
+
+## 2. ¿Cómo funciona en la práctica?
+
+Cliente
+
+Un navegador, una app o Postman
+
+GET /users
+
+API de Node.js + Express
+
+Recibe la solicitud y ejecuta la lógica correspondiente.
+
+Respuesta HTTP en JSON
+
+json
+```
+[
+  { "id": 1, "name": "Ana" },
+  { "id": 2, "name": "Juan" }
+]
+```
+
+El cliente hace una solicitud al endpoint y el servidor responde con los datos o con el resultado de la operación.
+
+## 3. ¿Cómo se crea un endpoint con Express?
+
+Primero, instalás Express:
+
+bash
+```
+npm install express
+```
+
+Después, creás un archivo `server.js`:
+
+js
+```
+const express = require("express");
+
+const app = express();
+
+app.get("/users", (req, res) => {
+  res.json([
+    { id: 1, name: "Ana" },
+    { id: 2, name: "Juan" }
+  ]);
+});
+
+app.listen(3000, () => {
+  console.log("Servidor en http://localhost:3000");
+});
+```
+
+Ejecutás el servidor:
+
+bash
+```
+node --watch server.js
+```
+
+Ahora podés visitar:
+
+`http://localhost:3000/users`
+
+Ese endpoint responde con los usuarios en formato JSON.
+
+En este ejemplo:
+
+- `http://localhost:3000` es la dirección base del servidor.
+- `/users` es la ruta.
+- `GET` es el método HTTP.
+- `app.get("/users", ...)` define qué debe hacer el servidor cuando recibe una solicitud `GET` a esa ruta.
+
+## 4. ¿Un endpoint es lo mismo que una URL?
+
+No exactamente.
+
+- URL: identifica una dirección o recurso, por ejemplo `http://localhost:3000/users`.
+- Ruta (path): es la parte de la URL que indica el recurso o camino, por ejemplo `/users`.
+- Endpoint: es el punto de acceso de la API para una operación determinada; normalmente se identifica por el método HTTP y la ruta.
+
+Por eso, `GET /users` y `POST /users` pueden usar la misma URL, pero son endpoints distintos porque realizan operaciones diferentes.
+
+En resumen: **Pensar en un endpoint como una puerta de entrada a tu API. Cada puerta tiene una ruta y un método HTTP que determinan qué operación puede realizar el cliente.**
+
+---
+
+## 5. Explicacion vieja
+
 Un endpoint es una URL específica a la que una aplicación cliente envía una solicitud para acceder a una funcionalidad o recurso particular ofrecido por una API del servidor, actuando como el punto final de una conexión API  Por otro lado, una ruta se refiere a la estructura de la URL que determina cómo se procesa una solicitud, incluyendo la base de ruta y el recurso específico, y puede estar asociada a un endpoint  En el contexto de APIs, la ruta define la dirección a la que se envía la solicitud, mientras que el endpoint es la ubicación exacta donde se procesa esa solicitud 
 
 Aunque el término "ruta" puede referirse a la estructura general de la URL, el "endpoint" se enfoca en la dirección específica que responde a una solicitud, especialmente en el contexto de APIs REST, donde se utilizan métodos HTTP como GET, POST, PUT o PATCH para realizar acciones sobre los recursos  Así, mientras la ruta define la estructura de acceso, el endpoint es la dirección concreta donde se realiza la operación 
